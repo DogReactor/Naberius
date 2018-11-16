@@ -79,3 +79,5 @@ dist/
 cache/
 data/
 static/
+
+config.json
