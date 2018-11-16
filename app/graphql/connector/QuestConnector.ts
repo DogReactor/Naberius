@@ -6,11 +6,17 @@ import {
   missionQuestList,
 } from '../dataFiles';
 import * as _ from 'lodash';
+import { logger } from '../../logger';
 class QuestConnector {
   private quests: any[] = [];
 
   constructor() {
-    this.init();
+    try {
+      this.init();
+    } catch (err) {
+      logger.error(err.stack);
+      logger.error('QuestConnector init failed');
+    }
   }
 
   public init() {

@@ -34,6 +34,7 @@ class JsonDb {
 
   public write(data: any) {
     this.data = data;
+    fs.ensureFileSync(this.path);
     fs.writeFileSync(this.path, JSON.stringify(data));
   }
 }
