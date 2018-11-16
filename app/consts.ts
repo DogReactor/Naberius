@@ -8,6 +8,7 @@ export const BASE_URL = 'http://assets.millennium-war.net';
 export const SELF_BASE_URL = config.SELF_BASE_URL;
 export const MONGODB_URL = config.MONGODB_URL;
 export const PORT = config.PORT;
+export const HOST = config.HOST;
 export const DATA_DIR = 'data';
 export const CACHE_DIR = 'cache';
 export const STATIC_DIR = 'static';

@@ -9,7 +9,7 @@ import * as Body from 'koa-body';
 import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/schema';
 import uploadOrigin from './middlewares/uploadOrigin';
-import { PORT } from './consts';
+import { PORT, HOST } from './consts';
 
 const server = new ApolloServer({
   typeDefs,
@@ -39,6 +39,6 @@ app.use(Mount('/static', Static('static')));
 
 server.applyMiddleware({ app });
 
-app.listen({ port: PORT }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
+app.listen({ port: PORT, host: HOST }, () =>
+  console.log(`🚀 Server ready at http://${HOST}:${PORT}${server.graphqlPath}`),
 );
