@@ -1,0 +1,25 @@
+{
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
+  },
+  "rules": {
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "quotemark": [true, "single"],
+    "object-literal-sort-keys": false,
+    "no-console": false,
+    "ordered-imports": false,
+    "interface-name": false,
+    "max-classes-per-file": false,
+    "no-bitwise": false,
+    "no-namespace": false,
+    "variable-name": [true, "allow-leading-underscore", "allow-pascal-case"],
+    "no-submodule-imports": false
+  }
+}
