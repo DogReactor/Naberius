@@ -66,9 +66,12 @@ export default {
     const events: any = _.find(dbs.battleTalkEvent.data, { MissionID });
     if (events) {
       let index = -1;
+      // sometimes RecordOffset will stick to a non-zero number
+      let stopIndex = -1;
       events.Events.forEach((event: any) => {
-        if (event.RecordOffset) {
+        if (event.RecordOffset && stopIndex !== event.RecordOffset) {
           index = event.RecordOffset;
+          stopIndex = event.RecordOffset;
           event.RecordIndex = event.RecordOffset;
         } else {
           event.RecordIndex = ++index;
