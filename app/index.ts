@@ -10,10 +10,7 @@ import * as Body from 'koa-body';
 import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/schema';
 import uploadOrigin from './middlewares/uploadOrigin';
-
-// const typeDefs = fs.readFileSync('./app/graphql/schema.gql', {
-// encoding: 'utf-8',
-// });
+import { PORT } from './consts';
 
 const server = new ApolloServer({
   typeDefs,
@@ -43,6 +40,6 @@ app.use(Mount('/static', Static('static')));
 
 server.applyMiddleware({ app });
 
-app.listen({ port: 4000 }, () =>
+app.listen({ port: PORT }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
 );
