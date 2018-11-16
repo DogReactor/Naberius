@@ -5,7 +5,6 @@ import * as Router from 'koa-router';
 import * as Mount from 'koa-mount';
 import * as CORS from '@koa/cors';
 import * as Compress from 'koa-compress';
-import * as BodyParser from 'koa-bodyparser';
 import * as Body from 'koa-body';
 import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/schema';
