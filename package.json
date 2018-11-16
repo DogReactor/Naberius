@@ -30,7 +30,7 @@
     "@types/promise.prototype.finally": "^2.0.2",
     "@types/request-promise-native": "^1.0.15",
     "@types/sharp": "^0.17.10",
-    "aigis-fuel": "../../aigis-fuel",
+    "aigis-fuel": "^0.2.4",
     "apollo-server": "^2.1.0",
     "apollo-server-koa": "^2.1.0",
     "chalk": "^2.4.1",
