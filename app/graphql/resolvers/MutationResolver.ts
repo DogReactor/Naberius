@@ -143,6 +143,7 @@ export default {
               evaar.Files.forEach((atb: any) => {
                 if (atb.Name.includes('evtxt')) {
                   const content = JSON.stringify(atb.Content.Contents);
+                  fs.ensureDirSync(HARLEM_TEXT_R_DIR);
                   fs.writeFileSync(
                     path.join(
                       HARLEM_TEXT_R_DIR,
@@ -167,6 +168,7 @@ export default {
               evaar.Files.forEach((atb: any) => {
                 if (atb.Name.includes('evtxt')) {
                   const content = JSON.stringify(atb.Content.Contents);
+                  fs.ensureDirSync(HARLEM_TEXT_A_DIR);
                   fs.writeFileSync(
                     path.join(
                       HARLEM_TEXT_A_DIR,
@@ -399,6 +401,7 @@ export default {
     } catch (err) {
       logger.error(err.stack);
       bus.status = 2;
+      logger.info('Download failed!');
       return false;
     }
     bus.status = 0;
