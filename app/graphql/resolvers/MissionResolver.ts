@@ -53,9 +53,7 @@ export default {
       .value();
   },
   Enemies: async ({ MissionID }: any) => {
-    console.log(MissionID);
     const enemies: any = _.find(dbs.Enemy.data, { MissionID });
-    console.log(enemies);
     fs.ensureDirSync(ENEMYDOT_IMG_DIR);
     fs.ensureDirSync(ENEMYDOT_INFO_DIR);
     if (enemies) {
