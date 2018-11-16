@@ -91,6 +91,6 @@ export class Emoji extends Typegoose {
 
 export const EmojiModel = new Emoji().getModelForClass(Emoji, {
   schemaOptions: {
-    collection: 'emojiMeta',
+    collection: 'emoji',
   },
 });
