@@ -7,6 +7,7 @@ import {
 } from '../dataFiles';
 import * as _ from 'lodash';
 import { logger } from '../../logger';
+
 class QuestConnector {
   private quests: any[] = [];
 

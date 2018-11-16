@@ -10,6 +10,7 @@ import {
   systemText,
   playerRaceType,
 } from '../dataFiles';
+import { logger } from '../../logger';
 
 class CardConnector {
   private cards: any[] = [];
@@ -19,31 +20,36 @@ class CardConnector {
   }
 
   public init() {
-    this.cards = [];
-    for (const card of cardList.data) {
-      this.cards.push({
-        ...card,
-        Name:
-          nameText.data[card.CardID - 1] &&
-          nameText.data[card.CardID - 1].Message,
-        SkillInit: this.getSkills(card.ClassLV0SkillID),
-        SkillCC: this.getSkills(card.ClassLV1SkillID),
-        SkillEvo: this.getSkills(card.EvoSkillID),
-        AbilityInitInfo: {
-          ...abilityList.data[card.Ability_Default],
-          AbilityID: card.Ability_Default,
-        },
-        AbilityEvoInfo: {
-          ...abilityList.data[card.Ability],
-          AbilityID: card.Ability,
-        },
-        Class: this.getClasses(card),
-        IllustID: card.Illust,
-        Race: this.getRace(card),
-        Talks: statusText.data
-          .slice(card.Flavor, card.Flavor + 3)
-          .map((c: any) => c.Message),
-      });
+    try {
+      this.cards = [];
+      for (const card of cardList.data) {
+        this.cards.push({
+          ...card,
+          Name:
+            nameText.data[card.CardID - 1] &&
+            nameText.data[card.CardID - 1].Message,
+          SkillInit: this.getSkills(card.ClassLV0SkillID),
+          SkillCC: this.getSkills(card.ClassLV1SkillID),
+          SkillEvo: this.getSkills(card.EvoSkillID),
+          AbilityInitInfo: {
+            ...abilityList.data[card.Ability_Default],
+            AbilityID: card.Ability_Default,
+          },
+          AbilityEvoInfo: {
+            ...abilityList.data[card.Ability],
+            AbilityID: card.Ability,
+          },
+          Class: this.getClasses(card),
+          IllustID: card.Illust,
+          Race: this.getRace(card),
+          Talks: statusText.data
+            .slice(card.Flavor, card.Flavor + 3)
+            .map((c: any) => c.Message),
+        });
+      }
+    } catch (err) {
+      logger.error(err.stack);
+      logger.error('CardConnector init failed');
     }
   }
 
