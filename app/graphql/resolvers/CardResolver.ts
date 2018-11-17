@@ -36,9 +36,13 @@ export default {
         });
         files.push(
           JSON.parse(f3)
-            .map((text: any) => `@${text._TalkerName}\n${text._TalkText}`)
+            .map((text: any) =>
+              text._TalkerName
+                ? `@${text._TalkerName}\n${text._TalkText}`
+                : text._TalkText,
+            )
             .join('\n\n')
-            .replace(/\\n/g, '\r\n'),
+            .replace(/\n/g, '\r\n'),
         );
       }
       return files;
@@ -65,9 +69,13 @@ export default {
         });
         files.push(
           JSON.parse(f3)
-            .map((text: any) => `@${text._TalkerName}\n${text._TalkText}`)
+            .map((text: any) =>
+              text._TalkerName
+                ? `@${text._TalkerName}\n${text._TalkText}`
+                : text._TalkText,
+            )
             .join('\n\n')
-            .replace(/\\n/g, '\r\n'),
+            .replace(/\n/g, '\r\n'),
         );
       }
       return files;
