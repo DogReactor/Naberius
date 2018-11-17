@@ -4,7 +4,6 @@ import * as Static from 'koa-static';
 import * as Router from 'koa-router';
 import * as Mount from 'koa-mount';
 import * as CORS from '@koa/cors';
-import * as Compress from 'koa-compress';
 import * as Body from 'koa-body';
 import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/schema';
@@ -33,7 +32,6 @@ router.post(
 );
 
 app.use(CORS());
-app.use(Compress());
 app.use(router.routes());
 app.use(Mount('/static', Static('static')));
 
