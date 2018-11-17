@@ -411,9 +411,9 @@ export default gql`
   }
 
   type BattleTalk {
-    Message: String!
-    Name: String!
-    FaceID: Int!
+    Message: String
+    Name: String
+    FaceID: Int
     RecordOffset: Int
     RecordIndex: Int
   }
