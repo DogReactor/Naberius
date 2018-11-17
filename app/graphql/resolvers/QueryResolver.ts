@@ -36,7 +36,7 @@ function fileStatusResolver(files: string[]) {
 export default {
   file: (root: any, args: any) => _.find(dbs.fileList.data, args),
   card: (root: any, args: any) => CardConnector.getCard(args.CardID),
-  cards: () => CardConnector.getCards(),
+  cards: (root: any, args: any) => _.filter(CardConnector.getCards(), args),
   missions: () => dbs.missionConfig.data,
   mission: (root: any, args: any) => _.find(dbs.missionConfig.data, args),
   quest: (root: any, args: any) => QuestConnector.getQuest(args.QuestID),

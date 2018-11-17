@@ -428,7 +428,7 @@ export default gql`
   type Query {
     file(name: String, link: String): File
     card(CardID: Int!): Card
-    cards: [Card]
+    cards(Rare: Int): [Card]
     ability(AbilityID: Int!): Ability
     abilities: [Ability]
     quest(QuestID: Int!): Quest
