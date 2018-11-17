@@ -436,7 +436,6 @@ export default gql`
     mission(MissionID: Int!): Mission
     missions: [Mission]
     uploadFiles: [Db]
-    downloadFiles: [Db]
     map(MapID: Int!): Map
     battleTalks: [BattleTalk]!
     classes: [Class]

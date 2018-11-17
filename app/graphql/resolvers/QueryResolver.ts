@@ -48,9 +48,6 @@ export default {
       AbilityID: index,
     })),
   uploadFiles: fileStatusResolver(dbs.uploadDbFiles),
-  downloadFiles: fileStatusResolver(
-    _.filter(fs.readdirSync('data'), file => !dbs.uploadDbFiles.includes(file)),
-  ),
   map: async (root: any, args: any) => MapConnector(args.MapID),
   battleTalks: () => dbs.questEventText.data,
   classes: () => dbs.classData.data.filter((c: any) => c.Name),
