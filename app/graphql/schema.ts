@@ -449,8 +449,8 @@ export default gql`
 
   type Mutation {
     downloadFiles: Boolean!
-    updateCardMeta(CardID: Int!, conneName: String, nickName: String): Card!
-    updateClassMeta(ClassID: Int!, cnName: String, nickName: String): Class!
+    updateCardMeta(CardID: Int!, ConneName: String, NickName: String): Card!
+    updateClassMeta(ClassID: Int!, CnName: String, NickName: String): Class!
     updateSkillInfluenceMeta(ID: Int!, Description: String): Boolean!
     updateAbilityConfigMeta(ID: Int!, Description: String): Boolean!
     removeEmoji(ID: String!): Boolean!
