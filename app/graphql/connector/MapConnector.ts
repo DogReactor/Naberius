@@ -27,7 +27,7 @@ export default async (MapID: number) => {
         if (match) {
           map.Entries.push({
             Entries: data.Contents,
-            EntryID: Number.parseInt(match[1]),
+            EntryID: Number.parseInt(match[1], 10),
           });
         }
       } else if (entryFilename.includes('Location')) {
@@ -35,7 +35,7 @@ export default async (MapID: number) => {
         if (match) {
           map.Locations.push({
             Locations: data.Contents,
-            LocationID: Number.parseInt(match[1]),
+            LocationID: Number.parseInt(match[1], 10),
           });
         }
       }
