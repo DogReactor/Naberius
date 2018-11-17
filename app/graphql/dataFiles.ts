@@ -4,6 +4,7 @@ import { DATA_DIR, CACHE_DIR } from '../consts';
 
 export const uploadDbFiles = [
   'FileList.json',
+  'FileListA.json',
   'CardList.json',
   'QuestList.json',
 ];
