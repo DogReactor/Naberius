@@ -35,6 +35,7 @@ function fileStatusResolver(files: string[]) {
 
 export default {
   file: (root: any, args: any) => _.find(dbs.fileList.data, args),
+  files: () => dbs.fileList.data,
   card: (root: any, args: any) => CardConnector.getCard(args.CardID),
   cards: (root: any, args: any) => _.filter(CardConnector.getCards(), args),
   missions: () => dbs.missionConfig.data,
