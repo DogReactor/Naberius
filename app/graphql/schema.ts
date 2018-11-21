@@ -446,6 +446,7 @@ export default gql`
     emojis: [Emoji]
     "服务器状态，0为空闲，1为忙，2为错误"
     serverStatus: Int!
+    posters: [String]
   }
 
   type Mutation {
