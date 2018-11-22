@@ -30,7 +30,7 @@ export default async (ctx: Context, next: any) => {
       files.QuestList
     ) {
       // copy old filelist for diff
-      const filelistStat = await fs.stat(path.join(DATA_DIR, 'Filelist.json'));
+      const filelistStat = await fs.stat(path.join(DATA_DIR, 'FileList.json'));
       if (
         Math.abs(filelistStat.ctime.getTime() - new Date().getTime()) /
           1000 /
@@ -39,8 +39,8 @@ export default async (ctx: Context, next: any) => {
         4
       ) {
         await fs.copy(
-          path.join(DATA_DIR, 'Filelist.json'),
-          path.join(DATA_DIR, 'FilelistOld.json'),
+          path.join(DATA_DIR, 'FileList.json'),
+          path.join(DATA_DIR, 'FileListOld.json'),
         );
       }
       await Promise.all([
