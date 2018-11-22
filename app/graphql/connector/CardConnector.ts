@@ -41,6 +41,7 @@ class CardConnector {
           },
           Class: this.getClasses(card),
           IllustID: card.Illust,
+          Illust: statusText.data[card.Illust].Message,
           Race: this.getRace(card),
           Talks: statusText.data
             .slice(card.Flavor, card.Flavor + 3)
