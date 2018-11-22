@@ -424,6 +424,10 @@ export default gql`
     emoji: [String]
     group: [Int]
   }
+  type Log {
+    Message: String
+    Level: String
+  }
 
   type Query {
     file(name: String, link: String): File
@@ -446,6 +450,7 @@ export default gql`
     emojis: [Emoji]
     "服务器状态，0为空闲，1为忙，2为错误"
     serverStatus: Int!
+    logs: [Log]
     posters: [String]
   }
 
@@ -457,11 +462,15 @@ export default gql`
     updateAbilityConfigMeta(ID: Int!, Description: String): Boolean!
     removeEmoji(ID: String!): Boolean!
     removeEmojiItem(ID: String!, index: Int!): Boolean!
-    uploadOrigin(
-      FileListR: Upload!
-      FileListA: Upload!
-      CardList: Upload!
-      QuestList: Upload!
-    ): Boolean!
+  }
+
+  type Subscription {
+    logAdded: Log
+  }
+
+  schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
   }
 `;

@@ -51,6 +51,7 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "sharp": "^0.21.0",
+    "subscriptions-transport-ws": "^0.9.15",
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.13.0",

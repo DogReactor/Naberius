@@ -25,7 +25,7 @@ export class Logger {
     this.logLevel = level;
   }
 
-  public log(level: Level, message: string | number) {
+  public log(level: Level, message: string) {
     if (this.logLevel <= level) {
       let castColor: any;
       switch (level) {
@@ -48,7 +48,10 @@ export class Logger {
         new Date().toLocaleString(),
       )} ${message}`;
 
-      bus.log.push(log);
+      bus.log.push({
+        Message: message,
+        Level: level,
+      });
 
       console.log(log);
     }

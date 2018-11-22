@@ -5,10 +5,18 @@ import * as Router from 'koa-router';
 import * as Mount from 'koa-mount';
 import * as CORS from '@koa/cors';
 import * as Body from 'koa-body';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/schema';
 import uploadOrigin from './middlewares/uploadOrigin';
 import { PORT, HOST } from './consts';
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
 const server = new ApolloServer({
   typeDefs,
@@ -37,6 +45,18 @@ app.use(Mount('/static', Static('static')));
 
 server.applyMiddleware({ app });
 
-app.listen({ port: PORT, host: HOST }, () =>
+const koaServer = app.listen({ port: PORT, host: HOST }, () =>
   console.log(`🚀 Server ready at http://${HOST}:${PORT}${server.graphqlPath}`),
+);
+
+const subscriptionServer = new SubscriptionServer(
+  {
+    execute,
+    subscribe,
+    schema,
+  },
+  {
+    server: koaServer,
+    path: '/graphql',
+  },
 );

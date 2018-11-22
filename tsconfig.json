@@ -17,7 +17,7 @@
     "skipLibCheck": true,
     "inlineSourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["./node_modules/@types", "koa-body"],
+    "types": ["koa-body"],
     "outDir": "dist"
   },
   "exclude": ["node_modules", "scripts"]

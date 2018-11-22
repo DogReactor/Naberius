@@ -61,5 +61,9 @@ export default {
   abilityConfigMetas: getAllAbilityConfigMeta,
   emojis: async () => EmojiConnector.getEmojis(),
   serverStatus: () => bus.status,
-  posters: () => fs.readdirSync(path.join('static', 'poster')).map(filename => path.basename(filename, '.jpg'))
+  posters: () =>
+    fs
+      .readdirSync(path.join('static', 'poster'))
+      .map(filename => path.basename(filename, '.jpg')),
+  logs: () => bus.log,
 };

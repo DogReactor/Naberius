@@ -11,6 +11,7 @@ import MapResolver from './MapResolver';
 import EnemyResolver from './EnemyResolver';
 import SkillInfluenceConfigResolver from './SkillInfluenceConfig';
 import AbilityConfigResolver from './AbilityConfigResolver';
+import SubscriptionResolver from './SubscriptionResolver';
 
 export default {
   Date: DateScalar,
@@ -26,4 +27,5 @@ export default {
   Enemy: EnemyResolver,
   SkillInfluenceConfig: SkillInfluenceConfigResolver,
   AbilityConfig: AbilityConfigResolver,
+  Subscription: SubscriptionResolver,
 };
