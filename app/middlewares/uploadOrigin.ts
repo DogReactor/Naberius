@@ -44,7 +44,7 @@ export default async (ctx: Context, next: any) => {
         );
       }
       await Promise.all([
-        writeFile('Filelist.json', files.FileListR),
+        writeFile('FileList.json', files.FileListR),
         writeFile('FileListA.json', files.FileListA),
         writeFile('CardList.json', files.CardList),
         writeFile('QuestList.json', files.QuestList),
