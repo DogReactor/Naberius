@@ -48,6 +48,10 @@ export default async (ctx: Context, next: any) => {
         writeFile('CardList.json', files.CardList),
         writeFile('QuestList.json', files.QuestList),
       ]);
+      dbs.fileList.read();
+      dbs.fileListA.read();
+      dbs.cardList.read();
+      dbs.questListOrigin.read();
       // overwrite old if md5 not match
       if (
         md5hex(fs.readFileSync(path.join(DATA_DIR, 'FileList.json'))) !==
@@ -58,10 +62,6 @@ export default async (ctx: Context, next: any) => {
           path.join(DATA_DIR, 'FileListOld.json'),
         );
       }
-      dbs.fileList.read();
-      dbs.fileListA.read();
-      dbs.cardList.read();
-      dbs.questListOrigin.read();
       MutationResolver.downloadFiles();
     }
   } else {
