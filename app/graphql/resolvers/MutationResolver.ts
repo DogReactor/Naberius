@@ -66,14 +66,20 @@ export default {
           dbs.statusText.write(res);
         }),
 
-        // StatusText.atb
         requestALTB('SystemText.atb').then(res => {
           dbs.systemText.write(res);
         }),
 
-        // StatusText.atb
         requestALTB('PlayerRaceType.atb').then(res => {
           dbs.playerRaceType.write(res);
+        }),
+
+        requestALTB('PlayerAssignType.atb').then(res => {
+          dbs.playerAssignType.write(res);
+        }),
+
+        requestALTB('PlayerIdentityType.atb').then(res => {
+          dbs.playerIdentityType.write(res);
         }),
 
         // SkillInfluenceConfig.atb

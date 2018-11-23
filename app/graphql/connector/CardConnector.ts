@@ -9,6 +9,8 @@ import {
   statusText,
   systemText,
   playerRaceType,
+  playerAssignType,
+  playerIdentityType,
 } from '../dataFiles';
 import { logger } from '../../logger';
 
@@ -42,7 +44,9 @@ class CardConnector {
           Class: this.getClasses(card),
           IllustID: card.Illust,
           Illust: statusText.data[card.Illust].Message,
-          Race: this.getRace(card),
+          Race: this.getType(card, '_TypeRace', playerRaceType),
+          Assign: this.getType(card, 'Assign', playerAssignType),
+          Identity: this.getType(card, 'Identity', playerIdentityType),
           Talks: statusText.data
             .slice(card.Flavor, card.Flavor + 3)
             .map((c: any) => c.Message),
@@ -166,6 +170,19 @@ class CardConnector {
     return classes;
   }
 
+  private getType = (card: any, prop: string, table: any) => {
+    const type = _.find(table.data, {
+      _TypeID: card[prop],
+    }) as any;
+    if (type) {
+      if (type._SystemTextID === 0) {
+        return null;
+      }
+      const text = systemText.data[type._SystemTextID];
+      return text ? text.Data_Text : null;
+    }
+  };
+
   private getRace = (card: any) => {
     const raceType = _.find(playerRaceType.data, {
       _TypeID: card._TypeRace,
@@ -175,6 +192,20 @@ class CardConnector {
         return 'なし';
       }
       const text = systemText.data[raceType._SystemTextID];
+      return text ? text.Data_Text : null;
+    }
+  };
+
+  private getAssign = (card: any) => {
+    const assignType = (playerAssignType.data as Array<{
+      _TypeID: number;
+      _SystemTextID: number;
+    }>).find(assign => assign._TypeID === card.Assign);
+    if (assignType) {
+      if (assignType._SystemTextID === 0) {
+        return null;
+      }
+      const text = systemText.data[assignType._SystemTextID];
       return text ? text.Data_Text : null;
     }
   };

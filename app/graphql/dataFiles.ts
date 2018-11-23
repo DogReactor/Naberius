@@ -54,6 +54,11 @@ export const classData = new JsonDb('ClassData.json', CACHE_DIR);
 export const statusText = new JsonDb('StatusText.json', CACHE_DIR);
 export const systemText = new JsonDb('SystemText.json', CACHE_DIR);
 export const playerRaceType = new JsonDb('PlayerRaceType.json', CACHE_DIR);
+export const playerAssignType = new JsonDb('PlayerAssignType.json', CACHE_DIR);
+export const playerIdentityType = new JsonDb(
+  'PlayerIdentityType.json',
+  CACHE_DIR,
+);
 export const missionQuestList = new JsonDb('MissionQuestList.json', CACHE_DIR);
 export const missionConfig = new JsonDb('MissionConfig.json', CACHE_DIR);
 export const questNameText = new JsonDb('QuestNameText.json', CACHE_DIR);

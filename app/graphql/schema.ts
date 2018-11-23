@@ -71,7 +71,9 @@ export default gql`
     "种族id"
     _TypeRace: Int!
     "种族"
-    Race: String!
+    Race: String
+    Assign: String
+    Identity: String
     "卖了给的虹水"
     _TradePoint: Int!
     "二觉方向"
