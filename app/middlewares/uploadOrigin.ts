@@ -1,8 +1,6 @@
 import { Context } from 'koa';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as crypto from 'crypto';
-import * as _ from 'lodash';
 import * as dbs from '../graphql/dataFiles';
 import { DATA_DIR } from '../consts';
 import { logger } from '../logger';
@@ -20,6 +18,21 @@ async function writeFile(filename: string, file: any) {
       resolve();
     });
   });
+}
+
+interface File {
+  Link: string;
+  Name: string;
+}
+
+function isEqual(a: File[], b: File[]) {
+  for (const file of a) {
+    if (b.find(file2 => file2.Name === file.Name && file2.Link === file.Link)) {
+      continue;
+    }
+    return false;
+  }
+  return true;
 }
 
 export default async (ctx: Context, next: any) => {
@@ -72,7 +85,7 @@ export default async (ctx: Context, next: any) => {
   logger.info('File uploaded');
   // overwrite old if md5 not match
   if (
-    _.isEqual(
+    isEqual(
       JSON.parse(
         fs.readFileSync(path.join(DATA_DIR, 'FileList.json'), 'utf-8'),
       ),
