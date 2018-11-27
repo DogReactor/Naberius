@@ -1,18 +1,12 @@
 import { Context } from 'koa';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as dbs from '../graphql/dataFiles';
 import * as crypto from 'crypto';
+import * as _ from 'lodash';
+import * as dbs from '../graphql/dataFiles';
 import { DATA_DIR } from '../consts';
 import { logger } from '../logger';
 import MutationResolver from '../graphql/resolvers/MutationResolver';
-
-function md5hex(str: string | Buffer) {
-  return crypto
-    .createHash('md5')
-    .update(str)
-    .digest('hex');
-}
 
 async function writeFile(filename: string, file: any) {
   if (typeof file === 'string') {
@@ -78,8 +72,14 @@ export default async (ctx: Context, next: any) => {
   logger.info('File uploaded');
   // overwrite old if md5 not match
   if (
-    md5hex(fs.readFileSync(path.join(DATA_DIR, 'FileList.json'))) !==
-    md5hex(fs.readFileSync(path.join(DATA_DIR, 'FileListTmp.json')))
+    _.isEqual(
+      JSON.parse(
+        fs.readFileSync(path.join(DATA_DIR, 'FileList.json'), 'utf-8'),
+      ),
+      JSON.parse(
+        fs.readFileSync(path.join(DATA_DIR, 'FileListTmp.json'), 'utf-8'),
+      ),
+    )
   ) {
     logger.info('Newer file detected, updating...');
     // copy now to old
