@@ -63,10 +63,14 @@ export default async (ctx: Context, next: any) => {
         );
       }
       MutationResolver.downloadFiles();
+    } else {
+      ctx.status = 400;
+      ctx.body = 'File(s) missing!';
+      return;
     }
   } else {
     ctx.status = 400;
-    ctx.body = 'File(s) missing!';
+    ctx.body = 'No files uploaded!';
     return;
   }
   ctx.body = 'OK';
