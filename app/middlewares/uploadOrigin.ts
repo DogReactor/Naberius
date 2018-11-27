@@ -32,6 +32,12 @@ function isEqual(a: File[], b: File[]) {
     }
     return false;
   }
+  for (const file of b) {
+    if (a.find(file2 => file2.Name === file.Name && file2.Link === file.Link)) {
+      continue;
+    }
+    return false;
+  }
   return true;
 }
 
