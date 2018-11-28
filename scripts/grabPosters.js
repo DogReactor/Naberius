@@ -34,7 +34,7 @@ while (!date.isToday) {
         console.log(`Downloading Img ${date.imgName} ...`);
         const dir = path.join('static', 'poster');
         fs.ensureDirSync(dir);
-        response.pipe(fs.WriteStream(path.join(dir, date.imgNameWithoutEvent)));
+        response.pipe(fs.WriteStream(path.join(dir, date.imgName)));
       } else {
         console.log(`Img ${date.imgName} not exists.`);
       }
