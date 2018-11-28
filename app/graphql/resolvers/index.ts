@@ -9,7 +9,7 @@ import MutationResolver from './MutationResolver';
 import CardResolver from './CardResolver';
 import MapResolver from './MapResolver';
 import EnemyResolver from './EnemyResolver';
-import SkillInfluenceConfigResolver from './SkillInfluenceConfig';
+import SkillInfluenceConfigResolver from './SkillInfluenceConfigResolver';
 import AbilityConfigResolver from './AbilityConfigResolver';
 import SubscriptionResolver from './SubscriptionResolver';
 
