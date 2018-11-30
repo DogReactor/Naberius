@@ -78,6 +78,11 @@ typings/
 dist/
 cache/
 data/
-static/
+static/*
+!static/ico/
+static/ico/*
+!static/ico/0/
+static/ico/0/*
+!static/ico/0/????.png
 
 config.json
