@@ -41,6 +41,7 @@ class JsonDb {
 }
 
 export const fileList = new JsonDb('FileList.json', DATA_DIR);
+export const fileListOld = new JsonDb('FileListOld.json', DATA_DIR);
 export const fileListA = new JsonDb('FileListA.json', DATA_DIR);
 export const cardList = new JsonDb('CardList.json', DATA_DIR);
 export const questListOrigin = new JsonDb('QuestList.json', DATA_DIR);

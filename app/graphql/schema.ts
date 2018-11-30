@@ -431,6 +431,12 @@ export default gql`
     Level: String
   }
 
+  type FileDiff {
+    newFiles: [File]
+    modifiedFiles: [File]
+    deletedFiles: [File]
+  }
+
   type Query {
     file(name: String, link: String): File
     files: [File]
@@ -454,6 +460,7 @@ export default gql`
     serverStatus: Int!
     logs: [Log]
     posters: [String]
+    fileDiff: FileDiff
   }
 
   type Mutation {

@@ -33,6 +33,35 @@ function fileStatusResolver(files: string[]) {
   };
 }
 
+interface File {
+  Link: string;
+  Name: string;
+}
+
+function fileListCompare(newFileList: File[], oldFileList: File[]) {
+  const newFiles: File[] = [];
+  const modifiedFiles: File[] = [];
+  const deletedFiles: File[] = [];
+  newFileList.forEach(newFile => {
+    const oldFile = oldFileList.find(o => o.Name === newFile.Name);
+    if (!oldFile) {
+      newFiles.push(newFile);
+    } else if (oldFile.Link !== newFile.Link) {
+      modifiedFiles.push(newFile);
+    }
+  });
+  oldFileList.forEach(oldFile => {
+    if (!newFileList.find(newFile => newFile.Name === oldFile.Name)) {
+      deletedFiles.push(oldFile);
+    }
+  });
+  return {
+    newFiles,
+    modifiedFiles,
+    deletedFiles,
+  };
+}
+
 export default {
   file: (root: any, args: any) => _.find(dbs.fileList.data, args),
   files: () => dbs.fileList.data,
@@ -66,4 +95,5 @@ export default {
       .readdirSync(path.join('static', 'poster'))
       .map(filename => path.basename(filename, '.jpg')),
   logs: () => bus.log,
+  fileDiff: () => fileListCompare(dbs.fileList.data, dbs.fileListOld.data),
 };

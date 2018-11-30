@@ -114,6 +114,7 @@ export default async (ctx: Context, next: any) => {
     );
 
     dbs.fileList.read();
+    dbs.fileListOld.read();
     dbs.fileListA.read();
     dbs.cardList.read();
     dbs.questListOrigin.read();
