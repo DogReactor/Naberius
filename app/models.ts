@@ -11,8 +11,8 @@ export class CardMeta extends Typegoose {
   @prop({ required: true })
   public CardID: number;
 
-  @prop()
-  public NickName?: string;
+  @arrayProp({ items: String })
+  public NickName?: string[];
 
   @prop()
   public ConneName?: string;
@@ -28,8 +28,8 @@ export class ClassMeta extends Typegoose {
   @prop({ required: true })
   public ClassID: number;
 
-  @prop()
-  public NickName?: string;
+  @arrayProp({ items: String })
+  public NickName?: string[];
 
   @prop()
   public CnName?: string;

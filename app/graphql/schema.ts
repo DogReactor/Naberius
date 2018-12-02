@@ -89,7 +89,7 @@ export default gql`
     Dots: [Dot]
     HarlemTextA: [String]
     HarlemTextR: [String]
-    NickName: String
+    NickName: [String]
     ConneName: String
     Talks: [String]
   }
@@ -291,7 +291,7 @@ export default gql`
     AwakeType1: Int!
     "二觉b职业id"
     AwakeType2: Int!
-    NickName: String
+    NickName: [String]
     CnName: String
   }
 
@@ -465,8 +465,8 @@ export default gql`
 
   type Mutation {
     downloadFiles: Boolean!
-    updateCardMeta(CardID: Int!, ConneName: String, NickName: String): Card!
-    updateClassMeta(ClassID: Int!, CnName: String, NickName: String): Class!
+    updateCardMeta(CardID: Int!, ConneName: String, NickName: [String]): Card!
+    updateClassMeta(ClassID: Int!, CnName: String, NickName: [String]): Class!
     updateSkillInfluenceMeta(ID: Int!, Description: String): Boolean!
     updateAbilityConfigMeta(ID: Int!, Description: String): Boolean!
     removeEmoji(ID: String!): Boolean!
