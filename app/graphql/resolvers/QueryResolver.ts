@@ -80,7 +80,9 @@ export default {
   uploadFiles: fileStatusResolver(dbs.uploadDbFiles),
   map: async (root: any, args: any) => MapConnector(args.MapID),
   battleTalks: () => dbs.questEventText.data,
-  classes: () => dbs.classData.data.filter((c: any) => c.Name),
+  classes: (root: any, args: any) => {
+    return _.filter(dbs.classData.data.filter((c: any) => c.Name), args);
+  },
   skills: () =>
     dbs.skillList.data.map((skill: any, index: number) => ({
       ...skill,

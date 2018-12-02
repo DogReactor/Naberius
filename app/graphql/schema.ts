@@ -441,7 +441,7 @@ export default gql`
     file(name: String, link: String): File
     files: [File]
     card(CardID: Int!): Card
-    cards(Rare: Int): [Card]
+    cards(Rare: Int, Name: String, InitClassID: Int): [Card]
     ability(AbilityID: Int!): Ability
     abilities: [Ability]
     quest(QuestID: Int!): Quest
@@ -451,7 +451,7 @@ export default gql`
     uploadFiles: [Db]
     map(MapID: Int!): Map
     battleTalks: [BattleTalk]!
-    classes: [Class]
+    classes(Name: String, ClassID: Int): [Class]
     skills: [Skill]
     skillInfluenceMetas: [SkillInfluenceMeta]
     abilityConfigMetas: [AbilityConfigMeta]
