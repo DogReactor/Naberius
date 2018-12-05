@@ -292,7 +292,6 @@ export default gql`
     "二觉b职业id"
     AwakeType2: Int!
     NickName: [String]
-    CnName: String
   }
 
   "职业列表"
@@ -466,7 +465,7 @@ export default gql`
   type Mutation {
     downloadFiles: Boolean!
     updateCardMeta(CardID: Int!, ConneName: String, NickName: [String]): Card!
-    updateClassMeta(ClassID: Int!, CnName: String, NickName: [String]): Class!
+    updateClassMeta(ClassID: Int!, NickName: [String]): Class!
     updateSkillInfluenceMeta(ID: Int!, Description: String): Boolean!
     updateAbilityConfigMeta(ID: Int!, Description: String): Boolean!
     removeEmoji(ID: String!): Boolean!

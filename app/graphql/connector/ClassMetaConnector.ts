@@ -6,7 +6,6 @@ export async function updateClassMeta(doc: ClassMeta) {
     classMeta = new ClassMetaModel(doc);
   } else {
     classMeta.NickName = doc.NickName;
-    classMeta.CnName = doc.CnName;
   }
   await classMeta.save();
   return classMeta;

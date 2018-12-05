@@ -30,9 +30,6 @@ export class ClassMeta extends Typegoose {
 
   @arrayProp({ items: String })
   public NickName?: string[];
-
-  @prop()
-  public CnName?: string;
 }
 
 export const ClassMetaModel = new ClassMeta().getModelForClass(ClassMeta, {
