@@ -81,7 +81,21 @@ export default {
   map: async (root: any, args: any) => MapConnector(args.MapID),
   battleTalks: () => dbs.questEventText.data,
   classes: (root: any, args: any) => {
-    return _.filter(dbs.classData.data.filter((c: any) => c.Name), args);
+    const MaterialID = args.MaterialID;
+    const classes = dbs.classData.data.filter((c: any) => c.Name);
+    if (MaterialID) {
+      return classes.filter(
+        (c: any) =>
+          c.JobChangeMaterial1 === MaterialID ||
+          c.JobChangeMaterial2 === MaterialID ||
+          c.JobChangeMaterial3 === MaterialID,
+      );
+    } else {
+      return classes;
+    }
+  },
+  class: (root: any, args: any) => {
+    return _.find(dbs.classData.data.filter((c: any) => c.Name), args);
   },
   skills: () =>
     dbs.skillList.data.map((skill: any, index: number) => ({

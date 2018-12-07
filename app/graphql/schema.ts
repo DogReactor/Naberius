@@ -269,7 +269,7 @@ export default gql`
     MaxDef: Int!
     "射程"
     AtkArea: Int!
-    "CC目标等级id"
+    "CC目标id"
     JobChange: Int!
     "cc素材1"
     JobChangeMaterial1: Int!
@@ -292,6 +292,8 @@ export default gql`
     "二觉b职业id"
     AwakeType2: Int!
     NickName: [String]
+    JobChangeMaterial: [Class]
+    Data_ExtraAwakeOrb: [Class]
   }
 
   "职业列表"
@@ -450,7 +452,8 @@ export default gql`
     uploadFiles: [Db]
     map(MapID: Int!): Map
     battleTalks: [BattleTalk]!
-    classes(Name: String, ClassID: Int): [Class]
+    classes(MaterialID: Int): [Class]
+    class(Name: String, ClassID: Int): Class
     skills: [Skill]
     skillInfluenceMetas: [SkillInfluenceMeta]
     abilityConfigMetas: [AbilityConfigMeta]
