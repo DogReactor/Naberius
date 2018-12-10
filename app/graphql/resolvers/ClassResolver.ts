@@ -1,4 +1,5 @@
 import { getClassMeta } from '../connector/ClassMetaConnector';
+import { getAbilityConfig } from './AbilityResolver';
 import * as dbs from '../dataFiles';
 
 export default {
@@ -34,4 +35,6 @@ export default {
       dbs.classData.data.find((classData: any) => classData.ClassID === id),
     );
   },
+  ClassAbilityConfig1: (unitClass: any) =>
+    getAbilityConfig(unitClass.ClassAbility1),
 };

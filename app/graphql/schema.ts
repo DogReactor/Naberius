@@ -294,6 +294,8 @@ export default gql`
     NickName: [String]
     JobChangeMaterial: [Class]
     Data_ExtraAwakeOrb: [Class]
+    ClassAbilityConfig1: [AbilityConfig]
+    ClassAbilityPower1: Int!
   }
 
   "职业列表"
