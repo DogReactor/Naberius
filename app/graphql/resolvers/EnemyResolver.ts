@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as dbs from '../dataFiles';
+import { getEnemyDotLength } from '../connector/EnemyConnector';
 
 export default {
   Types: (enemy: any) => {
@@ -24,4 +25,5 @@ export default {
 
     return types;
   },
+  DotLength: (enemy: any) => getEnemyDotLength(enemy),
 };

@@ -3,6 +3,7 @@ import * as path from 'path';
 import { parseAL } from 'aigis-fuel';
 import { MAP_DIR } from '../../consts';
 import { requestFile, numberPadding } from '../utils';
+import { grabEnemy } from './EnemyConnector';
 
 export default async (MapID: number) => {
   const mapStr = numberPadding(MapID, 4);
@@ -13,12 +14,18 @@ export default async (MapID: number) => {
   if (!exist) {
     const mapAR = parseAL(await requestFile(filename));
 
-    const map: { Entries: any[]; Locations: any[]; MapID: number } = {
+    const map: {
+      Entries: any[];
+      Locations: any[];
+      Enemies: any;
+      MapID: number;
+    } = {
       Entries: [],
       Locations: [],
+      Enemies: null,
       MapID,
     };
-    mapAR.Files.forEach((file: any) => {
+    for (const file of mapAR.Files) {
       const entryFilename: string = file.Name;
       const data = file.Content;
 
@@ -38,8 +45,11 @@ export default async (MapID: number) => {
             LocationID: Number.parseInt(match[1], 10),
           });
         }
+      } else if (entryFilename.includes('Enemy')) {
+        map.Enemies = data.Contents;
+        await Promise.all(map.Enemies.map((enemy: any) => grabEnemy(enemy)));
       }
-    });
+    }
 
     fs.writeFileSync(filePath, JSON.stringify(map));
     return map;

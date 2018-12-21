@@ -367,12 +367,14 @@ export default gql`
     TypeAttack: Int!
     HeightOfs_Paralisys: Int!
     Types: [String]!
+    DotLength: Int
   }
 
   type Map {
     Image: String
     Entries: [Entries]
     Locations: [Locations]
+    Enemies: [Enemy]
   }
 
   type Entries {
