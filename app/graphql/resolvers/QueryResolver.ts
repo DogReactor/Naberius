@@ -95,7 +95,10 @@ export default {
     }
   },
   class: (root: any, args: any) => {
-    return _.find(dbs.classData.data.filter((c: any) => c.Name), args);
+    return _.find(
+      dbs.classData.data.filter((c: any) => c.Name).reverse(),
+      args,
+    );
   },
   skills: () =>
     dbs.skillList.data.map((skill: any, index: number) => ({
