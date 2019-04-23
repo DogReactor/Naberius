@@ -162,13 +162,13 @@ class CardConnector {
           }),
         );
         if (card.Rare === 3) {
-          classes.ClassCC.MaxLevelUnit = 80;
+          classes.ClassEvo.MaxLevelUnit = 80;
         } else if (card.Rare === 4) {
-          classes.ClassCC.MaxLevelUnit = 90;
+          classes.ClassEvo.MaxLevelUnit = 90;
         } else if (card.Rare === 5) {
-          classes.ClassCC.MaxLevelUnit = 99;
+          classes.ClassEvo.MaxLevelUnit = 99;
         } else if (card.Rare === 7) {
-          classes.ClassCC.MaxLevelUnit = 85;
+          classes.ClassEvo.MaxLevelUnit = 85;
         }
       }
       // 如果觉醒职业可以二觉
