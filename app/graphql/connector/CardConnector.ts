@@ -125,6 +125,7 @@ class CardConnector {
         // 根据是否需要珠子判断为cc还是觉醒
         if (classes.ClassInit.Data_ExtraAwakeOrb1) {
           // 初始职业直接觉醒的情况
+
           if (card.Rare > 2) {
             // 若是银以上的特殊觉醒职业，设置觉醒职业
             classes.ClassEvo = _.cloneDeep(
@@ -132,27 +133,25 @@ class CardConnector {
                 ClassID: classes.ClassInit.JobChange,
               }),
             );
+          }
 
-            // 给银以上的职业的特殊觉醒设置等级上限
-            switch (card.Rare) {
-              case 3:
-                classes.ClassEvo.MaxLevelUnit = 80;
-                break;
-              case 4:
-                classes.ClassEvo.MaxLevelUnit = 90;
-                break;
-              case 5:
-                classes.ClassEvo.MaxLevelUnit = 99;
-                break;
-              case 7:
-                classes.ClassEvo.MaxLevelUnit = 85;
-                break;
-              default:
-                classes.ClassEvo.MaxLevelUnit = 10;
-            }
-          } else {
-            // 特殊觉醒职业的银，基础职业最大等级55
-            classes.ClassInit.MaxLevelUnit = 55;
+          // 给特殊觉醒的职业的初始职业设置等级上限
+          switch (card.Rare) {
+            case 2:
+              classes.ClassInit.MaxLevelUnit = 55;
+              break;
+            case 3:
+              classes.ClassInit.MaxLevelUnit = 60;
+              break;
+            case 4:
+              classes.ClassInit.MaxLevelUnit = 70;
+              break;
+            case 5:
+              classes.ClassInit.MaxLevelUnit = 80;
+              break;
+            case 7:
+              classes.ClassInit.MaxLevelUnit = 65;
+              break;
           }
         } else {
           // 初始职业cc的情况，设置cc职业
@@ -161,6 +160,27 @@ class CardConnector {
               ClassID: classes.ClassInit.JobChange,
             }),
           );
+        }
+      }
+
+      // 给CC职业设置等级
+      if (classes.ClassCC) {
+        switch (card.Rare) {
+          case 2:
+            classes.ClassCC.MaxLevelUnit = 55;
+            break;
+          case 3:
+            classes.ClassCC.MaxLevelUnit = 60;
+            break;
+          case 4:
+            classes.ClassCC.MaxLevelUnit = 70;
+            break;
+          case 5:
+            classes.ClassCC.MaxLevelUnit = 80;
+            break;
+          case 7:
+            classes.ClassCC.MaxLevelUnit = 65;
+            break;
         }
       }
 
