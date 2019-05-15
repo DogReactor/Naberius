@@ -114,7 +114,7 @@ class CardConnector {
     );
     // 如果职业存在
     if (classes.ClassInit) {
-      // 如果单位是铁铜
+      // 如果单位是铁铜，设置初始等级上限
       if (card.Rare === 0) {
         classes.ClassInit.MaxLevelUnit = 30;
       } else if (card.Rare === 1) {
@@ -124,53 +124,75 @@ class CardConnector {
       if (classes.ClassInit.JobChange) {
         // 根据是否需要珠子判断为cc还是觉醒
         if (classes.ClassInit.Data_ExtraAwakeOrb1) {
+          // 初始职业直接觉醒的情况
           if (card.Rare > 2) {
+            // 若是银以上的特殊觉醒职业，设置觉醒职业
             classes.ClassEvo = _.cloneDeep(
               _.find(classData.data, {
                 ClassID: classes.ClassInit.JobChange,
               }),
             );
+
+            // 给银以上的职业的特殊觉醒设置等级上限
+            switch (card.Rare) {
+              case 3:
+                classes.ClassEvo.MaxLevelUnit = 80;
+                break;
+              case 4:
+                classes.ClassEvo.MaxLevelUnit = 90;
+                break;
+              case 5:
+                classes.ClassEvo.MaxLevelUnit = 99;
+                break;
+              case 7:
+                classes.ClassEvo.MaxLevelUnit = 85;
+                break;
+              default:
+                classes.ClassEvo.MaxLevelUnit = 10;
+            }
           } else {
             // 特殊觉醒职业的银，基础职业最大等级55
             classes.ClassInit.MaxLevelUnit = 55;
           }
         } else {
+          // 初始职业cc的情况，设置cc职业
           classes.ClassCC = _.cloneDeep(
             _.find(classData.data, {
               ClassID: classes.ClassInit.JobChange,
             }),
           );
-
-          if (card.Rare === 2) {
-            classes.ClassCC.MaxLevelUnit = 55;
-          } else if (card.Rare === 3) {
-            classes.ClassCC.MaxLevelUnit = 60;
-          } else if (card.Rare === 4) {
-            classes.ClassCC.MaxLevelUnit = 70;
-          } else if (card.Rare === 5) {
-            classes.ClassCC.MaxLevelUnit = 80;
-          } else if (card.Rare === 7) {
-            classes.ClassCC.MaxLevelUnit = 75;
-          }
         }
       }
-      // 如果cc职业可以进阶
+
+      // 如果cc职业可以进阶，设置觉醒职业
       if (classes.ClassCC && classes.ClassCC.JobChange && card.Rare > 2) {
         classes.ClassEvo = _.cloneDeep(
           _.find(classData.data, {
             ClassID: classes.ClassCC.JobChange,
           }),
         );
-        if (card.Rare === 3) {
-          classes.ClassEvo.MaxLevelUnit = 80;
-        } else if (card.Rare === 4) {
-          classes.ClassEvo.MaxLevelUnit = 90;
-        } else if (card.Rare === 5) {
-          classes.ClassEvo.MaxLevelUnit = 99;
-        } else if (card.Rare === 7) {
-          classes.ClassEvo.MaxLevelUnit = 85;
+      }
+
+      // 如果有觉醒职业，设置等级
+      if (classes.ClassEvo) {
+        switch (card.Rare) {
+          case 3:
+            classes.ClassEvo.MaxLevelUnit = 80;
+            break;
+          case 4:
+            classes.ClassEvo.MaxLevelUnit = 90;
+            break;
+          case 5:
+            classes.ClassEvo.MaxLevelUnit = 99;
+            break;
+          case 7:
+            classes.ClassEvo.MaxLevelUnit = 85;
+            break;
+          default:
+            classes.ClassEvo.MaxLevelUnit = 10;
         }
       }
+
       // 如果觉醒职业可以二觉
       if (classes.ClassEvo && classes.ClassEvo.AwakeType1) {
         classes.ClassEvo2a = _.cloneDeep(
