@@ -131,6 +131,7 @@ export default gql`
     "mission信息"
     Mission: Mission
     Message: String!
+    EventArcs: [EventArc]
   }
 
   "mission信息"
@@ -444,6 +445,13 @@ export default gql`
     newFiles: [File]
     modifiedFiles: [File]
     deletedFiles: [File]
+  }
+
+  type EventArc {
+    _TextID: Int
+    _FaceID: Int
+    _TalkerName: String
+    _TalkText: String
   }
 
   type Query {

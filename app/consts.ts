@@ -23,3 +23,4 @@ export const SELF_PLAYERDOT_URL = SELF_STATIC_URL + '/playerdot';
 export const ICO_DIR = path.join(STATIC_DIR, 'ico');
 export const HARLEM_TEXT_R_DIR = path.join(CACHE_DIR, 'HarlemTextR');
 export const HARLEM_TEXT_A_DIR = path.join(CACHE_DIR, 'HarlemTextA');
+export const EVENT_ARC_DIR = path.join(CACHE_DIR, 'EventArc');

@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { parseAL, ALAR } from 'aigis-fuel';
+import { parseAL, ALAR, ALTB } from 'aigis-fuel';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import bus from '../../bus';
@@ -11,7 +11,12 @@ import {
   ALTX2PNG,
   numberPadding,
 } from '../utils';
-import { ICO_DIR, HARLEM_TEXT_R_DIR, HARLEM_TEXT_A_DIR } from '../../consts';
+import {
+  ICO_DIR,
+  HARLEM_TEXT_R_DIR,
+  HARLEM_TEXT_A_DIR,
+  EVENT_ARC_DIR,
+} from '../../consts';
 import { updateCardMeta } from '../connector/CardMetaConnector';
 import { updateClassMeta } from '../connector/ClassMetaConnector';
 import { updateSkillInfluenceMeta } from '../connector/SkillInfluenceMetaConnector';
@@ -184,6 +189,33 @@ export default {
                   );
                 }
               });
+            }
+          });
+        }),
+
+        // EventArc.aar
+        requestFile('EventArc.aar').then(res => {
+          const aar = parseAL(res) as ALAR;
+          aar.Files.forEach(evaarFile => {
+            const evaar = evaarFile.Content;
+            if (evaar instanceof ALAR) {
+              const match = /(?<=_ev)\d+(?=\.aar)/.exec(evaarFile.Name);
+              if (match) {
+                const questID = Number.parseInt(match[0], 10);
+                evaar.Files.forEach(atbFile => {
+                  if (atbFile.Name.includes('evtxt')) {
+                    const atb = atbFile.Content;
+                    if (atb instanceof ALTB) {
+                      const content = JSON.stringify(atb.Contents);
+                      fs.ensureDirSync(EVENT_ARC_DIR);
+                      fs.writeFileSync(
+                        path.join(EVENT_ARC_DIR, `${questID}.json`),
+                        content,
+                      );
+                    }
+                  }
+                });
+              }
             }
           });
         }),
