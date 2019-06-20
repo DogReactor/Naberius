@@ -44,6 +44,10 @@ export default gql`
     BonusType2: Int!
     "好感2的数值"
     BonusNum2: Int!
+    "好感3的种类"
+    BonusType3: Int!
+    "好感2的数值"
+    BonusNum3: Int!
     "比基础c提高的c"
     CostModValue: Int!
     "可以减的c"
