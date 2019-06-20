@@ -17,7 +17,7 @@ export default {
     }
   },
   Map: async (quest: any) => MapConnector(quest.MapNo),
-  EventArc: (quest: any) => {
+  EventArcs: (quest: any) => {
     const filename = `${quest.QuestID}.json`;
     const filePath = path.join(EVENT_ARC_DIR, filename);
     if (fs.existsSync(filePath)) {
