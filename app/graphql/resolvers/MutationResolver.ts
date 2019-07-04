@@ -16,6 +16,7 @@ import {
   HARLEM_TEXT_R_DIR,
   HARLEM_TEXT_A_DIR,
   EVENT_ARC_DIR,
+  CACHE_DIR,
 } from '../../consts';
 import { updateCardMeta } from '../connector/CardMetaConnector';
 import { updateClassMeta } from '../connector/ClassMetaConnector';
@@ -29,6 +30,7 @@ import { logger } from '../../logger';
 export default {
   downloadFiles: async () => {
     bus.status = 1;
+    fs.removeSync(CACHE_DIR);
     try {
       await Promise.all([
         // NameText.atb
