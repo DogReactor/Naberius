@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import bus from './bus';
+// import bus from './bus';
 
 /**
  * Log level definition.
@@ -48,10 +48,10 @@ export class Logger {
         new Date().toLocaleString(),
       )} ${message}`;
 
-      bus.log.push({
-        Message: message,
-        Level: level,
-      });
+      // bus.log.push({
+      //   Message: message,
+      //   Level: level,
+      // });
 
       console.log(log);
     }

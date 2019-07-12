@@ -58,7 +58,7 @@ export function PromiseAllPart(list: any[], key: string) {
   try {
     promises = list.map(item => item[key]);
   } catch (err) {
-    console.log(err.message);
+    logger.info(err.message);
     promises = [];
   }
   return Promise.all(promises).then(reses => {
@@ -87,11 +87,9 @@ export async function streamToBuffer(stream: Stream) {
   return new Promise((resolve, reject) => {
     let buffer = Buffer.alloc(0);
     stream.on('data', (thunk: Buffer) => {
-      console.log('data');
       buffer = Buffer.concat([buffer, thunk]);
     });
     stream.on('end', () => {
-      console.log('end');
       return resolve(buffer);
     });
     stream.on('error', err => reject(err));

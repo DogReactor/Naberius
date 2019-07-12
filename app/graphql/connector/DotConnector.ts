@@ -3,6 +3,7 @@ import * as path from 'path';
 import { parseAL, ALTX, ALAR, ALMT, ALOD } from 'aigis-fuel';
 import { PLAYERDOT_IMG_DIR, PLAYERDOT_INFO_DIR } from '../../consts';
 import { requestFile, numberPadding, ALTX2PNG } from '../utils';
+import { logger } from '../../logger';
 import * as _ from 'lodash';
 
 export default async (card: any) => {
@@ -20,7 +21,7 @@ export default async (card: any) => {
       const file = await requestFile(aarFilename);
       aarFile = parseAL(file) as ALAR;
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       return null;
     }
     for (const file of aarFile.Files) {

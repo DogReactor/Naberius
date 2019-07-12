@@ -22,6 +22,7 @@ class CardConnector {
   }
 
   public init() {
+    logger.info('Card Connector initing...');
     try {
       this.cards = [];
       for (const card of cardList.data) {
@@ -52,9 +53,10 @@ class CardConnector {
             .map((c: any) => c.Message),
         });
       }
+      logger.info('CardConnector init succeed!');
     } catch (err) {
-      logger.error(err.stack);
-      logger.error('CardConnector init failed');
+      // logger.error(err.stack);
+      logger.error('CardConnector init failed!');
     }
   }
 

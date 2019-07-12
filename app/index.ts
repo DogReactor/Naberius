@@ -11,6 +11,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/schema';
 import uploadOrigin from './middlewares/uploadOrigin';
+import { logger } from './logger';
 import { PORT, HOST } from './consts';
 
 const schema = makeExecutableSchema({
@@ -46,7 +47,7 @@ app.use(Mount('/static', Static('static')));
 server.applyMiddleware({ app });
 
 const koaServer = app.listen({ port: PORT, host: HOST }, () =>
-  console.log(`🚀 Server ready at http://${HOST}:${PORT}${server.graphqlPath}`),
+  logger.info(`🚀 Server ready at http://${HOST}:${PORT}${server.graphqlPath}`),
 );
 
 const subscriptionServer = new SubscriptionServer(
