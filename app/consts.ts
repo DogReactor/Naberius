@@ -9,7 +9,7 @@ if (!process.env.MONGODB_URL) {
 }
 
 export const BASE_URL = 'http://assets.millennium-war.net';
-export const MONGODB_URL = process.env.MONGODB_URL;
+export const MONGODB_URL = process.env.MONGODB_URL!;
 export const PORT =
   (process.env.PORT && Number.parseInt(process.env.PORT, 10)) || 4000;
 export const HOST = process.env.HOST || 'localhost';

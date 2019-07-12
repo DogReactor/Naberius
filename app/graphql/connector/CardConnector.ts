@@ -22,7 +22,7 @@ class CardConnector {
   }
 
   public init() {
-    logger.info('Card Connector initing...');
+    logger.info('CardConnector initing...');
     try {
       this.cards = [];
       for (const card of cardList.data) {

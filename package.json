@@ -28,7 +28,7 @@
     "@types/node": "^10.5.0",
     "@types/promise.prototype.finally": "^2.0.2",
     "@types/request-promise-native": "^1.0.15",
-    "@types/sharp": "^0.17.10",
+    "@types/sharp": "^0.22.2",
     "aigis-fuel": "^0.2.4",
     "apollo-server": "^2.1.0",
     "apollo-server-koa": "^2.1.0",
@@ -50,12 +50,12 @@
     "prettier": "^1.14.3",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
-    "sharp": "^0.21.0",
+    "sharp": "^0.22.1",
     "subscriptions-transport-ws": "^0.9.15",
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.13.0",
-    "typegoose": "^5.4.1",
+    "typegoose": "^5.8.0",
     "typescript": "^3.0.1"
   }
 }
