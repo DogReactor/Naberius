@@ -2,7 +2,7 @@ import * as dbs from '../dataFiles';
 import * as _ from 'lodash';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { DATA_DIR, CACHE_DIR, MAP_DIR } from '../../consts';
+import { DATA_DIR, STATIC_DIR } from '../../consts';
 import MapConnector from '../connector/MapConnector';
 import { getAllSkillInfluenceMeta } from '../connector/SkillInfluenceMetaConnector';
 import { getAllAbilityConfigMeta } from '../connector/AbilityConfigMetaConnector';
@@ -109,10 +109,13 @@ export default {
   abilityConfigMetas: getAllAbilityConfigMeta,
   emojis: async () => EmojiConnector.getEmojis(),
   serverStatus: () => bus.status,
-  posters: () =>
-    fs
-      .readdirSync(path.join('static', 'poster'))
-      .map(filename => path.basename(filename, '.jpg')),
+  posters: () => {
+    const postDir = path.join(STATIC_DIR, 'poster');
+    fs.ensureDirSync(postDir);
+    return fs
+      .readdirSync(postDir)
+      .map(filename => path.basename(filename, '.jpg'));
+  },
   logs: () => bus.log,
   fileDiff: () => fileListCompare(dbs.fileList.data, dbs.fileListOld.data),
 };
