@@ -55,7 +55,11 @@ export default async (card: any) => {
             ...entry,
           };
         });
-        dots.push(dot);
+
+        // filter dummy entries
+        if (dot.Entries && dot.Entries.length > 0) {
+          dots.push(dot);
+        }
       }
     }
     dots = dots.map(dot => {
