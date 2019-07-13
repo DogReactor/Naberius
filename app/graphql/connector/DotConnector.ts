@@ -55,6 +55,7 @@ export default async (card: any) => {
             ...entry,
           };
         });
+        dots.push(dot);
       }
     }
     dots = dots
