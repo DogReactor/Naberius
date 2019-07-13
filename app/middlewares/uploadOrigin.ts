@@ -26,6 +26,9 @@ interface File {
 }
 
 function isEqual(a: File[], b: File[]) {
+  if (!(a instanceof Array) || !(b instanceof Array)) {
+    return false;
+  }
   for (const file of a) {
     if (b.find(file2 => file2.Name === file.Name && file2.Link === file.Link)) {
       continue;
@@ -89,16 +92,16 @@ export default async (ctx: Context, next: any) => {
     return;
   }
   logger.info('File uploaded');
+  ctx.body = 'OK';
   // overwrite old if md5 not match
+  const fileListPath = path.join(DATA_DIR, 'FileList.json');
+  const fileListTmpPath = path.join(DATA_DIR, 'FileListTmp.json');
   if (
-    !fs.existsSync(path.join(DATA_DIR, 'FileList.json')) ||
+    !fs.existsSync(fileListPath) ||
+    !fs.existsSync(fileListTmpPath) ||
     !isEqual(
-      JSON.parse(
-        fs.readFileSync(path.join(DATA_DIR, 'FileList.json'), 'utf-8'),
-      ),
-      JSON.parse(
-        fs.readFileSync(path.join(DATA_DIR, 'FileListTmp.json'), 'utf-8'),
-      ),
+      JSON.parse(fs.readFileSync(fileListPath, 'utf-8')),
+      JSON.parse(fs.readFileSync(fileListTmpPath, 'utf-8')),
     )
   ) {
     logger.info('Newer file detected, updating...');
@@ -123,5 +126,4 @@ export default async (ctx: Context, next: any) => {
   } else {
     logger.info('File not changed');
   }
-  ctx.body = 'OK';
 };
