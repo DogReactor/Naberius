@@ -55,20 +55,23 @@ export default async (card: any) => {
             ...entry,
           };
         });
-
-        // filter dummy entries
-        if (dot.Entries && dot.Entries.length > 0) {
-          dots.push(dot);
-        }
       }
     }
-    dots = dots.map(dot => {
-      dot.Entries = dot.Entries.map((entry: any) => {
-        entry.Sprites = sprites[entry.Sprites.toString()];
-        return entry;
-      });
-      return dot;
-    });
+    dots = dots
+      .map(dot => {
+        dot.Entries = dot.Entries.map((entry: any) => {
+          entry.Sprites = sprites[entry.Sprites.toString()];
+          if (!entry.Sprites) {
+            return null;
+          }
+          return entry;
+        }).filter((entry: any) => entry);
+        if (dot.Entries.length === 0) {
+          return null;
+        }
+        return dot;
+      })
+      .filter(dot => dot);
 
     fs.writeFileSync(dotInfoPath, JSON.stringify(dots));
   } else {
