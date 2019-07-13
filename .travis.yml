@@ -1,0 +1,23 @@
+dist: trusty
+sudo: true
+
+services:
+  - docker
+
+language: node_js
+node_js:
+  - stable
+
+os:
+  - linux
+
+before_install:
+  - bash ./scripts/install_kubectl.sh
+
+install:
+  - npm install
+  - npm run build
+  - docker build -t moondropx/naberius-background .
+
+after_success:
+  - bash ./scripts/docker_push.sh

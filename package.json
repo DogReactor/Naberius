@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
     "clean": "node scripts/clean.js app",
     "grabPosters": "node scripts/grabPosters.js",
     "start": "ts-node app",
