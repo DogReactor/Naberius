@@ -14,10 +14,9 @@ os:
 before_install:
   - bash ./scripts/install_kubectl.sh
 
-install:
-  - npm install
+script:
   - npm run build
-  - docker build -t moondropx/naberius-background .
+  - docker build -t moondropx/naberius .
 
 after_success:
   - bash ./scripts/docker_push.sh
