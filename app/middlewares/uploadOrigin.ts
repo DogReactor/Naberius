@@ -91,6 +91,7 @@ export default async (ctx: Context, next: any) => {
   logger.info('File uploaded');
   // overwrite old if md5 not match
   if (
+    fs.existsSync(path.join(DATA_DIR, 'FileList.json')) &&
     !isEqual(
       JSON.parse(
         fs.readFileSync(path.join(DATA_DIR, 'FileList.json'), 'utf-8'),
