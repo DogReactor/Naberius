@@ -12,7 +12,7 @@ import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/schema';
 import uploadOrigin from './middlewares/uploadOrigin';
 import { logger } from './logger';
-import { PORT, HOST } from './consts';
+import { PORT, HOST, STATIC_DIR } from './consts';
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -42,7 +42,7 @@ router.post(
 
 app.use(CORS());
 app.use(router.routes());
-app.use(Mount('/static', Static('static')));
+app.use(Mount('/static', Static(STATIC_DIR)));
 
 server.applyMiddleware({ app });
 
