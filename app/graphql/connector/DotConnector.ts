@@ -24,13 +24,15 @@ export default async (card: any) => {
       logger.error(e);
       return null;
     }
+    let tx = false;
     for (const file of aarFile.Files) {
-      if (file.Name.split('.')[1] === 'atx' && file.Content) {
+      if (file.Name.split('.')[1] === 'atx' && file.Content && !tx) {
         const content = file.Content as ALTX;
         sprites = content.Sprites;
         await ALTX2PNG(content).toFile(
           path.join(PLAYERDOT_IMG_DIR, `${card.CardID}.png`),
         );
+        tx = true;
       } else if (file.Name.split('.')[1] === 'aod' && file.Content) {
         const alod = file.Content as ALOD;
         const almt = alod.ALMT as ALMT;
