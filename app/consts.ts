@@ -24,3 +24,4 @@ export const ICO_DIR = path.join(STATIC_DIR, 'ico');
 export const HARLEM_TEXT_R_DIR = path.join(CACHE_DIR, 'HarlemTextR');
 export const HARLEM_TEXT_A_DIR = path.join(CACHE_DIR, 'HarlemTextA');
 export const EVENT_ARC_DIR = path.join(CACHE_DIR, 'EventArc');
+export const POSTER_ROOT_URL = 'http://assets.millennium-war.net/00/html/image';

@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: naberius-deployment #
+  namespace: magicdog # 同一namespace可以互相调用资源
+  labels:
+    k8s-app: naberius # 在定义service时用到
+spec:
+  replicas: 1 # 定义需要多少个pod
+  selector:
+    matchLabels:
+      k8s-app: naberius # 给k8s用的
+  template:
+    metadata:
+      labels:
+        k8s-app: naberius # 跟上边保持一致
+    spec:
+      containers:
+        - name: naberius #
+          image: moondropx/naberius # 部署时用的docker镜像
+          env:
+            - name: MONGODB_URL
+              value: mongodb://mongo-service:27017/aigis
+            - name: FILES_ROOT_DIR
+              value: /root/naberius-files
+          ports:
+            - containerPort: 4000
+          volumeMounts:
+            - name: util-pv
+              mountPath: /root/naberius-files
+              subPath: naberius-files
+      volumes:
+        - name: util-pv
+          persistentVolumeClaim:
+            claimName: util-pv-claim
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: naberius-service #
+  namespace: magicdog #
+spec:
+  selector:
+    k8s-app: naberius # 跟deployment里保持一致
+  ports:
+    - port: 4000 # 用80就可以了
+      targetPort: 4000 # 上边容器开启的端口
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: naberius-ingress #
+  namespace: magicdog #
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: aigisapi.naberi.us #
+      http:
+        paths:
+          - backend:
+              serviceName: naberius-service # 上边定义的service名字
+              servicePort: 4000 # 上边service使用的端口
+  tls:
+    - secretName: aigisapi-naberi-us-tls

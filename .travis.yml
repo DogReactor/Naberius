@@ -12,11 +12,12 @@ os:
   - linux
 
 before_install:
-  - bash ./scripts/install_kubectl.sh
+  - bash install_kubectl.sh
 
 script:
   - npm run build
   - docker build -t moondropx/naberius .
 
 after_success:
-  - bash ./scripts/docker_push.sh
+  - bash docker_push.sh
+  - bash kube_deploy.sh

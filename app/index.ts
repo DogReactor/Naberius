@@ -13,6 +13,7 @@ import typeDefs from './graphql/schema';
 import uploadOrigin from './middlewares/uploadOrigin';
 import { logger } from './logger';
 import { PORT, HOST, STATIC_DIR } from './consts';
+import './schedule';
 
 const schema = makeExecutableSchema({
   typeDefs,
