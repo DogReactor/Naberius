@@ -19,6 +19,7 @@ export const PLAYERDOT_IMG_DIR = path.join(STATIC_DIR, 'playerdot');
 export const PLAYERDOT_INFO_DIR = path.join(CACHE_DIR, 'playerdot');
 export const ENEMYDOT_IMG_DIR = path.join(STATIC_DIR, 'enemydot');
 export const ENEMYDOT_INFO_DIR = path.join(CACHE_DIR, 'enemydot');
+export const POSTER_IMG_DIR = path.join(STATIC_DIR, 'poster');
 export const MAP_DIR = path.join(CACHE_DIR, 'map');
 export const ICO_DIR = path.join(STATIC_DIR, 'ico');
 export const HARLEM_TEXT_R_DIR = path.join(CACHE_DIR, 'HarlemTextR');

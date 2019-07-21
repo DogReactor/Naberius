@@ -4,7 +4,7 @@ import * as request from 'request';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { logger } from '../logger';
-import { POSTER_ROOT_URL } from '../consts';
+import { POSTER_ROOT_URL, POSTER_IMG_DIR } from '../consts';
 
 class DateParser {
   private date: moment.Moment;
@@ -33,16 +33,13 @@ class DateParser {
 schedule.scheduleJob('0 30 */1 * * *', () => {
   const date = new DateParser();
   request(`${POSTER_ROOT_URL}/${date.imgName}`).on('response', response => {
-    const dir = path.join('static', 'poster');
-    const imgPath = path.join(dir, date.imgName);
+    const imgPath = path.join(POSTER_IMG_DIR, date.imgName);
     if (response.statusCode === 200 && !fs.existsSync(imgPath)) {
       logger.info(`Downloading Img ${date.imgName} ...`);
-      fs.ensureDirSync(dir);
-      response
-        .pipe(fs.createWriteStream(path.join(dir, date.imgName)))
-        .on('end', () => {
-          logger.info(`Downloaded Img ${date.imgName} !`);
-        });
+      fs.ensureDirSync(POSTER_IMG_DIR);
+      response.pipe(fs.createWriteStream(imgPath)).on('end', () => {
+        logger.info(`Downloaded Img ${date.imgName} !`);
+      });
     }
   });
 });
