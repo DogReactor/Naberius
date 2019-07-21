@@ -33,32 +33,26 @@ export default {
     fs.removeSync(CACHE_DIR);
     try {
       await Promise.all([
-        // NameText.atb
         requestALTB('NameText.atb').then(res => {
           dbs.nameText.write(res);
         }),
 
-        // SkillList.atb
         requestALTB('SkillList.atb').then(res => {
           dbs.skillList.write(res);
         }),
 
-        // SkillText.atb
         requestALTB('SkillText.atb').then(res => {
           dbs.skillText.write(res);
         }),
 
-        // SkillTypeList.atb
         requestALTB('SkillTypeList.atb').then(res => {
           dbs.skillTypeList.write(res);
         }),
 
-        // AbilityList.atb
         requestALTB('AbilityList.atb').then(res => {
           dbs.abilityList.write(res);
         }),
 
-        // AbilityText.atb
         requestALTB('AbilityText.atb').then(res => {
           dbs.abilityText.write(res);
         }),
@@ -68,7 +62,6 @@ export default {
           dbs.abilityConfig.write(res);
         }),
 
-        // StatusText.atb
         requestALTB('StatusText.atb').then(res => {
           dbs.statusText.write(res);
         }),
@@ -89,24 +82,24 @@ export default {
           dbs.playerIdentityType.write(res);
         }),
 
-        // SkillInfluenceConfig.atb
         requestALTB('SkillInfluenceConfig.atb').then(res => {
           dbs.skillInfluenceConfig.write(res);
         }),
 
-        // EnemyElem.atb
         requestALTB('EnemyElem.atb').then(res => {
           dbs.enemyElem.write(res);
         }),
 
-        // EnemyType.atb
         requestALTB('EnemyType.atb').then(res => {
           dbs.enemyType.write(res);
         }),
 
-        // QuestEventText.atb
         requestALTB('QuestEventText.atb').then(res => {
           dbs.questEventText.write(res);
+        }),
+
+        requestALTB('ClassBattleStyleConfig.atb').then(res => {
+          dbs.classBattleStyleConfig.write(res);
         }),
 
         // HarlemText.aar

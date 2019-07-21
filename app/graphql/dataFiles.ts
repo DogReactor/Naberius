@@ -75,6 +75,10 @@ export const skillInfluenceConfig = new JsonDb(
 export const abilityConfig = new JsonDb('AbilityConfig.json', CACHE_DIR);
 export const Enemy = new JsonDb('Enemy.json', CACHE_DIR);
 export const battleTalkEvent = new JsonDb('BattleTalkEvent.json', CACHE_DIR);
+export const classBattleStyleConfig = new JsonDb(
+  'ClassBattleStyleConfig.json',
+  CACHE_DIR,
+);
 
 export function cacheLoader(name: string) {
   return JSON.parse(fs.readFileSync(path.join(CACHE_DIR, name), 'utf-8'));

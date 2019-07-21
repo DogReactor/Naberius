@@ -301,6 +301,7 @@ export default gql`
     Data_ExtraAwakeOrb: [Class]
     ClassAbilityConfig1: [AbilityConfig]
     ClassAbilityPower1: Int!
+    BattleStyle: ClassBattleStyle
   }
 
   "职业列表"
@@ -452,6 +453,18 @@ export default gql`
     _FaceID: Int
     _TalkerName: String
     _TalkText: String
+  }
+
+  type ClassBattleStyle {
+    Data_ID: Int!
+    Type_BattleStyle: Int!
+    _Param_01: Int!
+    _Param_02: Int!
+    _Range_01: Int!
+    _Range_02: Int!
+    _Range_03: Int!
+    _Range_04: Int!
+    _Range_05: Int!
   }
 
   type Query {

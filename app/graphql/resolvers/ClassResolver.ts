@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { getClassMeta } from '../connector/ClassMetaConnector';
 import { getAbilityConfig } from './AbilityResolver';
 import * as dbs from '../dataFiles';
@@ -37,4 +38,6 @@ export default {
   },
   ClassAbilityConfig1: (unitClass: any) =>
     getAbilityConfig(unitClass.ClassAbility1),
+  BattleStyle: (unitClass: any) =>
+    _.find(dbs.classBattleStyleConfig, { Data_ID: unitClass.ClassID }),
 };
