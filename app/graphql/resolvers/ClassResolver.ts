@@ -39,5 +39,5 @@ export default {
   ClassAbilityConfig1: (unitClass: any) =>
     getAbilityConfig(unitClass.ClassAbility1),
   BattleStyle: (unitClass: any) =>
-    _.find(dbs.classBattleStyleConfig, { Data_ID: unitClass.ClassID }),
+    _.find(dbs.classBattleStyleConfig.data, { Data_ID: unitClass.ClassID }),
 };
