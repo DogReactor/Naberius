@@ -5,6 +5,7 @@ import * as Router from 'koa-router';
 import * as Mount from 'koa-mount';
 import * as CORS from '@koa/cors';
 import * as Body from 'koa-body';
+import * as fs from 'fs-extra';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
@@ -14,6 +15,8 @@ import uploadOrigin from './middlewares/uploadOrigin';
 import { logger } from './logger';
 import { PORT, HOST, STATIC_DIR } from './consts';
 import './schedule';
+
+fs.copySync('/root/static', STATIC_DIR);
 
 const schema = makeExecutableSchema({
   typeDefs,
