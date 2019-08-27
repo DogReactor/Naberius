@@ -58,7 +58,7 @@ export default async (MapID: number) => {
               });
               return routeWithoutAt;
             }),
-            LocationID: Number.parseInt(match[1], 10),
+            RouteID: Number.parseInt(match[1], 10),
           });
         }
       } else if (entryFilename.includes('Enemy')) {
