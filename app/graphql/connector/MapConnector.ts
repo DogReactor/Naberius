@@ -17,12 +17,14 @@ export default async (MapID: number) => {
     const map: {
       Entries: any[];
       Locations: any[];
+      Routes: any[];
       Enemies: any;
       MapID: number;
     } = {
       Entries: [],
       Locations: [],
       Enemies: null,
+      Routes: [],
       MapID,
     };
     for (const file of mapAR.Files) {
@@ -42,6 +44,20 @@ export default async (MapID: number) => {
         if (match) {
           map.Locations.push({
             Locations: data.Contents,
+            LocationID: Number.parseInt(match[1], 10),
+          });
+        }
+      } else if (entryFilename.includes('Route')) {
+        const match = /Route(\d+)/.exec(entryFilename);
+        if (match) {
+          map.Routes.push({
+            Routes: data.Contents.map((route: any) => {
+              const routeWithoutAt: any = {};
+              Object.keys(route).forEach(key => {
+                routeWithoutAt[key.replace('@', '')] = route[key];
+              });
+              return routeWithoutAt;
+            }),
             LocationID: Number.parseInt(match[1], 10),
           });
         }

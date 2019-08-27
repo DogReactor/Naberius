@@ -343,6 +343,17 @@ export default gql`
     Y: Int!
   }
 
+  type Route {
+    X: Int!
+    Y: Int!
+    RouteID: Int!
+    JumpPoint: Int!
+    WarpDelay: Int!
+    WaitTime: Int!
+    SpeedModify: Int!
+    OnEvent: String
+  }
+
   type Enemy {
     SpecialEffect: Int!
     PatternID: Int!
@@ -380,6 +391,7 @@ export default gql`
     Image: String
     Entries: [Entries]
     Locations: [Locations]
+    Routes: [Routes]
     Enemies: [Enemy]
   }
 
@@ -391,6 +403,11 @@ export default gql`
   type Locations {
     LocationID: Int!
     Locations: [Location]
+  }
+
+  type Routes {
+    RouteID: Int!
+    Routes: [Route]
   }
 
   type Dot {
