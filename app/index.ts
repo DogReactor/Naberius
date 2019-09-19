@@ -16,7 +16,9 @@ import { logger } from './logger';
 import { PORT, HOST, STATIC_DIR } from './consts';
 import './schedule';
 
-fs.copySync('/root/static', STATIC_DIR);
+if (!process.env.NOT_DOCKER) {
+  fs.copySync('/root/static', STATIC_DIR);
+}
 
 const schema = makeExecutableSchema({
   typeDefs,

@@ -7,6 +7,14 @@ import * as dbs from './dataFiles';
 import { logger } from '../logger';
 import { BASE_URL } from '../consts';
 
+/**
+ * sleep for a time
+ * @param ms time(ms)
+ */
+async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(() => resolve(), ms));
+}
+
 let downloadNum = 0;
 
 export async function requestFile(filename: string) {
@@ -16,6 +24,12 @@ export async function requestFile(filename: string) {
   }
 
   if (file) {
+    while (true) {
+      if (downloadNum < 10) {
+        break;
+      }
+      await sleep(500);
+    }
     downloadNum += 1;
     logger.info(`+${downloadNum} Downloading ${file.Name}`);
     for (let retry = 1; retry <= 3; retry++) {
