@@ -7,7 +7,7 @@ import MissionResolver from './MissionResolver';
 import QueryResolver from './QueryResolver';
 import MutationResolver from './MutationResolver';
 import CardResolver from './CardResolver';
-import MapResolver from './MapResolver';
+// import MapResolver from './MapResolver';
 import EnemyResolver from './EnemyResolver';
 import SkillInfluenceConfigResolver from './SkillInfluenceConfigResolver';
 import AbilityConfigResolver from './AbilityConfigResolver';
@@ -21,7 +21,7 @@ export default {
   Ability: AbilityResolver,
   Quest: QuestResolver,
   Mission: MissionResolver,
-  Map: MapResolver,
+  // Map: MapResolver,
   Query: QueryResolver,
   Mutation: MutationResolver,
   Enemy: EnemyResolver,

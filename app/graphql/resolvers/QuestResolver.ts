@@ -16,7 +16,15 @@ export default {
       return null;
     }
   },
-  Map: async (quest: any) => MapConnector(quest.MapNo),
+  Map: async (quest: any) => {
+    if (quest.MapNo < 1000) {
+      const mission = _.find(dbs.missionQuestList.data, {
+        QuestID: quest.QuestID,
+      }) as any;
+      return MapConnector(quest.MapNo, mission.MissionID);
+    }
+    return MapConnector(quest.MapNo);
+  },
   EventArcs: (quest: any) => {
     const filename = `${quest.QuestID}.json`;
     const filePath = path.join(EVENT_ARC_DIR, filename);
