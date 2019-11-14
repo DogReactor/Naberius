@@ -1,6 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
+    "baseUrl": "./src",
     "declaration": true,
     "removeComments": true,
     "target": "es2017",
@@ -22,5 +23,5 @@
     "types": ["koa-body"],
     "outDir": "dist"
   },
-  "exclude": ["node_modules", "scripts", "dist"]
+  "exclude": ["node_modules", "scripts", "dist", "app"]
 }
