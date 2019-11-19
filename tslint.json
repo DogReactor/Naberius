@@ -21,6 +21,7 @@
     "no-bitwise": false,
     "no-namespace": false,
     "variable-name": [true, "allow-leading-underscore", "allow-pascal-case"],
-    "no-submodule-imports": false
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": false
   }
 }
