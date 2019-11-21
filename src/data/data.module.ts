@@ -50,6 +50,10 @@ function cacheFactory(fileName: string): Provider {
     cacheFactory('PlayerAssignType'),
     cacheFactory('PlayerIdentityType'),
     cacheFactory('SystemText'),
+    cacheFactory('SkillList'),
+    cacheFactory('SkillText'),
+    cacheFactory('SkillTypeList'),
+    cacheFactory('SkillInfluenceConfig'),
   ],
   exports: [
     'FileList',
@@ -61,6 +65,10 @@ function cacheFactory(fileName: string): Provider {
     'PlayerAssignType',
     'PlayerIdentityType',
     'SystemText',
+    'SkillList',
+    'SkillText',
+    'SkillTypeList',
+    'SkillInfluenceConfig',
   ],
 })
 export class DataModule {}

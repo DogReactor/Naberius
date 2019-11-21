@@ -5,27 +5,39 @@ import { CacheFileService } from './cacheFile.service';
 @Resolver()
 export class DataResolver {
   constructor(
-    @Inject('NameText') private readonly nameTextList: CacheFileService<any>,
+    @Inject('NameText') private readonly nameTexts: CacheFileService<any>,
     @Inject('StatusText')
-    private readonly statusTextList: CacheFileService<any>,
+    private readonly statusTexts: CacheFileService<any>,
     @Inject('PlayerRaceType')
-    private readonly PlayerRaceTypeList: CacheFileService<any>,
+    private readonly PlayerRaceTypes: CacheFileService<any>,
     @Inject('PlayerAssignType')
-    private readonly PlayerAssignTypeList: CacheFileService<any>,
+    private readonly PlayerAssignTypes: CacheFileService<any>,
     @Inject('PlayerIdentityType')
-    private readonly PlayerIdentityTypeList: CacheFileService<any>,
+    private readonly PlayerIdentityTypes: CacheFileService<any>,
     @Inject('SystemText')
-    private readonly SystemTextList: CacheFileService<any>,
+    private readonly SystemTexts: CacheFileService<any>,
+    @Inject('SkillList')
+    private readonly Skills: CacheFileService<any>,
+    @Inject('SkillText')
+    private readonly SkillTexts: CacheFileService<any>,
+    @Inject('SkillTypeList')
+    private readonly SkillTypes: CacheFileService<any>,
+    @Inject('SkillInfluenceConfig')
+    private readonly SkillInfluenceConfigs: CacheFileService<any>,
   ) {}
   @Mutation(returns => Boolean)
   updateFiles() {
     [
-      this.nameTextList,
-      this.statusTextList,
-      this.PlayerRaceTypeList,
-      this.PlayerAssignTypeList,
-      this.PlayerIdentityTypeList,
-      this.SystemTextList,
+      this.nameTexts,
+      this.statusTexts,
+      this.PlayerRaceTypes,
+      this.PlayerAssignTypes,
+      this.PlayerIdentityTypes,
+      this.SystemTexts,
+      this.Skills,
+      this.SkillTexts,
+      this.SkillTypes,
+      this.SkillInfluenceConfigs,
     ].forEach(service => service.update());
     return true;
   }

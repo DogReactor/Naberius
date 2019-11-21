@@ -5,7 +5,6 @@ import {
   ResolveProperty,
   Parent,
 } from '@nestjs/graphql';
-import { CardSchema } from './schemas/card.schema';
 import { Inject } from '@nestjs/common';
 import { DataFileService } from 'data/dataFile.service';
 import { Card } from 'data/models/card.model';
@@ -15,6 +14,7 @@ import { NameText } from 'data/models/nameText.model';
 import { File } from 'data/models/file.model';
 import { StatusText } from 'data/models/statusText.model';
 import { SystemText } from 'data/models/systemText.model';
+import { SkillsWithType } from './models/skillsWithType.model';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -25,35 +25,32 @@ function fileSorter(a: File, b: File) {
   return 1;
 }
 
-@Resolver(CardSchema)
+@Resolver(Card)
 export class CardsResolver {
   constructor(
-    @Inject('CardList') private readonly cardList: DataFileService<Card>,
-    @Inject('FileList') private readonly fileList: DataFileService<File>,
+    @Inject('CardList') private readonly cards: DataFileService<Card>,
+    @Inject('FileList') private readonly files: DataFileService<File>,
     @Inject('NameText')
-    private readonly nameTextList: CacheFileService<NameText>,
+    private readonly nameTexts: CacheFileService<NameText>,
     @Inject('StatusText')
-    private readonly statusTextList: CacheFileService<StatusText>,
+    private readonly statusTexts: CacheFileService<StatusText>,
     @Inject('SystemText')
-    private readonly SystemTextList: CacheFileService<SystemText>,
+    private readonly SystemTexts: CacheFileService<SystemText>,
     @Inject('PlayerRaceType')
-    private readonly playerRaceTypeList: CacheFileService<PlayerType>,
+    private readonly playerRaceTypes: CacheFileService<PlayerType>,
     @Inject('PlayerAssignType')
-    private readonly playerAssignTypeList: CacheFileService<PlayerType>,
+    private readonly playerAssignTypes: CacheFileService<PlayerType>,
     @Inject('PlayerIdentityType')
-    private readonly playerIdentityTypeList: CacheFileService<PlayerType>,
+    private readonly playerIdentityTypes: CacheFileService<PlayerType>,
   ) {}
 
   getType(
     card: Card,
-    file:
-      | 'playerRaceTypeList'
-      | 'playerAssignTypeList'
-      | 'playerIdentityTypeList',
+    file: 'playerRaceTypes' | 'playerAssignTypes' | 'playerIdentityTypes',
   ) {
     const type = this[file].data.find(t => t._TypeID === card._TypeRace);
-    if (type) {
-      const text = this.SystemTextList.data[type._SystemTextID];
+    if (type && type._SystemTextID !== 0) {
+      const text = this.SystemTexts.data[type._SystemTextID];
       if (text) {
         return text.Data_Text;
       }
@@ -65,9 +62,9 @@ export class CardsResolver {
    * Properties *
    **************/
 
-  @ResolveProperty()
+  @ResolveProperty(type => String)
   Name(@Parent() card: Card) {
-    const name = this.nameTextList.data[card.CardID - 1];
+    const name = this.nameTexts.data[card.CardID - 1];
     if (name) {
       return name.Message;
     } else {
@@ -75,10 +72,10 @@ export class CardsResolver {
     }
   }
 
-  @ResolveProperty()
+  @ResolveProperty(type => [String])
   ImageStand(@Parent() card: Card) {
     // TODO: extreamly slow
-    return this.fileList._.filter(
+    return this.files._.filter(
       file =>
         !!RegExp(
           `^${(Array(3).join('0') + card.CardID).slice(-3)}_card_\\d\\.png$`,
@@ -89,10 +86,10 @@ export class CardsResolver {
       .value();
   }
 
-  @ResolveProperty()
+  @ResolveProperty(type => [String])
   ImageCG(@Parent() card: Card) {
     // TODO: extreamly slow
-    return this.fileList._.filter(file => {
+    return this.files._.filter(file => {
       return !!RegExp(
         `^HarlemCG_${(Array(3).join('0') + card.CardID).slice(-3)}_\\d\\.png$`,
       ).exec(file.Name);
@@ -103,37 +100,52 @@ export class CardsResolver {
       .value();
   }
 
-  @ResolveProperty()
+  @ResolveProperty(type => String)
   IllustName(@Parent() card: Card) {
-    return this.statusTextList.data[card.Illust];
+    return this.statusTexts.data[card.Illust];
   }
 
-  @ResolveProperty()
+  @ResolveProperty(type => String, { nullable: true })
   RaceName(@Parent() card: Card) {
-    return this.getType(card, 'playerRaceTypeList');
+    return this.getType(card, 'playerRaceTypes');
   }
 
-  @ResolveProperty()
+  @ResolveProperty(type => String, { nullable: true })
   AssignName(@Parent() card: Card) {
-    return this.getType(card, 'playerAssignTypeList');
+    return this.getType(card, 'playerAssignTypes');
   }
 
-  @ResolveProperty()
+  @ResolveProperty(type => String, { nullable: true })
   IdentityName(@Parent() card: Card) {
-    return this.getType(card, 'playerIdentityTypeList');
+    return this.getType(card, 'playerIdentityTypes');
+  }
+
+  @ResolveProperty(type => [SkillsWithType])
+  Skills(@Parent() card: Card) {
+    const skills: SkillsWithType[] = [];
+    if (card.ClassLV0SkillID) {
+      skills.push({ Type: 'Init', initSkillID: card.ClassLV0SkillID });
+    }
+    if (card.ClassLV0SkillID !== card.ClassLV1SkillID) {
+      skills.push({ Type: 'CC', initSkillID: card.ClassLV1SkillID });
+    }
+    if (card.EvoSkillID) {
+      skills.push({ Type: 'Evo', initSkillID: card.EvoSkillID });
+    }
+    return skills;
   }
 
   /***********
    * Queries *
    ***********/
 
-  @Query(type => [CardSchema])
-  cards() {
-    return this.cardList.data;
+  @Query(type => [Card], { name: 'cards' })
+  getCards() {
+    return this.cards.data;
   }
 
-  @Query(type => CardSchema, { nullable: true })
+  @Query(type => Card, { nullable: true })
   card(@Args({ name: 'CardID', type: () => Int }) CardID: number) {
-    return this.cardList.data.find(card => card.CardID === CardID);
+    return this.cards.data.find(card => card.CardID === CardID);
   }
 }
