@@ -69,11 +69,19 @@ type Card {
   ChildCardID: Int!
   OriginID: Int!
   RootsID: Int!
+  Name: String
+  ImageStand: [String!]!
+  ImageCG: [String!]!
+  IllustName: String
 }
 
 type File {
   Name: String!
   Link: String!
+}
+
+type Mutation {
+  updateFiles: Boolean!
 }
 
 type Query {

@@ -1,14 +1,14 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { QuestSchema } from './schemas/quest.schema';
 import { Inject } from '@nestjs/common';
-import { StaticFileService } from 'data/staticFile.service';
+import { DataFileService } from 'data/dataFile.service';
 import { Quest } from 'data/models/quest.model';
 import { Int } from 'type-graphql';
 
 @Resolver(QuestSchema)
 export class QuestsResolver {
   constructor(
-    @Inject('QuestList') private readonly questList: StaticFileService<Quest>,
+    @Inject('QuestList') private readonly questList: DataFileService<Quest>,
   ) {}
 
   @Query(returns => [QuestSchema])

@@ -132,4 +132,25 @@ export class CardSchema {
   OriginID: number;
   @Field(type => Int)
   RootsID: number;
+
+  @Field({ nullable: true })
+  Name: string;
+
+  @Field(type => [String])
+  ImageStand: string[];
+
+  @Field(type => [String])
+  ImageCG: string[];
+
+  @Field(type => String, { nullable: true })
+  IllustName?: string;
+
+  @Field({ nullable: true })
+  RaceName?: string;
+
+  @Field({ nullable: true })
+  AssignName?: string;
+
+  @Field({ nullable: true })
+  IdentityName?: string;
 }
