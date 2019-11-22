@@ -15,6 +15,8 @@ import { File } from 'data/models/file.model';
 import { StatusText } from 'data/models/statusText.model';
 import { SystemText } from 'data/models/systemText.model';
 import { SkillsWithType } from './models/skillsWithType.model';
+import { FileListService } from 'data/fileList.service';
+import { HarlemTextService } from 'data/harlemText.service';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -29,7 +31,7 @@ function fileSorter(a: File, b: File) {
 export class CardsResolver {
   constructor(
     @Inject('CardList') private readonly cards: DataFileService<Card>,
-    @Inject('FileList') private readonly files: DataFileService<File>,
+    private readonly files: FileListService,
     @Inject('NameText')
     private readonly nameTexts: CacheFileService<NameText>,
     @Inject('StatusText')
@@ -42,6 +44,7 @@ export class CardsResolver {
     private readonly playerAssignTypes: CacheFileService<PlayerType>,
     @Inject('PlayerIdentityType')
     private readonly playerIdentityTypes: CacheFileService<PlayerType>,
+    private readonly harlemTexts: HarlemTextService,
   ) {}
 
   getType(
@@ -133,6 +136,11 @@ export class CardsResolver {
       skills.push({ Type: 'Evo', initSkillID: card.EvoSkillID });
     }
     return skills;
+  }
+
+  @ResolveProperty(type => [String])
+  HarlemText(@Parent() card: Card, @Args('type') Type: 'A' | 'R') {
+    return this.harlemTexts.get(card.CardID, Type);
   }
 
   /***********

@@ -3,12 +3,11 @@ import { FileSchema } from './schemas/file.schema';
 import { File } from 'data/models/file.model';
 import { Inject } from '@nestjs/common';
 import { DataFileService } from 'data/dataFile.service';
+import { FileListService } from 'data/fileList.service';
 
 @Resolver(FileSchema)
 export class FilesResolver {
-  constructor(
-    @Inject('FileList') private readonly fileList: DataFileService<File>,
-  ) {}
+  constructor(private readonly fileList: FileListService) {}
 
   @Query(returns => [FileSchema])
   files(): FileSchema[] {

@@ -1,10 +1,8 @@
-import * as request from 'request-promise-native';
 import * as _ from 'lodash';
-import { parseAL, ALTX } from 'aigis-fuel';
+import { ALTX } from 'aigis-fuel';
 import * as sharp from 'sharp';
 import { Stream } from 'stream';
 import { logger } from './logger';
-// import { BASE_URL } from '../consts';
 
 /**
  * sleep for a time
@@ -12,49 +10,6 @@ import { logger } from './logger';
  */
 export async function sleep(ms: number) {
   return new Promise(resolve => setTimeout(() => resolve(), ms));
-}
-
-let downloadNum = 0;
-
-export async function requestFile(fileURL: string, fileName: string) {
-  while (true) {
-    if (downloadNum < 10) {
-      break;
-    }
-    await sleep(1000);
-  }
-  downloadNum += 1;
-  logger.info(`+${downloadNum} Downloading ${fileName}`);
-  for (let retry = 1; retry <= 3; retry++) {
-    try {
-      const res = await request.get({
-        url: fileURL,
-        encoding: null,
-        timeout: 50 * 1000,
-        proxy: process.env.proxy,
-        gzip: true,
-        family: 4,
-      });
-      logger.info(`-${downloadNum} Downloaded ${fileName}!`);
-      downloadNum -= 1;
-      return res;
-    } catch (err) {
-      logger.error(err.stack);
-      logger.info(
-        `=${downloadNum} Failed downloading ${fileName}, retry ${retry}...`,
-      );
-    }
-  }
-  logger.error(`-${downloadNum} Failed downloading ${fileName}!`);
-  downloadNum -= 1;
-  throw Error('Download Failed!');
-}
-
-export function requestALTB(fileUrl: string, fileName: string) {
-  return requestFile(fileUrl, fileName).then(res => {
-    const table = parseAL(res);
-    return table.Contents;
-  });
 }
 
 export function PromiseAllPart(list: any[], key: string) {

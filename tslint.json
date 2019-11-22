@@ -11,7 +11,7 @@
         "singleline": "never"
       }
     ],
-    "quotemark": [true, "single"],
+    "quotemark": [true, "single", "avoid-escape"],
     "object-literal-sort-keys": false,
     "no-console": false,
     "ordered-imports": false,
@@ -22,6 +22,7 @@
     "no-namespace": false,
     "variable-name": [true, "allow-leading-underscore", "allow-pascal-case"],
     "no-submodule-imports": false,
-    "no-implicit-dependencies": false
+    "no-implicit-dependencies": false,
+    "no-angle-bracket-type-assertion": false
   }
 }

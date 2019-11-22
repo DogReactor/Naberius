@@ -2,12 +2,13 @@ import { Module, Provider, Inject } from '@nestjs/common';
 import { ConfigModule } from 'config/config.module';
 import { ConfigService } from 'config/config.service';
 import { DataFileService } from './dataFile.service';
-import { File } from './models/file.model';
 import { join } from 'path';
 import { CacheFileService } from './cacheFile.service';
 import { CommonModule } from 'common/common.module';
 import { RequestService } from 'common/request.service';
 import { DataResolver } from './data.resolver';
+import { FileListService } from './fileList.service';
+import { HarlemTextService } from './harlemText.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -24,13 +25,9 @@ function dataFactory(fileName: string): Provider {
 function cacheFactory(fileName: string): Provider {
   return {
     provide: fileName,
-    inject: [ConfigService, 'FileList', RequestService],
-    useFactory: (
-      config: ConfigService,
-      fileList: DataFileService<File>,
-      request: RequestService,
-    ) => {
-      const service = new CacheFileService(fileList, request);
+    inject: [ConfigService, RequestService],
+    useFactory: (config: ConfigService, request: RequestService) => {
+      const service = new CacheFileService(request);
       service.setFilePath(join(config.get('CACHE_DIR'), fileName + '.json'));
       return service;
     },
@@ -41,7 +38,7 @@ function cacheFactory(fileName: string): Provider {
   imports: [ConfigModule, CommonModule],
   providers: [
     DataResolver,
-    dataFactory('FileList'),
+    FileListService,
     dataFactory('CardList'),
     dataFactory('QuestList'),
     cacheFactory('NameText'),
@@ -54,9 +51,10 @@ function cacheFactory(fileName: string): Provider {
     cacheFactory('SkillText'),
     cacheFactory('SkillTypeList'),
     cacheFactory('SkillInfluenceConfig'),
+    HarlemTextService,
   ],
   exports: [
-    'FileList',
+    FileListService,
     'CardList',
     'QuestList',
     'NameText',
@@ -69,6 +67,7 @@ function cacheFactory(fileName: string): Provider {
     'SkillText',
     'SkillTypeList',
     'SkillInfluenceConfig',
+    HarlemTextService,
   ],
 })
 export class DataModule {}

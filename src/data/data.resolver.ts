@@ -1,6 +1,7 @@
 import { Resolver, Mutation } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { CacheFileService } from './cacheFile.service';
+import { HarlemTextService } from './harlemText.service';
 
 @Resolver()
 export class DataResolver {
@@ -9,35 +10,37 @@ export class DataResolver {
     @Inject('StatusText')
     private readonly statusTexts: CacheFileService<any>,
     @Inject('PlayerRaceType')
-    private readonly PlayerRaceTypes: CacheFileService<any>,
+    private readonly playerRaceTypes: CacheFileService<any>,
     @Inject('PlayerAssignType')
-    private readonly PlayerAssignTypes: CacheFileService<any>,
+    private readonly playerAssignTypes: CacheFileService<any>,
     @Inject('PlayerIdentityType')
-    private readonly PlayerIdentityTypes: CacheFileService<any>,
+    private readonly playerIdentityTypes: CacheFileService<any>,
     @Inject('SystemText')
-    private readonly SystemTexts: CacheFileService<any>,
+    private readonly systemTexts: CacheFileService<any>,
     @Inject('SkillList')
-    private readonly Skills: CacheFileService<any>,
+    private readonly skills: CacheFileService<any>,
     @Inject('SkillText')
-    private readonly SkillTexts: CacheFileService<any>,
+    private readonly skillTexts: CacheFileService<any>,
     @Inject('SkillTypeList')
-    private readonly SkillTypes: CacheFileService<any>,
+    private readonly skillTypes: CacheFileService<any>,
     @Inject('SkillInfluenceConfig')
-    private readonly SkillInfluenceConfigs: CacheFileService<any>,
+    private readonly skillInfluenceConfigs: CacheFileService<any>,
+    private readonly harlemTexts: HarlemTextService,
   ) {}
   @Mutation(returns => Boolean)
   updateFiles() {
     [
       this.nameTexts,
       this.statusTexts,
-      this.PlayerRaceTypes,
-      this.PlayerAssignTypes,
-      this.PlayerIdentityTypes,
-      this.SystemTexts,
-      this.Skills,
-      this.SkillTexts,
-      this.SkillTypes,
-      this.SkillInfluenceConfigs,
+      this.playerRaceTypes,
+      this.playerAssignTypes,
+      this.playerIdentityTypes,
+      this.systemTexts,
+      this.skills,
+      this.skillTexts,
+      this.skillTypes,
+      this.skillInfluenceConfigs,
+      this.harlemTexts,
     ].forEach(service => service.update());
     return true;
   }

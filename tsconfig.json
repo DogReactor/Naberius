@@ -16,7 +16,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["koa-body"],
     "outDir": "dist"
   },
   "exclude": ["node_modules", "scripts", "dist", "app"]

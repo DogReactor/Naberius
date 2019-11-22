@@ -77,6 +77,7 @@ type Card {
   AssignName: String
   IdentityName: String
   Skills: [SkillsWithType!]!
+  HarlemText(type: String!): [String!]!
 }
 
 type File {
