@@ -6,4 +6,5 @@ export const Consts: Partial<Config> = {
   HARLEM_TEXT_A_DIR: 'HarlemTextA',
   CACHE_DIR: 'cache',
   DATA_DIR: 'data',
+  MISSION_DIR: 'mission',
 };

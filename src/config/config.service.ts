@@ -15,40 +15,35 @@ export class ConfigService {
       ...JSON.parse(readFileSync(join(filePath, 'config.json'), 'utf-8')),
     };
 
-    if (Consts.DATA_DIR === this.config.DATA_DIR) {
-      this.config.DATA_DIR = join(this.config.FILES_ROOT_DIR, Consts.DATA_DIR);
-    }
-    if (Consts.CACHE_DIR === this.config.CACHE_DIR) {
-      this.config.CACHE_DIR = join(
-        this.config.FILES_ROOT_DIR,
-        Consts.CACHE_DIR,
-      );
-    }
-    if (Consts.HARLEM_TEXT_A_DIR === this.config.HARLEM_TEXT_A_DIR) {
-      this.config.HARLEM_TEXT_A_DIR = join(
-        this.config.CACHE_DIR,
-        Consts.HARLEM_TEXT_A_DIR,
-      );
-    }
-    if (Consts.HARLEM_TEXT_R_DIR === this.config.HARLEM_TEXT_R_DIR) {
-      this.config.HARLEM_TEXT_R_DIR = join(
-        this.config.CACHE_DIR,
-        Consts.HARLEM_TEXT_R_DIR,
-      );
-    }
+    this.joinDir('DATA_DIR', 'FILES_ROOT_DIR');
+    this.joinDir('CACHE_DIR', 'CACHE_DIR');
+    this.joinDir('HARLEM_TEXT_A_DIR', 'CACHE_DIR');
+    this.joinDir('HARLEM_TEXT_R_DIR', 'CACHE_DIR');
+    this.joinDir('MISSION_DIR', 'CACHE_DIR');
 
-    [
-      this.config.FILES_ROOT_DIR,
-      this.config.CACHE_DIR,
-      this.config.DATA_DIR,
-      this.config.HARLEM_TEXT_A_DIR,
-      this.config.HARLEM_TEXT_R_DIR,
-    ].forEach(path => ensureDirSync(path));
+    Object.keys(this.config)
+      .filter(key =>
+        ([
+          'FILES_ROOT_DIR',
+          'CACHE_DIR',
+          'DATA_DIR',
+          'HARLEM_TEXT_A_DIR',
+          'HARLEM_TEXT_R_DIR',
+          'MISSION_DIR',
+        ] as Array<keyof Config>).includes(key as keyof Config),
+      )
+      .forEach(key => ensureDirSync(this.config[key as keyof Config]));
 
     console.info('Config initialized!');
   }
 
   get(key: keyof Config) {
     return this.config[key];
+  }
+
+  private joinDir(dirKey: keyof Config, baseDirKey: keyof Config) {
+    if (Consts[dirKey] === this.config[dirKey]) {
+      this.config[dirKey] = join(this.config[baseDirKey], Consts[dirKey]!);
+    }
   }
 }
