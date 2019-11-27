@@ -3,6 +3,30 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Ability {
+  AbilityName: String!
+  AbilityPower: Int!
+  AbilityType: Int!
+  AbilityTextID: Int!
+  _ConfigID: Int!
+  AbilityID: Int!
+  Text: String
+  Configs: [AbilityConfig!]!
+}
+
+type AbilityConfig {
+  _ConfigID: Int!
+  _InvokeType: Int!
+  _TargetType: Int!
+  _InfluenceType: Int!
+  _Param1: Int!
+  _Param2: Int!
+  _Param3: Int!
+  _Param4: Int!
+  _Command: String!
+  _ActivateCommand: String!
+}
+
 type Card {
   CardID: Int!
   InitClassID: Int!
@@ -80,6 +104,66 @@ type Card {
   HarlemText(type: String!): [String!]!
 }
 
+type Class {
+  ClassID: Int!
+  Name: String!
+  MaxLevel: Int!
+  Cost: Int!
+  InitHP: Int!
+  MaxHP: Int!
+  AttackType: Int!
+  InitAtk: Int!
+  MaxAtk: Int!
+  MaxTarget: Int!
+  InitDef: Int!
+  MaxDef: Int!
+  AtkSpeedCorrection: Int!
+  AtkArea: Int!
+  JobChange: Int!
+  JobChangeMaterial1: Int!
+  JobChangeMaterial2: Int!
+  JobChangeMaterial3: Int!
+  Data_ExtraAwakeOrb1: Int!
+  Data_ExtraAwakeOrb2: Int!
+  Dot: Int!
+  MissileID: Int!
+  ApproachFlag: Int!
+  BlockNum: Int!
+  DotNo: Int!
+  AttackWait: Int!
+  AttackAnimNo: Int!
+  BuildExp: Int!
+  HpGaugeHeight: Int!
+  AttackAttribute: Int!
+  HitEffect: Int!
+  Explanation: String!
+  ClassAbility1: Int!
+  ClassAbilityPower1: Int!
+  AwakeType1: Int!
+  AwakeType2: Int!
+  _LowRareEvolveMaterial_01: Int!
+  _LowRareEvolveMaterial_02: Int!
+  _LowRareEvolveMaterial_03: Int!
+  SortGroupID: Int!
+  DisplayPermission: String!
+  JobChangeMaterials: [Class!]!
+  Data_ExtraAwakeOrbs: [Class!]!
+  BattleStyle: ClassBattleStyleConfig
+  ClassAbilityConfigs: [AbilityConfig!]
+}
+
+type ClassBattleStyleConfig {
+  Data_ID: Int!
+  Type_BattleStyle: Int!
+  _Param_01: Int!
+  _Param_02: Int!
+  _Range_01: Int!
+  _Range_02: Int!
+  _Range_03: Int!
+  _Range_04: Int!
+  _Range_05: Int!
+}
+
 type File {
   Name: String!
   Link: String!
@@ -97,6 +181,10 @@ type Query {
   card(CardID: Int!): Card
   skills: [Skill!]!
   skill(SkillID: Int!): Skill
+  abilities: [Ability!]!
+  ability(AbilityID: Int!): Ability!
+  classes: [Class!]!
+  class(ClassID: Int!): Class
 }
 
 type Quest {

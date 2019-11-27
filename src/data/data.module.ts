@@ -9,6 +9,7 @@ import { RequestService } from 'common/request.service';
 import { DataResolver } from './data.resolver';
 import { FileListService } from './fileList.service';
 import { HarlemTextService } from './harlemText.service';
+import { ClassDataService } from './class.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -51,7 +52,12 @@ function cacheFactory(fileName: string): Provider {
     cacheFactory('SkillText'),
     cacheFactory('SkillTypeList'),
     cacheFactory('SkillInfluenceConfig'),
+    cacheFactory('AbilityList'),
+    cacheFactory('AbilityText'),
+    cacheFactory('AbilityConfig'),
+    cacheFactory('ClassBattleStyleConfig'),
     HarlemTextService,
+    ClassDataService,
   ],
   exports: [
     FileListService,
@@ -67,7 +73,12 @@ function cacheFactory(fileName: string): Provider {
     'SkillText',
     'SkillTypeList',
     'SkillInfluenceConfig',
+    'AbilityList',
+    'AbilityText',
+    'AbilityConfig',
+    'ClassBattleStyleConfig',
     HarlemTextService,
+    ClassDataService,
   ],
 })
 export class DataModule {}

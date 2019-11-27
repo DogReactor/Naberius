@@ -2,6 +2,7 @@ import { Resolver, Mutation } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { CacheFileService } from './cacheFile.service';
 import { HarlemTextService } from './harlemText.service';
+import { ClassDataService } from './class.service';
 
 @Resolver()
 export class DataResolver {
@@ -25,7 +26,16 @@ export class DataResolver {
     private readonly skillTypes: CacheFileService<any>,
     @Inject('SkillInfluenceConfig')
     private readonly skillInfluenceConfigs: CacheFileService<any>,
+    @Inject('ClassBattleStyleConfig')
+    private readonly classBattleStyleConfigs: CacheFileService<any>,
     private readonly harlemTexts: HarlemTextService,
+    private readonly classData: ClassDataService,
+    @Inject('AbilityList')
+    private readonly abilities: CacheFileService<any>,
+    @Inject('AbilityText')
+    private readonly abilityTexts: CacheFileService<any>,
+    @Inject('AbilityConfig')
+    private readonly abilityConfigs: CacheFileService<any>,
   ) {}
   @Mutation(returns => Boolean)
   updateFiles() {
@@ -41,6 +51,11 @@ export class DataResolver {
       this.skillTypes,
       this.skillInfluenceConfigs,
       this.harlemTexts,
+      this.classBattleStyleConfigs,
+      this.classData,
+      this.abilities,
+      this.abilityTexts,
+      this.abilityConfigs,
     ].forEach(service => service.update());
     return true;
   }

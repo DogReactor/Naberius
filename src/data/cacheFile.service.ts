@@ -7,7 +7,7 @@ import { FileListService } from './fileList.service';
 
 @Injectable()
 export class CacheFileService<T> extends DataService<T> {
-  constructor(private readonly request: RequestService) {
+  constructor(protected readonly request: RequestService) {
     super();
   }
 
