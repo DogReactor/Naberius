@@ -20,19 +20,17 @@ export class ConfigService {
     this.joinDir('HARLEM_TEXT_A_DIR', 'CACHE_DIR');
     this.joinDir('HARLEM_TEXT_R_DIR', 'CACHE_DIR');
     this.joinDir('MISSION_DIR', 'CACHE_DIR');
+    this.joinDir('NAME_TEXT_DIR', 'CACHE_DIR');
 
-    Object.keys(this.config)
-      .filter(key =>
-        ([
-          'FILES_ROOT_DIR',
-          'CACHE_DIR',
-          'DATA_DIR',
-          'HARLEM_TEXT_A_DIR',
-          'HARLEM_TEXT_R_DIR',
-          'MISSION_DIR',
-        ] as Array<keyof Config>).includes(key as keyof Config),
-      )
-      .forEach(key => ensureDirSync(this.config[key as keyof Config]));
+    ([
+      'FILES_ROOT_DIR',
+      'CACHE_DIR',
+      'DATA_DIR',
+      'HARLEM_TEXT_A_DIR',
+      'HARLEM_TEXT_R_DIR',
+      'MISSION_DIR',
+      'NAME_TEXT_DIR',
+    ] as Array<keyof Config>).forEach(key => ensureDirSync(this.config[key]));
 
     console.info('Config initialized!');
   }

@@ -7,8 +7,7 @@ import { FileListService } from 'data/fileList.service';
 
 @Injectable()
 export class RequestService {
-  // the number of files downloading now
-  private downloadNum = 0;
+  private downloadings: string[] = [];
 
   constructor(
     private readonly config: ConfigService,
@@ -20,14 +19,20 @@ export class RequestService {
     if (!file) {
       throw Error("Can't find file: " + fileName);
     }
+    if (this.downloadings.find(name => name === fileName)) {
+      while (this.downloadings.find(name => name === fileName)) {
+        await sleep(1000);
+      }
+      return true;
+    }
     while (true) {
-      if (this.downloadNum < 10) {
+      if (this.downloadings.length < 10) {
         break;
       }
       await sleep(1000);
     }
-    this.downloadNum += 1;
-    console.info(`+${this.downloadNum} Downloading ${fileName}`);
+    this.downloadings.push(fileName);
+    console.info(`+${this.downloadings.length} Downloading ${fileName}`);
     for (let retry = 1; retry <= 3; retry++) {
       try {
         const res = await request.get({
@@ -38,23 +43,33 @@ export class RequestService {
           gzip: true,
           family: 4,
         });
-        console.info(`-${this.downloadNum} Downloaded ${fileName}!`);
-        this.downloadNum -= 1;
+        console.info(`-${this.downloadings.length} Downloaded ${fileName}!`);
+        this.downloadings.splice(
+          this.downloadings.findIndex(n => n === fileName),
+          1,
+        );
+
         return res;
       } catch (err) {
         console.error(err.stack);
         console.info(
-          `=${this.downloadNum} Failed downloading ${fileName}, retry ${retry}...`,
+          `=${this.downloadings.length} Failed downloading ${fileName}, retry ${retry}...`,
         );
       }
     }
-    console.error(`-${this.downloadNum} Failed downloading ${fileName}!`);
-    this.downloadNum -= 1;
+    console.error(`-${this.downloadings} Failed downloading ${fileName}!`);
+    this.downloadings.splice(
+      this.downloadings.findIndex(n => n === fileName),
+      1,
+    );
     throw Error('Download Failed!');
   }
 
   async requestALTB(fileName: string) {
     return this.requestFile(fileName).then(res => {
+      if (res === true) {
+        return res;
+      }
       const table = parseAL(res);
       return table.Contents;
     });

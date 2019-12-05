@@ -3,6 +3,8 @@ import { Inject } from '@nestjs/common';
 import { CacheFileService } from './cacheFile.service';
 import { HarlemTextService } from './harlemText.service';
 import { ClassDataService } from './class.service';
+import { MissionConfigService } from './missionConfig.service';
+import { QuestNameTextService } from './questNameText.service';
 
 @Resolver()
 export class DataResolver {
@@ -36,6 +38,7 @@ export class DataResolver {
     private readonly abilityTexts: CacheFileService<any>,
     @Inject('AbilityConfig')
     private readonly abilityConfigs: CacheFileService<any>,
+    private readonly missionConfigs: MissionConfigService,
   ) {}
   @Mutation(returns => Boolean)
   updateFiles() {
@@ -56,6 +59,7 @@ export class DataResolver {
       this.abilities,
       this.abilityTexts,
       this.abilityConfigs,
+      this.missionConfigs,
     ].forEach(service => service.update());
     return true;
   }

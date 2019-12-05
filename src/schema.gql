@@ -169,13 +169,18 @@ type File {
   Link: String!
 }
 
+type MissionConfig {
+  MissionID: Int!
+  Name: String!
+  Enable: Int!
+}
+
 type Mutation {
   updateFiles: Boolean!
 }
 
 type Query {
   files: [File!]!
-  quests: [Quest!]!
   quest(QuestID: Int!): Quest
   cards: [Card!]!
   card(CardID: Int!): Card
@@ -224,6 +229,8 @@ type Quest {
   _DispIndex: Int!
   _HoldingParam: Int!
   DangerArea: Int!
+  Mission: MissionConfig
+  Name: String
 }
 
 type Skill {

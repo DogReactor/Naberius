@@ -7,4 +7,5 @@ export const Consts: Partial<Config> = {
   CACHE_DIR: 'cache',
   DATA_DIR: 'data',
   MISSION_DIR: 'mission',
+  NAME_TEXT_DIR: 'nameText',
 };

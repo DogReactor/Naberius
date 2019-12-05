@@ -6,4 +6,5 @@ export class Config {
   HARLEM_TEXT_A_DIR: string;
   FILES_ROOT_DIR: string;
   MISSION_DIR: string;
+  NAME_TEXT_DIR: string;
 }

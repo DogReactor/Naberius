@@ -10,6 +10,8 @@ import { DataResolver } from './data.resolver';
 import { FileListService } from './fileList.service';
 import { HarlemTextService } from './harlemText.service';
 import { ClassDataService } from './class.service';
+import { MissionConfigService } from './missionConfig.service';
+import { QuestNameTextService } from './questNameText.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -58,6 +60,8 @@ function cacheFactory(fileName: string): Provider {
     cacheFactory('ClassBattleStyleConfig'),
     HarlemTextService,
     ClassDataService,
+    MissionConfigService,
+    QuestNameTextService,
   ],
   exports: [
     FileListService,
@@ -79,6 +83,8 @@ function cacheFactory(fileName: string): Provider {
     'ClassBattleStyleConfig',
     HarlemTextService,
     ClassDataService,
+    MissionConfigService,
+    QuestNameTextService,
   ],
 })
 export class DataModule {}
