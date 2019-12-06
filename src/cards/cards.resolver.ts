@@ -108,7 +108,7 @@ export class CardsResolver {
 
   @ResolveProperty(type => String)
   IllustName(@Parent() card: Card) {
-    return this.statusTexts.data[card.Illust];
+    return this.statusTexts.data[card.Illust].Message;
   }
 
   @ResolveProperty(type => String, { nullable: true })
