@@ -85,4 +85,7 @@ export class Class {
   SortGroupID: number;
   @Field()
   DisplayPermission: string;
+
+  @Field({ nullable: true })
+  Type?: 'Init' | 'CC' | 'Evo' | 'Evo2a' | 'Evo2b';
 }

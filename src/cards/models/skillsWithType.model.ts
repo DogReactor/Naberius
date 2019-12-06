@@ -3,7 +3,7 @@ import { ObjectType, Field } from 'type-graphql';
 @ObjectType()
 export class SkillsWithType {
   @Field()
-  Type: string;
+  Type: 'Init' | 'CC' | 'Evo';
 
   initSkillID: number;
 }

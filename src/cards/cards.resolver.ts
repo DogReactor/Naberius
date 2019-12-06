@@ -17,6 +17,8 @@ import { SystemText } from 'data/models/systemText.model';
 import { SkillsWithType } from './models/skillsWithType.model';
 import { FileListService } from 'data/fileList.service';
 import { HarlemTextService } from 'data/harlemText.service';
+import { Class } from 'data/models/class.model';
+import { ClassDataService } from 'data/class.service';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -45,6 +47,7 @@ export class CardsResolver {
     @Inject('PlayerIdentityType')
     private readonly playerIdentityTypes: CacheFileService<PlayerType>,
     private readonly harlemTexts: HarlemTextService,
+    private readonly classes: ClassDataService,
   ) {}
 
   getType(
@@ -139,8 +142,53 @@ export class CardsResolver {
   }
 
   @ResolveProperty(type => [String])
-  HarlemText(@Parent() card: Card, @Args('type') Type: 'A' | 'R') {
+  HarlemText(@Parent() card: Card, @Args('Type') Type: 'A' | 'R') {
     return this.harlemTexts.get(card.CardID, Type);
+  }
+
+  @ResolveProperty(type => [Class])
+  Classes(@Parent() card: Card) {
+    const classes: Class[] = [];
+    // init class
+    classes.push({
+      ...this.classes.data.find(cl => cl.ClassID === card.InitClassID)!,
+      Type: 'Init',
+    });
+
+    // Init -> CC || Init -> Evo
+    if (classes[0].JobChange) {
+      classes.push({
+        ...this.classes.data.find(cl => cl.ClassID === classes[0].JobChange)!,
+        Type: classes[0].Data_ExtraAwakeOrb1 ? 'Evo' : 'CC',
+      });
+    }
+
+    // CC -> Evo
+    if (classes[classes.length - 1].Type === 'CC') {
+      const CCClass = classes[classes.length - 1];
+      if (CCClass.JobChange) {
+        classes.push({
+          ...this.classes.data.find(cl => cl.ClassID === CCClass.JobChange)!,
+          Type: 'Evo',
+        });
+      }
+    }
+
+    // Evo -> Evo2a && Evo2b
+    if (classes[classes.length - 1].Type === 'Evo') {
+      const EvoClass = classes[classes.length - 1];
+      if (EvoClass.AwakeType1) {
+        classes.push({
+          ...this.classes.data.find(cl => cl.ClassID === EvoClass.AwakeType1)!,
+          Type: 'Evo2a',
+        });
+        classes.push({
+          ...this.classes.data.find(cl => cl.ClassID === EvoClass.AwakeType2)!,
+          Type: 'Evo2b',
+        });
+      }
+    }
+    return classes;
   }
 
   /***********

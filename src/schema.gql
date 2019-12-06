@@ -101,7 +101,8 @@ type Card {
   AssignName: String
   IdentityName: String
   Skills: [SkillsWithType!]!
-  HarlemText(type: String!): [String!]!
+  HarlemText(Type: String!): [String!]!
+  Classes: [Class!]!
 }
 
 type Class {
@@ -146,6 +147,7 @@ type Class {
   _LowRareEvolveMaterial_03: Int!
   SortGroupID: Int!
   DisplayPermission: String!
+  Type: String
   JobChangeMaterials: [Class!]!
   Data_ExtraAwakeOrbs: [Class!]!
   BattleStyle: ClassBattleStyleConfig
@@ -171,8 +173,26 @@ type File {
 
 type MissionConfig {
   MissionID: Int!
-  Name: String!
-  Enable: Int!
+  Name: String
+  Enable: Int
+  TagID: Int
+  TagIDRange: Int
+  UseInformationButton: Int
+  DisplayOrder: Int
+  TrialCardID: Int
+  IncentiveType: Int
+  IncentiveCardID: Int
+  EventItemName: String
+  UseEndText: Int
+  ButtonTextureID: Int
+  KeyQuestID: Int
+  TitleID: Int
+  QuestID: String
+  FaceIconID: String
+  TowerCrystalID: String
+  ConsumeItemID: String
+  DailyAutoAddCount: Int
+  TopFloor: Int
 }
 
 type Mutation {
