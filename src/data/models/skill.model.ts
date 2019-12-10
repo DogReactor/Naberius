@@ -26,5 +26,5 @@ export class Skill {
   ID_Text: number;
 
   @Field(type => [SkillInfluenceConfig])
-  Influences?: SkillInfluenceConfig[];
+  Configs?: SkillInfluenceConfig[];
 }

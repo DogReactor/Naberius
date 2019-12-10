@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FileListService } from './fileList.service';
 import { RequestService } from 'common/request.service';
-import { parseAL, ALAR } from 'aigis-fuel';
+import { parseAL, ALAR, ALTB } from 'aigis-fuel';
 import { writeFile, readdirSync, readFileSync, existsSync } from 'fs-extra';
 import { ConfigService } from 'config/config.service';
 import { join } from 'path';
@@ -40,10 +40,10 @@ export class HarlemTextService {
         await this.request.requestFile(item.name),
       ) as ALAR).Files.forEach(evaarFile => {
         const match = /(?<=ev)\d+(?=\.aar)/.exec(evaarFile.Name);
-        const evaar = evaarFile.Content;
+        const evaar = evaarFile.Content as ALAR;
         if (match) {
           const CardID = Number.parseInt(match[0], 10);
-          evaar.Files.forEach((atb: any) => {
+          evaar.Files.forEach(atb => {
             if (atb.Name.includes('evtxt')) {
               writeFile(
                 join(this.config.get(item.dir as any), `Text${CardID}.json`),

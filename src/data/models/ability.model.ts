@@ -15,4 +15,7 @@ export class Ability {
   AbilityText: null;
   @Field(type => Int)
   AbilityID: number;
+
+  @Field({ nullable: true })
+  Type?: 'Init' | 'Evo';
 }

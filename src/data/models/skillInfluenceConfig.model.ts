@@ -23,11 +23,11 @@ export class SkillInfluenceConfig {
   Data_MulValue3: number;
   @Field(type => Int)
   Data_AddValue: number;
-  @Field(type => Int)
+  @Field()
   _Expression: string;
-  @Field(type => Int)
+  @Field()
   _ExpressionActivate: string;
-  @Field(type => Int)
+  @Field()
   _ExpressionActivateTarget: string;
   @Field(type => Int)
   _HoldRatioUpperLimit: number;

@@ -5,6 +5,8 @@ import { HarlemTextService } from './harlemText.service';
 import { ClassDataService } from './class.service';
 import { MissionConfigService } from './missionConfig.service';
 import { QuestNameTextService } from './questNameText.service';
+import { EventArcService } from './eventArc.service';
+import { IcoService } from './ico.service';
 
 @Resolver()
 export class DataResolver {
@@ -39,6 +41,8 @@ export class DataResolver {
     @Inject('AbilityConfig')
     private readonly abilityConfigs: CacheFileService<any>,
     private readonly missionConfigs: MissionConfigService,
+    private readonly eventArcs: EventArcService,
+    private readonly icos: IcoService,
   ) {}
   @Mutation(returns => Boolean)
   updateFiles() {
@@ -60,6 +64,8 @@ export class DataResolver {
       this.abilityTexts,
       this.abilityConfigs,
       this.missionConfigs,
+      this.icos,
+      this.eventArcs,
     ].forEach(service => service.update());
     return true;
   }

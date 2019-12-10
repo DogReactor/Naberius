@@ -12,6 +12,9 @@ import { HarlemTextService } from './harlemText.service';
 import { ClassDataService } from './class.service';
 import { MissionConfigService } from './missionConfig.service';
 import { QuestNameTextService } from './questNameText.service';
+import { IcoService } from './ico.service';
+import { EventArcService } from './eventArc.service';
+import { DotService } from './dot.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -62,6 +65,9 @@ function cacheFactory(fileName: string): Provider {
     ClassDataService,
     MissionConfigService,
     QuestNameTextService,
+    IcoService,
+    EventArcService,
+    DotService,
   ],
   exports: [
     FileListService,
@@ -85,6 +91,8 @@ function cacheFactory(fileName: string): Provider {
     ClassDataService,
     MissionConfigService,
     QuestNameTextService,
+    EventArcService,
+    DotService,
   ],
 })
 export class DataModule {}

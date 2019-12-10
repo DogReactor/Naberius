@@ -20,6 +20,7 @@
     "@nestjs/core": "^6.9.0",
     "@nestjs/graphql": "^6.5.3",
     "@nestjs/platform-express": "^6.9.0",
+    "@nestjs/serve-static": "^1.0.2",
     "aigis-fuel": "^0.2.4",
     "apollo-server": "^2.1.0",
     "apollo-server-express": "^2.9.8",

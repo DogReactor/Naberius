@@ -19,6 +19,10 @@ import { FileListService } from 'data/fileList.service';
 import { HarlemTextService } from 'data/harlemText.service';
 import { Class } from 'data/models/class.model';
 import { ClassDataService } from 'data/class.service';
+import { Ability } from 'data/models/ability.model';
+import { ConfigService } from 'config/config.service';
+import { RequestService } from 'common/request.service';
+import { DotService } from 'data/dot.service';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -48,6 +52,9 @@ export class CardsResolver {
     private readonly playerIdentityTypes: CacheFileService<PlayerType>,
     private readonly harlemTexts: HarlemTextService,
     private readonly classes: ClassDataService,
+    @Inject('AbilityList')
+    private readonly abilities: CacheFileService<Ability>,
+    private readonly dots: DotService,
   ) {}
 
   getType(
@@ -89,6 +96,7 @@ export class CardsResolver {
     )
       .sort(fileSorter)
       .map(file => file.Link)
+      .uniq()
       .value();
   }
 
@@ -100,9 +108,9 @@ export class CardsResolver {
         `^HarlemCG_${(Array(3).join('0') + card.CardID).slice(-3)}_\\d\\.png$`,
       ).exec(file.Name);
     })
-      .slice()
       .sort(fileSorter)
       .map(file => file.Link)
+      .uniq()
       .value();
   }
 
@@ -141,9 +149,32 @@ export class CardsResolver {
     return skills;
   }
 
+  @ResolveProperty(type => [Ability])
+  Abilities(@Parent() card: Card) {
+    const abilities: Ability[] = [];
+    if (card.Ability_Default) {
+      abilities.push({
+        Type: 'Init',
+        ...this.abilities.data.find(a => a.AbilityID === card.Ability_Default)!,
+      });
+    }
+    if (card.Ability) {
+      abilities.push({
+        Type: 'Evo',
+        ...this.abilities.data.find(a => a.AbilityID === card.Ability)!,
+      });
+    }
+    return abilities;
+  }
+
   @ResolveProperty(type => [String])
-  HarlemText(@Parent() card: Card, @Args('Type') Type: 'A' | 'R') {
-    return this.harlemTexts.get(card.CardID, Type);
+  HarlemTextA(@Parent() card: Card) {
+    return this.harlemTexts.get(card.CardID, 'A');
+  }
+
+  @ResolveProperty(type => [String])
+  HarlemTextR(@Parent() card: Card) {
+    return this.harlemTexts.get(card.CardID, 'R');
   }
 
   @ResolveProperty(type => [Class])
@@ -189,6 +220,11 @@ export class CardsResolver {
       }
     }
     return classes;
+  }
+
+  @ResolveProperty(type => String, { nullable: true })
+  async Dots(@Parent() card: Card) {
+    return this.dots.get(card.CardID);
   }
 
   /***********

@@ -39,10 +39,10 @@ export class SkillsResolver {
   }
 
   @ResolveProperty(type => [SkillInfluenceConfig])
-  Influences(@Parent() skill: Skill): SkillInfluenceConfig[] {
+  Configs(@Parent() skill: Skill): SkillInfluenceConfig[] {
     // avoid calculate again
-    if (skill.Influences) {
-      return skill.Influences;
+    if (skill.Configs) {
+      return skill.Configs;
     }
     const type = this.skillTypes.data.find(
       t => t.SkillTypeID === skill.SkillType,

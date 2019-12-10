@@ -106,6 +106,7 @@ type Card {
   HarlemTextA: [String!]!
   HarlemTextR: [String!]!
   Classes: [Class!]!
+  Dots: String
 }
 
 type Class {

@@ -3,7 +3,6 @@ import { SkillsWithType } from './models/skillsWithType.model';
 import { Inject } from '@nestjs/common';
 import { CacheFileService } from 'data/cacheFile.service';
 import { Skill } from 'data/models/skill.model';
-import { SkillInfluenceConfig } from 'data/models/skillInfluenceConfig.model';
 import { SkillsResolver } from './skills.resolver';
 
 @Resolver(SkillsWithType)
@@ -24,11 +23,11 @@ export class SkillsWithTypeResolver {
     const skillIDs = [skillsWithType.initSkillID];
     let index = 0;
     while (index < skills.length) {
-      const influences = this.skillsResolver.Influences(skills[index]);
-      (skills[index].Influences = influences).forEach(influence => {
+      const configs = this.skillsResolver.Configs(skills[index]);
+      (skills[index].Configs = configs).forEach(config => {
         // 49为切换技能
-        if (influence.Data_InfluenceType === 49) {
-          const targetID = influence.Data_AddValue;
+        if (config.Data_InfluenceType === 49) {
+          const targetID = config.Data_AddValue;
           if (targetID !== 0 && !skillIDs.includes(targetID)) {
             const targetSkill = this.skills.data[targetID];
             if (targetSkill) {

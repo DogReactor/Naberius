@@ -9,7 +9,7 @@ import { DataModule } from 'data/data.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      autoSchemaFile: 'src/schema.gql',
+      autoSchemaFile: 'schema.gql',
     }),
     ConfigModule,
     DataModule,

@@ -14,25 +14,33 @@ export class ConfigService {
       ...Consts,
       ...JSON.parse(readFileSync(join(filePath, 'config.json'), 'utf-8')),
     };
-
     this.joinDir('DATA_DIR', 'FILES_ROOT_DIR');
     this.joinDir('CACHE_DIR', 'CACHE_DIR');
     this.joinDir('HARLEM_TEXT_A_DIR', 'CACHE_DIR');
     this.joinDir('HARLEM_TEXT_R_DIR', 'CACHE_DIR');
     this.joinDir('MISSION_DIR', 'CACHE_DIR');
     this.joinDir('NAME_TEXT_DIR', 'CACHE_DIR');
+    this.joinDir('EVENT_ARC_DIR', 'CACHE_DIR');
+    this.joinDir('ICO_DIR', 'STATIC_DIR');
+    this.joinDir('PLAYERDOT_IMG_DIR', 'STATIC_DIR');
+    this.joinDir('PLAYERDOT_INFO_DIR', 'CACHE_DIR');
+    this.ensureDirs();
+    console.info('Config initialized!');
+  }
 
+  ensureDirs() {
     ([
       'FILES_ROOT_DIR',
       'CACHE_DIR',
       'DATA_DIR',
+      'STATIC_DIR',
       'HARLEM_TEXT_A_DIR',
       'HARLEM_TEXT_R_DIR',
       'MISSION_DIR',
       'NAME_TEXT_DIR',
+      'PLAYERDOT_IMG_DIR',
+      'PLAYERDOT_INFO_DIR',
     ] as Array<keyof Config>).forEach(key => ensureDirSync(this.config[key]));
-
-    console.info('Config initialized!');
   }
 
   get(key: keyof Config) {
