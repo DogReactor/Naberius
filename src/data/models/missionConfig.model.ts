@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
-export class MissionConfig {
+export class Mission {
   @Field(type => Int)
   MissionID: number;
   @Field({ nullable: true })
@@ -56,4 +56,7 @@ export class MissionConfig {
   DailyAutoAddCount?: number;
   @Field(type => Int, { nullable: true })
   TopFloor?: number;
+
+  @Field()
+  Type?: string;
 }

@@ -9,7 +9,7 @@ import { Inject } from '@nestjs/common';
 import { DataFileService } from 'data/dataFile.service';
 import { Quest } from 'data/models/quest.model';
 import { Int } from 'type-graphql';
-import { MissionConfig } from 'data/models/missionConfig.model';
+import { Mission } from 'data/models/missionConfig.model';
 import { MissionConfigService } from 'data/missionConfig.service';
 import { QuestNameTextService } from 'data/questNameText.service';
 
@@ -21,7 +21,7 @@ export class QuestsResolver {
     private readonly questNameTexts: QuestNameTextService,
   ) {}
 
-  @ResolveProperty(type => MissionConfig, { nullable: true })
+  @ResolveProperty(type => Mission, { nullable: true })
   Mission(@Parent() quest: Quest) {
     return this.missionConfigs.getMissionByQuestID(quest.QuestID);
   }

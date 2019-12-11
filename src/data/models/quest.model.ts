@@ -1,5 +1,4 @@
 import { ObjectType, Field, Int } from 'type-graphql';
-import { MissionConfig } from './missionConfig.model';
 
 @ObjectType()
 export class Quest {

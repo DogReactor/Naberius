@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
-import { parseAL, ALTB } from 'aigis-fuel';
-import { DataService } from './data.service';
 import { FileListService } from './fileList.service';
 import { RequestService } from 'common/request.service';
 import { writeFile, readdir, readFile } from 'fs-extra';
 import { ConfigService } from 'config/config.service';
 import { join, parse } from 'path';
-import { MissionConfig } from './models/missionConfig.model';
+import { Mission } from './models/missionConfig.model';
 import { MissionQuest } from './models/missionQuest.model';
+import { MissingSubscriptionTopicsError } from 'type-graphql';
+import { EventNameText } from './models/eventNameText.model';
 
 @Injectable()
 export class MissionConfigService {
-  private configs: MissionConfig[] = [];
-  private missionQuests: MissionQuest[] = [];
+  configs: Mission[] = [];
+  missionQuests: MissionQuest[] = [];
   constructor(
     private readonly files: FileListService,
     private readonly request: RequestService,
@@ -26,6 +26,12 @@ export class MissionConfigService {
     return this.configs.find(conf => conf.MissionID === MissionID);
   }
 
+  getQuestIDs(MissionID: number) {
+    return this.missionQuests
+      .filter(mq => mq.MissionID === MissionID)
+      .map(mq => mq.QuestID);
+  }
+
   getMissionByQuestID(QuestID: number) {
     const missionQuest = this.missionQuests.find(mq => mq.QuestID === QuestID);
     if (missionQuest) {
@@ -36,15 +42,19 @@ export class MissionConfigService {
   async read() {
     const dir = this.config.get('MISSION_DIR');
 
+    const eventNameTexts: EventNameText[] = JSON.parse(
+      await readFile(join(dir, 'EventNameText.json'), 'utf-8'),
+    );
+
     const configFiles = (await readdir(dir)).filter(name =>
       name.includes('MissionConfig'),
     );
     for (const fileName of configFiles) {
-      const file: MissionConfig[] = JSON.parse(
+      const missions: Mission[] = JSON.parse(
         await readFile(join(dir, fileName), 'utf-8'),
       );
-      this.configs.push(...file);
-      for (const config of file) {
+
+      for (const config of missions) {
         if (config.QuestID) {
           // fuck daily reproduce missions
           this.missionQuests.push(
@@ -53,8 +63,16 @@ export class MissionConfigService {
               QuestID: Number.parseInt(idStr, 10),
             })),
           );
+          config.Name = eventNameTexts[config.TitleID!].Data_Text;
         }
       }
+
+      this.configs.push(
+        ...missions.map(mission => ({
+          ...mission,
+          Type: fileName.replace('MissionConfig.json', ''),
+        })),
+      );
     }
 
     const mqFiles = (await readdir(dir)).filter(name =>
@@ -85,5 +103,6 @@ export class MissionConfigService {
           );
         }),
     );
+    await this.read();
   }
 }

@@ -175,7 +175,7 @@ type File {
   Link: String!
 }
 
-type MissionConfig {
+type Mission {
   MissionID: Int!
   Name: String
   Enable: Int
@@ -197,6 +197,8 @@ type MissionConfig {
   ConsumeItemID: String
   DailyAutoAddCount: Int
   TopFloor: Int
+  Type: String!
+  Quests: [Quest!]!
 }
 
 type Mutation {
@@ -206,6 +208,8 @@ type Mutation {
 type Query {
   files: [File!]!
   quest(QuestID: Int!): Quest
+  missions: [Mission!]!
+  mission(MissionID: Int!): Mission!
   cards: [Card!]!
   card(CardID: Int!): Card
   skills: [Skill!]!
@@ -253,7 +257,7 @@ type Quest {
   _DispIndex: Int!
   _HoldingParam: Int!
   DangerArea: Int!
-  Mission: MissionConfig
+  Mission: Mission
   Name: String
 }
 
