@@ -66,13 +66,13 @@ export class ClassesResolver {
    * Queries *
    ***********/
 
-  @Query(type => [Class], { name: 'classes' })
-  getClasses() {
+  @Query(type => [Class])
+  Classes() {
     return this.classes.data;
   }
 
   @Query(type => Class, { nullable: true })
-  class(@Args({ name: 'ClassID', type: () => Int }) ClassID: number) {
+  Class(@Args({ name: 'ClassID', type: () => Int }) ClassID: number) {
     return this.classes.data.find(cl => cl.ClassID === ClassID);
   }
 }

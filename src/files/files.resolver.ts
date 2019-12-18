@@ -10,7 +10,7 @@ export class FilesResolver {
   constructor(private readonly fileList: FileListService) {}
 
   @Query(returns => [FileSchema])
-  files(): FileSchema[] {
+  Files(): FileSchema[] {
     return this.fileList.data;
   }
 }

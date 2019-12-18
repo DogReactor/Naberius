@@ -53,13 +53,13 @@ export class AbilitiesResolver {
     return [];
   }
 
-  @Query(type => [Ability], { name: 'abilities' })
-  getAbilities() {
+  @Query(type => [Ability])
+  Abilities() {
     return this.abilities.data;
   }
 
   @Query(type => Ability)
-  ability(@Args({ name: 'AbilityID', type: () => Int }) AbilityID: number) {
+  Ability(@Args({ name: 'AbilityID', type: () => Int }) AbilityID: number) {
     return this.abilities.data.find(ab => ab.AbilityID === AbilityID);
   }
 }

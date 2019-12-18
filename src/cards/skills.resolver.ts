@@ -70,13 +70,13 @@ export class SkillsResolver {
     return [];
   }
 
-  @Query(type => [Skill], { name: 'skills' })
-  getSkills() {
+  @Query(type => [Skill])
+  Skills() {
     return this.skills.data;
   }
 
   @Query(type => Skill, { nullable: true })
-  skill(@Args({ name: 'SkillID', type: () => Int }) SkillID: number) {
+  Skill(@Args({ name: 'SkillID', type: () => Int }) SkillID: number) {
     return this.skills.data[SkillID];
   }
 }

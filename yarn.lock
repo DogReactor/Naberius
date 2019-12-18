@@ -861,10 +861,10 @@ aggregate-error@3.0.0:
     clean-stack "^2.0.0"
     indent-string "^3.2.0"
 
-aigis-fuel@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.npmjs.org/aigis-fuel/-/aigis-fuel-0.2.4.tgz#356abf36e427517d24bb373fa77721af384c7d34"
-  integrity sha512-QI0ZiH9KIHh5/UcxypaQWKHh/FtgIQdW/5yVq8E9lpY46maJ6ZIA2I086TV8wetf1SeFPQQdbezWl9qmDvvwfA==
+aigis-fuel@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.npmjs.org/aigis-fuel/-/aigis-fuel-0.2.5.tgz#0bfbfdbf10d4bc11e77f8d086c3f8a2292c9f3e6"
+  integrity sha512-Pg6e2F9TWr8iX3dQ1KT8Y0q834bQo+BqkkulTmp+E1vO5/8pBFuzPolRAg4E8q1G0NAJR1alQDA82Onyd1Pvjg==
 
 ajv-errors@^1.0.0:
   version "1.0.1"

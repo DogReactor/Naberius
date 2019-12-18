@@ -7,7 +7,7 @@ import { writeFile, pathExists, readFile } from 'fs-extra';
 import { Message } from './models/message.model';
 
 @Injectable()
-export class QuestNameTextService {
+export class MessageTextService {
   private cache: { [MissionID: number]: Message[] } = {};
   constructor(
     private readonly files: FileListService,
@@ -19,11 +19,12 @@ export class QuestNameTextService {
     if (this.cache[MissionID]) {
       return this.cache[MissionID];
     }
-    const fileName = `QuestNameText${MissionID}`;
+    const fileName = `MessageText${MissionID}`;
     const filePath = join(
-      this.config.get('QUEST_NAME_TEXT_DIR'),
-      MissionID + '.json',
+      this.config.get('MESSAGE_TEXT_DIR'),
+      fileName + '.json',
     );
+
     if (!(await pathExists(filePath))) {
       const file = this.files.data.find(f => f.Name === fileName + '.atb');
       if (!file) {

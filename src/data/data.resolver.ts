@@ -43,9 +43,15 @@ export class DataResolver {
     private readonly missionConfigs: MissionConfigService,
     private readonly eventArcs: EventArcService,
     private readonly icos: IcoService,
+    @Inject('QuestEventText')
+    private readonly questEventTexts: CacheFileService<any>,
+    @Inject('EnemyType')
+    private readonly enemyTypes: CacheFileService<any>,
+    @Inject('EnemyElem')
+    private readonly enemyElems: CacheFileService<any>,
   ) {}
   @Mutation(returns => Boolean)
-  updateFiles() {
+  UpdateFiles() {
     [
       this.nameTexts,
       this.statusTexts,
@@ -66,6 +72,9 @@ export class DataResolver {
       this.missionConfigs,
       this.icos,
       this.eventArcs,
+      this.questEventTexts,
+      this.enemyTypes,
+      this.enemyElems,
     ].forEach(service => service.update());
     return true;
   }

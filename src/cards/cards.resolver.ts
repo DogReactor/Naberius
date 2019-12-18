@@ -20,9 +20,8 @@ import { HarlemTextService } from 'data/harlemText.service';
 import { Class } from 'data/models/class.model';
 import { ClassDataService } from 'data/class.service';
 import { Ability } from 'data/models/ability.model';
-import { ConfigService } from 'config/config.service';
-import { RequestService } from 'common/request.service';
 import { DotService } from 'data/dot.service';
+import { Dot } from 'data/models/dot.model';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -222,22 +221,22 @@ export class CardsResolver {
     return classes;
   }
 
-  @ResolveProperty(type => String, { nullable: true })
+  @ResolveProperty(type => [Dot], { nullable: true })
   async Dots(@Parent() card: Card) {
-    return this.dots.get(card.CardID);
+    return this.dots.get(card.CardID, 'Player');
   }
 
   /***********
    * Queries *
    ***********/
 
-  @Query(type => [Card], { name: 'cards' })
-  getCards() {
+  @Query(type => [Card])
+  Cards() {
     return this.cards.data;
   }
 
   @Query(type => Card, { nullable: true })
-  card(@Args({ name: 'CardID', type: () => Int }) CardID: number) {
+  Card(@Args({ name: 'CardID', type: () => Int }) CardID: number) {
     return this.cards.data.find(card => card.CardID === CardID);
   }
 }

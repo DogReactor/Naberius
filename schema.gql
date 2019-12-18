@@ -28,6 +28,19 @@ type AbilityConfig {
   _ActivateCommand: String!
 }
 
+type Alpha {
+  Time: Int!
+  Data: Int!
+}
+
+type BattleTalkEvent {
+  Message: String
+  Name: String
+  FaceID: Int!
+  RecordOffset: Int!
+  RecordIndex: Int!
+}
+
 type Card {
   CardID: Int!
   InitClassID: Int!
@@ -106,7 +119,7 @@ type Card {
   HarlemTextA: [String!]!
   HarlemTextR: [String!]!
   Classes: [Class!]!
-  Dots: String
+  Dots: [Dot!]
 }
 
 type Class {
@@ -170,9 +183,116 @@ type ClassBattleStyleConfig {
   _Range_05: Int!
 }
 
+type Dot {
+  Name: String!
+  Length: Int!
+  Entries: [DotEntry!]!
+}
+
+type DotEntry {
+  Name: String!
+  Sprites: [Sprite!]!
+  PatternNo: [PatternNo!]
+  Pos: [Pos!]
+  Scale: [Scale!]
+  Alpha: [Alpha!]
+}
+
+type Enemy {
+  SpecialEffect: Int!
+  PatternID: Int!
+  Type: Int!
+  Attribute: Int!
+  Weather: Int!
+  HP: Int!
+  HP_MAX: Int!
+  ATTACK_POWER: Int!
+  ATTACK_TYPE: Int!
+  ATTACK_RANGE: Int!
+  ATTACK_SPEED: Int!
+  ARMOR_DEFENSE: Int!
+  MAGIC_DEFENSE: Int!
+  MOVE_SPEED: Int!
+  SKILL: Int!
+  SkyFlag: Boolean!
+  GainCost: Int!
+  EffectHeight: Int!
+  HpGaugeHeight: Int!
+  AttackAnimNo: Int!
+  BossFlag: Boolean!
+  BgmID: Int!
+  DotRate: Int!
+  MagicAttack: Boolean!
+  AttackWait: Int!
+  HitEffect: Int!
+  MissileID: Int!
+  DeadEffect: Int!
+  Param_ResistanceAssassin: Int!
+  Param_ChangeParam: Int!
+  Param_ChangeCondition: Int!
+  _Attribute: String
+  EnemyType: EnemyType!
+  EnemyElem: EnemyElem!
+  Dots: [Dot!]
+}
+
+type EnemyElem {
+  _EnemyElementID: Int!
+  _EnemyElementName: String!
+  _EnemyElementNote: String!
+  _EnemyElementDefine: String!
+}
+
+type EnemyType {
+  _EnemyTypeID: Int!
+  _EnemyTypeName: String!
+  _EnemyTypeNote: String!
+  _EnemyTypeDefine: String!
+}
+
+type Entry {
+  EnemyID: Int!
+  Wait: Int!
+  RouteNo: Int!
+  Loop: Int!
+  Level: Int!
+  PrizeEnemySpawnPercent: Int!
+  PrizeCardID: Int!
+  PrizeEnemyDropPercent: Int!
+  RouteOffset: Int!
+  IsAppear: String
+  FreeCommand: String
+  EntryCommand: String
+  DeadCommand: String
+}
+
+type EventArc {
+  _TextID: Int!
+  _FaceID: Int!
+  _TalkerName: String!
+  _TalkText: String!
+}
+
 type File {
   Name: String!
   Link: String!
+}
+
+type Location {
+  ObjectID: Int!
+  X: Int!
+  Y: Int!
+  _Command: String
+}
+
+type Map {
+  MapID: Int!
+  Entries: [[Entry]]!
+  Locations: [[Location]]!
+  Routes: [[Route]]!
+  Enemies: [Enemy!]
+  MapName: String!
+  Image: String
 }
 
 type Mission {
@@ -199,25 +319,45 @@ type Mission {
   TopFloor: Int
   Type: String!
   Quests: [Quest!]!
+  BattleTalkEvents: [BattleTalkEvent!]
+  Enemies: [Enemy!]!
 }
 
 type Mutation {
-  updateFiles: Boolean!
+  UpdateFiles: Boolean!
+}
+
+type PatternNo {
+  Time: Int
+  Data: Int!
+}
+
+type Pos {
+  Time: Int!
+  Data: PosData!
+}
+
+type PosData {
+  X: Int!
+  Y: Int!
+  Z: Int!
 }
 
 type Query {
-  files: [File!]!
-  quest(QuestID: Int!): Quest
-  missions: [Mission!]!
-  mission(MissionID: Int!): Mission!
-  cards: [Card!]!
-  card(CardID: Int!): Card
-  skills: [Skill!]!
-  skill(SkillID: Int!): Skill
-  abilities: [Ability!]!
-  ability(AbilityID: Int!): Ability!
-  classes: [Class!]!
-  class(ClassID: Int!): Class
+  Files: [File!]!
+  Quest(QuestID: Int!): Quest
+  QuestEventTexts: [QuestEventText!]!
+  Missions: [Mission!]!
+  Mission(MissionID: Int!): Mission!
+  Map: Map
+  Cards: [Card!]!
+  Card(CardID: Int!): Card
+  Skills: [Skill!]!
+  Skill(SkillID: Int!): Skill
+  Abilities: [Ability!]!
+  Ability(AbilityID: Int!): Ability!
+  Classes: [Class!]!
+  Class(ClassID: Int!): Class
 }
 
 type Quest {
@@ -259,6 +399,37 @@ type Quest {
   DangerArea: Int!
   Mission: Mission
   Name: String
+  Message: String
+  EventArcs: [EventArc!]
+  Map: Map
+}
+
+type QuestEventText {
+  Message: String!
+  Name: String!
+  FaceID: Int!
+}
+
+type Route {
+  X: Int!
+  Y: Int!
+  RouteID: Int!
+  JumpPoint: Int!
+  WarpDelay: Int!
+  WaitTime: Int!
+  SpeedModify: Int!
+  OnEvent: String
+}
+
+type Scale {
+  Time: Int!
+  Data: ScaleData!
+}
+
+type ScaleData {
+  X: Int!
+  Y: Int!
+  Z: Int!
 }
 
 type Skill {
@@ -296,4 +467,13 @@ type SkillInfluenceConfig {
 type SkillsWithType {
   Type: String!
   Skills: [Skill!]!
+}
+
+type Sprite {
+  X: Int!
+  Y: Int!
+  Width: Int!
+  Height: Int!
+  OriginX: Int!
+  OriginY: Int!
 }

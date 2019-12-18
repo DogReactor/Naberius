@@ -4,30 +4,27 @@ import { ConfigService } from 'config/config.service';
 import { RequestService } from 'common/request.service';
 import { join } from 'path';
 import { writeFile, pathExists, readFile } from 'fs-extra';
-import { Message } from './models/message.model';
+import { Enemy } from './models/enemy.model';
 
 @Injectable()
-export class QuestNameTextService {
-  private cache: { [MissionID: number]: Message[] } = {};
+export class EnemyService {
+  private cache: { [MissionID: number]: Enemy[] } = {};
   constructor(
     private readonly files: FileListService,
     private readonly request: RequestService,
     private readonly config: ConfigService,
   ) {}
 
-  async get(MissionID: number): Promise<Message[]> {
+  async get(MissionID: number): Promise<Enemy[]> {
     if (this.cache[MissionID]) {
       return this.cache[MissionID];
     }
-    const fileName = `QuestNameText${MissionID}`;
-    const filePath = join(
-      this.config.get('QUEST_NAME_TEXT_DIR'),
-      MissionID + '.json',
-    );
+    const fileName = `Enemy${MissionID}.atb`;
+    const filePath = join(this.config.get('ENEMY_DIR'), MissionID + '.json');
     if (!(await pathExists(filePath))) {
-      const file = this.files.data.find(f => f.Name === fileName + '.atb');
+      const file = this.files.data.find(f => f.Name === fileName);
       if (!file) {
-        throw Error(`File ${fileName + '.atb'} not found!`);
+        throw Error(`File ${fileName} not found!`);
       }
       const data = await this.request.requestALTB(file.Name);
       if (data !== true) {

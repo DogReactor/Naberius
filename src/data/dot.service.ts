@@ -3,9 +3,9 @@ import { RequestService } from 'common/request.service';
 import { ConfigService } from 'config/config.service';
 import { Dot } from './models/dot.model';
 import { join } from 'path';
-import { pathExistsSync, writeFile, readFile } from 'fs-extra';
+import { writeFile, readFile, ensureDir, pathExists } from 'fs-extra';
 import { numberPadding, ALTX2PNG } from 'common/utils';
-import { ALTX, parseAL, ALMT, ALOD } from 'aigis-fuel';
+import { ALTX, parseAL, ALMT, ALOD, ALAR } from 'aigis-fuel';
 
 @Injectable()
 export class DotService {
@@ -14,20 +14,21 @@ export class DotService {
     private readonly config: ConfigService,
   ) {}
 
-  async get(CardID: number) {
-    let dots: Dot[] = [];
-    const dotImagePath = join(
-      this.config.get('PLAYERDOT_IMG_DIR'),
-      `${CardID}.png`,
+  async get(CardID: number, type: 'Enemy' | 'Player') {
+    const dotPath = join(
+      this.config.get(type === 'Player' ? 'PLAYER_DOT_DIR' : 'ENEMY_DOT_DIR'),
+      CardID.toString(),
     );
-    const dotInfoPath = join(
-      this.config.get('PLAYERDOT_INFO_DIR'),
-      `${CardID}.json`,
-    );
-    if (!(pathExistsSync(dotImagePath) && pathExistsSync(dotInfoPath))) {
+    const dotImagePath = join(dotPath, `sprite.png`);
+    const dotInfoPath = join(dotPath, `info.json`);
+    if (!(await pathExists(dotPath))) {
+      await ensureDir(dotPath);
+      const dots: Dot[] = [];
       let sprites: { [key: number]: ALTX.FrameTable } = {};
-      const aarFilename = `PlayerDot${numberPadding(CardID, 4)}.aar`;
-      const aarFile = parseAL(await this.request.requestFile(aarFilename));
+      const aarFilename = `${type}Dot${numberPadding(CardID, 4)}.aar`;
+      const aarFile = parseAL(
+        await this.request.requestFile(aarFilename),
+      ) as ALAR;
 
       // extract atx picture file
       // only extract one atx file if there's multiple
@@ -87,9 +88,7 @@ export class DotService {
       //   .filter(dot => dot);
 
       await writeFile(dotInfoPath, JSON.stringify(dots));
-    } else {
-      dots = JSON.parse(await readFile(dotInfoPath, { encoding: 'utf-8' }));
     }
-    return JSON.stringify(dots);
+    return JSON.parse(await readFile(dotInfoPath, 'utf-8')) as Dot[];
   }
 }

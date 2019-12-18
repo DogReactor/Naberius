@@ -15,6 +15,10 @@ import { QuestNameTextService } from './questNameText.service';
 import { IcoService } from './ico.service';
 import { EventArcService } from './eventArc.service';
 import { DotService } from './dot.service';
+import { MessageTextService } from './messageText.service';
+import { BattleTalkEventService } from './battleTalkEvent.service';
+import { MapService } from './map.service';
+import { EnemyService } from './enemy.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -61,13 +65,20 @@ function cacheFactory(fileName: string): Provider {
     cacheFactory('AbilityText'),
     cacheFactory('AbilityConfig'),
     cacheFactory('ClassBattleStyleConfig'),
+    cacheFactory('QuestEventText'),
+    cacheFactory('EnemyType'),
+    cacheFactory('EnemyElem'),
     HarlemTextService,
     ClassDataService,
     MissionConfigService,
     QuestNameTextService,
+    MessageTextService,
     IcoService,
     EventArcService,
     DotService,
+    BattleTalkEventService,
+    MapService,
+    EnemyService,
   ],
   exports: [
     FileListService,
@@ -87,12 +98,19 @@ function cacheFactory(fileName: string): Provider {
     'AbilityText',
     'AbilityConfig',
     'ClassBattleStyleConfig',
+    'QuestEventText',
+    'EnemyType',
+    'EnemyElem',
     HarlemTextService,
     ClassDataService,
     MissionConfigService,
     QuestNameTextService,
+    MessageTextService,
     EventArcService,
     DotService,
+    BattleTalkEventService,
+    MapService,
+    EnemyService,
   ],
 })
 export class DataModule {}

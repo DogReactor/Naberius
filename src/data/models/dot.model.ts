@@ -1,39 +1,93 @@
-export class Dot {
+import { ObjectType, Field, Int } from 'type-graphql';
+
+@ObjectType()
+export class Sprite {
+  @Field(type => Int)
+  X: number;
+  @Field(type => Int)
+  Y: number;
+  @Field(type => Int)
+  Width: number;
+  @Field(type => Int)
+  Height: number;
+  @Field(type => Int)
+  OriginX: number;
+  @Field(type => Int)
+  OriginY: number;
+}
+
+@ObjectType()
+class PatternNo {
+  @Field(type => Int, { nullable: true })
+  Time: number;
+  @Field(type => Int)
+  Data: number;
+}
+
+@ObjectType()
+export class PosData {
+  @Field(type => Int)
+  X: number;
+  @Field(type => Int)
+  Y: number;
+  @Field(type => Int)
+  Z: number;
+}
+@ObjectType()
+class Pos {
+  @Field(type => Int)
+  Time: number;
+  @Field(type => PosData)
+  Data: PosData;
+}
+
+@ObjectType()
+export class ScaleData {
+  @Field(type => Int)
+  X: number;
+  @Field(type => Int)
+  Y: number;
+  @Field(type => Int)
+  Z: number;
+}
+@ObjectType()
+export class Scale {
+  @Field(type => Int)
+  Time: number;
+  @Field(type => ScaleData)
+  Data: ScaleData;
+}
+
+@ObjectType()
+export class Alpha {
+  @Field(type => Int)
+  Time: number;
+  @Field(type => Int)
+  Data: number;
+}
+
+@ObjectType()
+export class DotEntry {
+  @Field()
   Name: string;
+  @Field(type => [Sprite])
+  Sprites: Sprite[];
+  @Field(type => [PatternNo], { nullable: true })
+  PatternNo?: PatternNo[];
+  @Field(type => [Pos], { nullable: true })
+  Pos?: Pos[];
+  @Field(type => [Scale], { nullable: true })
+  Scale?: Scale[];
+  @Field(type => [Alpha], { nullable: true })
+  Alpha?: Alpha[];
+}
+
+@ObjectType()
+export class Dot {
+  @Field()
+  Name: string;
+  @Field(type => Int)
   Length: number;
-  Entries: Array<{
-    Name: string;
-    Sprites: Array<{
-      X: number;
-      Y: number;
-      Width: number;
-      Height: number;
-      OriginX: number;
-      OriginY: number;
-    }>;
-    PatternNo?: Array<{
-      Time: number;
-      Data: number;
-    }>;
-    Pos?: Array<{
-      Time: number;
-      Data: {
-        X: number;
-        Y: number;
-        Z: number;
-      };
-    }>;
-    Scale?: Array<{
-      Time: number;
-      Data: {
-        X: number;
-        Y: number;
-        Z: number;
-      };
-    }>;
-    Alpha?: Array<{
-      Time: number;
-      Data: number;
-    }>;
-  }>;
+  @Field(type => [DotEntry])
+  Entries: DotEntry[];
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RequestService } from 'common/request.service';
-import { parseAL } from 'aigis-fuel';
+import { parseAL, ALAR, ALTX } from 'aigis-fuel';
 import { ALTX2PNG } from 'common/utils';
 import { join } from 'path';
 import { ensureDirSync } from 'fs-extra';
@@ -20,14 +20,14 @@ export class IcoService {
       this.request.requestFile('ico_03.aar'),
     ]).then(res => {
       res.forEach((aar, index: number) => {
-        const parsed = parseAL(aar);
+        const parsed = parseAL(aar) as ALAR;
         const dir = join(this.config.get('ICO_DIR'), index.toString());
         ensureDirSync(dir);
-        parsed.Files.forEach((file: any) => {
-          const atx = file.Content;
+        parsed.Files.forEach(file => {
+          const atx = file.Content as ALTX;
           const image = ALTX2PNG(atx);
-          Object.keys(atx.Sprites).forEach((key: string) => {
-            const sprite = atx.Sprites[key][0];
+          Object.keys(atx.Sprites).forEach(key => {
+            const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
             if (sprite.Width !== 0 && sprite.Height !== 0) {
               const modKey = Number.parseInt(key, 10) % 2048;
               image
