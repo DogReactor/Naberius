@@ -19,6 +19,7 @@ import { Map } from 'data/models/map.model';
 import { MapService } from 'data/map.service';
 import { QuestEventText } from 'data/models/questEventText.model';
 import { CacheFileService } from 'data/cacheFile.service';
+import { QuestTermConfig } from 'data/models/questTermConfig.model';
 
 @Resolver(Quest)
 export class QuestsResolver {
@@ -31,6 +32,8 @@ export class QuestsResolver {
     private readonly maps: MapService,
     @Inject('QuestEventText')
     private readonly questEventTexts: CacheFileService<QuestEventText>,
+    @Inject('QuestTermConfig')
+    private readonly questTermConfigs: CacheFileService<QuestTermConfig>,
   ) {}
 
   @ResolveProperty(type => Mission, { nullable: true })
@@ -75,6 +78,39 @@ export class QuestsResolver {
         return this.maps.get(quest.MapNo, mission.MissionID);
       }
     }
+  }
+
+  @ResolveProperty(type => [QuestTermConfig])
+  QuestTermConfigs(@Parent() quest: Quest) {
+    if (quest.QuestTerms === 0) {
+      return [];
+    }
+    let index = this.questTermConfigs.data.findIndex(
+      qtc => qtc.ID_Config === quest.QuestTerms,
+    );
+
+    const configs: QuestTermConfig[] = [];
+    if (index !== -1) {
+      let config: QuestTermConfig;
+      while (true) {
+        config = this.questTermConfigs.data[index++];
+        if (
+          !(
+            config &&
+            (config.ID_Config === 0 || config.ID_Config === quest.QuestTerms)
+          )
+        ) {
+          break;
+        }
+        configs.push(config);
+      }
+    }
+    return configs;
+  }
+
+  @ResolveProperty(type => [QuestTermConfig])
+  QuestHardTermConfigs(@Parent() quest: Quest) {
+    return this.QuestTermConfigs({ QuestTerms: quest._HardCondition } as Quest);
   }
 
   @Query(returns => Quest, { nullable: true })

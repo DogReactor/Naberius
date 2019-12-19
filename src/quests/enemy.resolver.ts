@@ -6,6 +6,7 @@ import { EnemyType } from 'data/models/enemyType.model';
 import { EnemyElem } from 'data/models/enemyElem.model';
 import { DotService } from 'data/dot.service';
 import { Dot } from 'data/models/dot.model';
+import { EnemySpecialtyConfig } from 'data/models/enemySpecialtyConfig.model';
 
 @Resolver(Enemy)
 export class EnemyResolver {
@@ -15,6 +16,8 @@ export class EnemyResolver {
     @Inject('EnemyElem')
     private readonly enemyElems: CacheFileService<EnemyElem>,
     private readonly dots: DotService,
+    @Inject('EnemySpecialty_Config')
+    private readonly enemySpecialties: CacheFileService<EnemySpecialtyConfig>,
   ) {}
 
   @ResolveProperty(type => EnemyType)
@@ -30,5 +33,32 @@ export class EnemyResolver {
   @ResolveProperty(type => [Dot], { nullable: true })
   async Dots(@Parent() enemy: Enemy) {
     return this.dots.get((enemy.PatternID >> 8) % 4096, 'Enemy');
+  }
+
+  @ResolveProperty(type => [EnemySpecialtyConfig])
+  SpecialtyConfigs(@Parent() enemy: Enemy) {
+    if (enemy.SpecialEffect === 0) {
+      return [];
+    }
+    let index = this.enemySpecialties.data.findIndex(
+      es => es.ID_Config === enemy.SpecialEffect,
+    );
+    const configs: EnemySpecialtyConfig[] = [];
+    if (index !== -1) {
+      let config: EnemySpecialtyConfig;
+      while (true) {
+        config = this.enemySpecialties.data[index++];
+        if (
+          !(
+            config &&
+            (config.ID_Config === 0 || config.ID_Config === enemy.SpecialEffect)
+          )
+        ) {
+          break;
+        }
+        configs.push(config);
+      }
+    }
+    return configs;
   }
 }

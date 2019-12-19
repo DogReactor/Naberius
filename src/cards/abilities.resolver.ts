@@ -37,16 +37,15 @@ export class AbilitiesResolver {
     let index = this.abilityConfigs.data.findIndex(
       ac => ac._ConfigID === ability._ConfigID,
     );
-    if (index) {
+    if (index !== -1) {
       const configs: AbilityConfig[] = [];
       let config = this.abilityConfigs.data[index];
-      while (config._ConfigID === 0 || config._ConfigID === ability._ConfigID) {
+      while (
+        config &&
+        (config._ConfigID === 0 || config._ConfigID === ability._ConfigID)
+      ) {
         configs.push(config);
-        index++;
-        config = this.abilityConfigs.data[index];
-        if (!config) {
-          break;
-        }
+        config = this.abilityConfigs.data[++index];
       }
       return configs;
     }

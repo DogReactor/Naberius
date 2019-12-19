@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int, Float } from 'type-graphql';
 
 @ObjectType()
 export class Sprite {
@@ -19,50 +19,50 @@ export class Sprite {
 @ObjectType()
 class PatternNo {
   @Field(type => Int, { nullable: true })
-  Time: number;
+  Time?: number;
   @Field(type => Int)
   Data: number;
 }
 
 @ObjectType()
 export class PosData {
-  @Field(type => Int)
+  @Field(type => Float)
   X: number;
-  @Field(type => Int)
+  @Field(type => Float)
   Y: number;
-  @Field(type => Int)
+  @Field(type => Float)
   Z: number;
 }
 @ObjectType()
 class Pos {
-  @Field(type => Int)
-  Time: number;
+  @Field(type => Int, { nullable: true })
+  Time?: number;
   @Field(type => PosData)
   Data: PosData;
 }
 
 @ObjectType()
 export class ScaleData {
-  @Field(type => Int)
+  @Field(type => Float)
   X: number;
-  @Field(type => Int)
+  @Field(type => Float)
   Y: number;
-  @Field(type => Int)
+  @Field(type => Float)
   Z: number;
 }
 @ObjectType()
 export class Scale {
-  @Field(type => Int)
-  Time: number;
+  @Field(type => Int, { nullable: true })
+  Time?: number;
   @Field(type => ScaleData)
   Data: ScaleData;
 }
 
 @ObjectType()
 export class Alpha {
-  @Field(type => Int)
-  Time: number;
-  @Field(type => Int)
+  @Field(type => Int, { nullable: true })
+  Time?: number;
+  @Field(type => Float)
   Data: number;
 }
 

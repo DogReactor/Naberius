@@ -29,8 +29,8 @@ type AbilityConfig {
 }
 
 type Alpha {
-  Time: Int!
-  Data: Int!
+  Time: Int
+  Data: Float!
 }
 
 type BattleTalkEvent {
@@ -234,6 +234,7 @@ type Enemy {
   EnemyType: EnemyType!
   EnemyElem: EnemyElem!
   Dots: [Dot!]
+  SpecialtyConfigs: [EnemySpecialtyConfig!]!
 }
 
 type EnemyElem {
@@ -241,6 +242,17 @@ type EnemyElem {
   _EnemyElementName: String!
   _EnemyElementNote: String!
   _EnemyElementDefine: String!
+}
+
+type EnemySpecialtyConfig {
+  ID_Config: Int!
+  Type_Influence: Int!
+  Param_1: Int!
+  Param_2: Int!
+  Param_3: Int!
+  Param_4: Int!
+  _Expression: String!
+  _ExtParam: String!
 }
 
 type EnemyType {
@@ -333,14 +345,14 @@ type PatternNo {
 }
 
 type Pos {
-  Time: Int!
+  Time: Int
   Data: PosData!
 }
 
 type PosData {
-  X: Int!
-  Y: Int!
-  Z: Int!
+  X: Float!
+  Y: Float!
+  Z: Float!
 }
 
 type Query {
@@ -402,12 +414,24 @@ type Quest {
   Message: String
   EventArcs: [EventArc!]
   Map: Map
+  QuestTermConfigs: [QuestTermConfig!]!
+  QuestHardTermConfigs: [QuestTermConfig!]!
 }
 
 type QuestEventText {
   Message: String!
   Name: String!
   FaceID: Int!
+}
+
+type QuestTermConfig {
+  ID_Config: Int!
+  Type_Influence: Int!
+  Data_Param1: Int!
+  Data_Param2: Int!
+  Data_Param3: Int!
+  Data_Param4: Int!
+  Data_Expression: String!
 }
 
 type Route {
@@ -422,14 +446,14 @@ type Route {
 }
 
 type Scale {
-  Time: Int!
+  Time: Int
   Data: ScaleData!
 }
 
 type ScaleData {
-  X: Int!
-  Y: Int!
-  Z: Int!
+  X: Float!
+  Y: Float!
+  Z: Float!
 }
 
 type Skill {
