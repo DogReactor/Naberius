@@ -15,7 +15,7 @@ export class ConfigService {
       ...JSON.parse(readFileSync(join(filePath, 'config.json'), 'utf-8')),
     };
     this.joinDir('DATA_DIR', 'FILES_ROOT_DIR');
-    this.joinDir('CACHE_DIR', 'CACHE_DIR');
+    this.joinDir('CACHE_DIR', 'FILES_ROOT_DIR');
     this.joinDir('HARLEM_TEXT_A_DIR', 'CACHE_DIR');
     this.joinDir('HARLEM_TEXT_R_DIR', 'CACHE_DIR');
     this.joinDir('MISSION_DIR', 'CACHE_DIR');
@@ -29,6 +29,7 @@ export class ConfigService {
     this.joinDir('MESSAGE_TEXT_DIR', 'CACHE_DIR');
     this.joinDir('ENEMY_DIR', 'CACHE_DIR');
     this.ensureDirs();
+    console.log(this.config);
     console.info('Config initialized!');
   }
 
