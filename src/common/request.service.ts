@@ -5,6 +5,8 @@ import { sleep } from './utils';
 import { ConfigService } from 'config/config.service';
 import { FileListService } from 'data/fileList.service';
 import { EventEmitter } from 'events';
+import * as ProgressBar from 'progress';
+import * as progress from 'request-progress';
 
 @Injectable()
 export class RequestService extends EventEmitter {
@@ -31,10 +33,10 @@ export class RequestService extends EventEmitter {
         await sleep(Math.floor(Math.random() * 1001));
       }
       this.downloadings.push(fileName);
-      console.info(`+${this.downloadings.length} Downloading ${fileName}`);
+      // console.info(`+${this.downloadings.length} Downloading ${fileName}`);
       for (let retry = 1; retry <= 3; retry++) {
         try {
-          const res = await request.get({
+          const req = request.get({
             url: this.config.get('ASSETS_BASE_URL') + file.Link,
             encoding: null,
             timeout: 50 * 1000,
@@ -42,7 +44,15 @@ export class RequestService extends EventEmitter {
             gzip: true,
             family: 4,
           });
-          console.info(`-${this.downloadings.length} Downloaded ${fileName}!`);
+
+          const bar = new ProgressBar(`${retry} ${fileName} [:bar] :percent`, {total: 100, width: 20});
+
+          progress(req).on('progress', (state: any) => {
+            bar.update(state.percent);
+          });
+
+          const res = await req;
+          console.info(`Downloaded ${fileName}!`);
           this.downloadings.splice(
             this.downloadings.findIndex(n => n === fileName),
             1,
@@ -50,13 +60,13 @@ export class RequestService extends EventEmitter {
           this.emit(fileName, 'success', res);
           return;
         } catch (err) {
-          console.error(err.stack);
+          // console.error(err.stack);
           console.info(
-            `=${this.downloadings.length} Failed downloading ${fileName}, retry ${retry}...`,
+            `Failed downloading ${fileName}, retry #${retry}...`,
           );
         }
       }
-      console.error(`-${this.downloadings} Failed downloading ${fileName}!`);
+      console.error(`Failed downloading ${fileName}!`);
       this.downloadings.splice(
         this.downloadings.findIndex(n => n === fileName),
         1,

@@ -29,7 +29,6 @@ export class ConfigService {
     this.joinDir('MESSAGE_TEXT_DIR', 'CACHE_DIR');
     this.joinDir('ENEMY_DIR', 'CACHE_DIR');
     this.ensureDirs();
-    console.log(this.config);
     console.info('Config initialized!');
   }
 
