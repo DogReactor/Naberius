@@ -14,7 +14,7 @@ async function bootstrap() {
 
   app.useStaticAssets('static', { prefix: '/static/' });
 
-  await app.listen(4000);
+  await app.listen(app.get(ConfigService).get('PORT'));
 }
 
 bootstrap();

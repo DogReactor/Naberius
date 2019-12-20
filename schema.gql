@@ -120,6 +120,14 @@ type Card {
   HarlemTextR: [String!]!
   Classes: [Class!]!
   Dots: [Dot!]
+  NickNames: [String!]
+  ConneName: String
+}
+
+type CardMeta {
+  CardID: Int!
+  NickNames: [String!]
+  ConneName: String
 }
 
 type Class {
@@ -337,6 +345,7 @@ type Mission {
 
 type Mutation {
   UpdateFiles: Boolean!
+  CardMeta(NickNames: [String!], ConneName: String, CardID: Int!): CardMeta
 }
 
 type PatternNo {

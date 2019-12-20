@@ -4,6 +4,7 @@ import {
   Args,
   ResolveProperty,
   Parent,
+  Mutation,
 } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { DataFileService } from 'data/dataFile.service';
@@ -22,6 +23,9 @@ import { ClassDataService } from 'data/class.service';
 import { Ability } from 'data/models/ability.model';
 import { DotService } from 'data/dot.service';
 import { Dot } from 'data/models/dot.model';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CardMeta } from 'data/models/cardMeta.model';
+import { Repository } from 'typeorm';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -54,6 +58,8 @@ export class CardsResolver {
     @Inject('AbilityList')
     private readonly abilities: CacheFileService<Ability>,
     private readonly dots: DotService,
+    @InjectRepository(CardMeta)
+    private readonly cardMetaRepo: Repository<CardMeta>,
   ) {}
 
   getType(
@@ -226,6 +232,22 @@ export class CardsResolver {
     return this.dots.get(card.CardID, 'Player');
   }
 
+  @ResolveProperty(type => [String], { nullable: true })
+  async NickNames(@Parent() card: Card) {
+    const meta = await this.cardMetaRepo.findOne({ CardID: card.CardID });
+    if (meta) {
+      return meta.NickNames;
+    }
+  }
+
+  @ResolveProperty(type => String, { nullable: true })
+  async ConneName(@Parent() card: Card) {
+    const meta = await this.cardMetaRepo.findOne({ CardID: card.CardID });
+    if (meta) {
+      return meta.ConneName;
+    }
+  }
+
   /***********
    * Queries *
    ***********/
@@ -238,5 +260,37 @@ export class CardsResolver {
   @Query(type => Card, { nullable: true })
   Card(@Args({ name: 'CardID', type: () => Int }) CardID: number) {
     return this.cards.data.find(card => card.CardID === CardID);
+  }
+
+  /*************
+   * Mutations *
+   *************/
+
+  @Mutation(type => CardMeta, { nullable: true })
+  async CardMeta(
+    @Args({ name: 'CardID', type: () => Int }) CardID: number,
+    @Args({ name: 'ConneName', type: () => String, nullable: true })
+    ConneName: string,
+    @Args({ name: 'NickNames', type: () => [String], nullable: true })
+    NickNames: [string],
+  ) {
+    try {
+      let meta = await this.cardMetaRepo.findOne({ CardID });
+      if (!meta) {
+        meta = new CardMeta();
+        meta.CardID = CardID;
+      }
+      if (typeof ConneName === 'string') {
+        meta.ConneName = ConneName;
+      }
+      if (NickNames instanceof Array) {
+        meta.NickNames = NickNames;
+      }
+      await this.cardMetaRepo.save(meta);
+      return meta;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
   }
 }

@@ -29,6 +29,12 @@ export class ConfigService {
     this.joinDir('MESSAGE_TEXT_DIR', 'CACHE_DIR');
     this.joinDir('ENEMY_DIR', 'CACHE_DIR');
     this.ensureDirs();
+
+    this.setDefault('PORT', '4000');
+    this.setDefault('MONGO_HOST', 'localhost');
+    this.setDefault('MONGO_PORT', '27017');
+    this.setDefault('MONGO_DATABASE', 'aigis');
+
     console.info('Config initialized!');
   }
 
@@ -48,6 +54,10 @@ export class ConfigService {
       'MESSAGE_TEXT_DIR',
       'ENEMY_DIR',
     ] as Array<keyof Config>).forEach(key => ensureDirSync(this.config[key]));
+  }
+
+  setDefault(key: keyof Config, value: string) {
+    this.config[key] = this.config[key] || value;
   }
 
   get(key: keyof Config) {
