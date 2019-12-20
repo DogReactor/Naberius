@@ -47,6 +47,7 @@ export class RequestService extends EventEmitter {
 
           const bar = new ProgressBar(`${retry} ${fileName} [:bar] :percent`, {total: 100, width: 20});
 
+          bar.update(0);
           progress(req).on('progress', (state: any) => {
             bar.update(state.percent);
           });
