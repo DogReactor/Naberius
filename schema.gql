@@ -177,6 +177,8 @@ type Class {
   Data_ExtraAwakeOrbs: [Class!]!
   BattleStyle: ClassBattleStyleConfig
   ClassAbilityConfigs: [AbilityConfig!]
+  Cards: [Card!]!
+  NickNames: [String!]
 }
 
 type ClassBattleStyleConfig {
@@ -189,6 +191,11 @@ type ClassBattleStyleConfig {
   _Range_03: Int!
   _Range_04: Int!
   _Range_05: Int!
+}
+
+type ClassMeta {
+  ClassID: Int!
+  NickNames: [String!]
 }
 
 type Dot {
@@ -346,6 +353,7 @@ type Mission {
 type Mutation {
   UpdateFiles: Boolean!
   CardMeta(NickNames: [String!], ConneName: String, CardID: Int!): CardMeta
+  ClassMeta(NickNames: [String!], ClassID: Int!): ClassMeta
 }
 
 type PatternNo {

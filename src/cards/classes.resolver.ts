@@ -5,6 +5,7 @@ import {
   Resolver,
   ResolveProperty,
   Parent,
+  Mutation,
 } from '@nestjs/graphql';
 import { Class } from 'data/models/class.model';
 import { Int } from 'type-graphql';
@@ -14,6 +15,11 @@ import { ClassBattleStyleConfig } from 'data/models/classBattleStyleConfig.model
 import { AbilityConfig } from 'data/models/abilityConfig.model';
 import { AbilitiesResolver } from './abilities.resolver';
 import { Ability } from 'data/models/ability.model';
+import { Card } from 'data/models/card.model';
+import { DataService } from 'data/data.service';
+import { ClassMeta } from 'data/models/classMeta.model';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Resolver(Class)
 export class ClassesResolver {
@@ -24,6 +30,10 @@ export class ClassesResolver {
       ClassBattleStyleConfig
     >,
     private readonly abilitiesResolver: AbilitiesResolver,
+    @Inject('CardList')
+    private readonly cards: DataService<Card>,
+    @InjectRepository(ClassMeta)
+    private readonly classMetaRepo: Repository<ClassMeta>,
   ) {}
 
   /**************
@@ -62,6 +72,19 @@ export class ClassesResolver {
     } as any) as Ability);
   }
 
+  @ResolveProperty(type => [Card])
+  Cards(@Parent() classData: Class) {
+    return this.cards.data.filter(c => c.InitClassID === classData.ClassID);
+  }
+
+  @ResolveProperty(type => [String], { nullable: true })
+  async NickNames(@Parent() classData: Class) {
+    const meta = await this.classMetaRepo.findOne({
+      ClassID: classData.ClassID,
+    });
+    if (meta) return meta.NickNames;
+  }
+
   /***********
    * Queries *
    ***********/
@@ -74,5 +97,32 @@ export class ClassesResolver {
   @Query(type => Class, { nullable: true })
   Class(@Args({ name: 'ClassID', type: () => Int }) ClassID: number) {
     return this.classes.data.find(cl => cl.ClassID === ClassID);
+  }
+
+  /*************
+   * Mutations *
+   *************/
+
+  @Mutation(type => ClassMeta, { nullable: true })
+  async ClassMeta(
+    @Args({ name: 'ClassID', type: () => Int }) ClassID: number,
+    @Args({ name: 'NickNames', type: () => [String], nullable: true })
+    NickNames: string[],
+  ) {
+    try {
+      let meta = await this.classMetaRepo.findOne({ ClassID });
+      if (!meta) {
+        meta = new ClassMeta();
+        meta.ClassID = ClassID;
+      }
+      if (NickNames instanceof Array) {
+        meta.NickNames = NickNames;
+      }
+      await this.classMetaRepo.save(meta);
+      return meta;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
 }

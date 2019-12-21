@@ -8,6 +8,7 @@ import { DataModule } from 'data/data.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from 'config/config.service';
 import { CardMeta } from 'data/models/cardMeta.model';
+import { ClassMeta } from 'data/models/classMeta.model';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { CardMeta } from 'data/models/cardMeta.model';
         host: config.get('MONGO_HOST'),
         port: Number.parseInt(config.get('MONGO_PORT'), 10),
         database: config.get('MONGO_DATABASE'),
-        entities: [CardMeta],
+        entities: [CardMeta, ClassMeta],
         synchronize: true,
       }),
     }),

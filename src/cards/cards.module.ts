@@ -8,9 +8,14 @@ import { ClassesResolver } from './classes.resolver';
 import { AbilitiesResolver } from './abilities.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CardMeta } from 'data/models/cardMeta.model';
+import { ClassMeta } from 'data/models/classMeta.model';
 
 @Module({
-  imports: [ConfigModule, DataModule, TypeOrmModule.forFeature([CardMeta])],
+  imports: [
+    ConfigModule,
+    DataModule,
+    TypeOrmModule.forFeature([CardMeta, ClassMeta]),
+  ],
   providers: [
     CardsResolver,
     SkillsResolver,

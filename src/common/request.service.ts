@@ -45,7 +45,10 @@ export class RequestService extends EventEmitter {
             family: 4,
           });
 
-          const bar = new ProgressBar(`${retry} ${fileName} [:bar] :percent`, {total: 100, width: 20});
+          const bar = new ProgressBar(`${retry} ${fileName} [:bar] :percent`, {
+            total: 100,
+            width: 20,
+          });
 
           bar.update(0);
           progress(req).on('progress', (state: any) => {
@@ -53,6 +56,7 @@ export class RequestService extends EventEmitter {
           });
 
           const res = await req;
+          bar.update(1);
           console.info(`Downloaded ${fileName}!`);
           this.downloadings.splice(
             this.downloadings.findIndex(n => n === fileName),
@@ -62,9 +66,7 @@ export class RequestService extends EventEmitter {
           return;
         } catch (err) {
           // console.error(err.stack);
-          console.info(
-            `Failed downloading ${fileName}, retry #${retry}...`,
-          );
+          console.info(`Failed downloading ${fileName}, retry #${retry}...`);
         }
       }
       console.error(`Failed downloading ${fileName}!`);
