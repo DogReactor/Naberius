@@ -11,6 +11,8 @@ import { Inject } from '@nestjs/common';
 import { AbilityText } from 'data/models/abilityText.model';
 import { Int } from 'type-graphql';
 import { AbilityConfig } from 'data/models/abilityConfig.model';
+import { DataService } from 'data/data.service';
+import { Card } from 'data/models/card.model';
 
 @Resolver(Ability)
 export class AbilitiesResolver {
@@ -21,6 +23,8 @@ export class AbilitiesResolver {
     private readonly abilityTexts: CacheFileService<AbilityText>,
     @Inject('AbilityConfig')
     private readonly abilityConfigs: CacheFileService<AbilityConfig>,
+    @Inject('CardList')
+    private readonly cards: DataService<Card>,
   ) {}
 
   @ResolveProperty(type => String, { nullable: true })
@@ -50,6 +54,15 @@ export class AbilitiesResolver {
       return configs;
     }
     return [];
+  }
+
+  @ResolveProperty(type => [Card])
+  Cards(@Parent() ability: Ability) {
+    return this.cards.data.filter(
+      a =>
+        a.Ability_Default === ability.AbilityID ||
+        a.Ability === ability.AbilityID,
+    );
   }
 
   @Query(type => [Ability])
