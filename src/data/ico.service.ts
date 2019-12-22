@@ -19,7 +19,7 @@ export class IcoService {
       this.request.requestFile('ico_02.aar'),
       this.request.requestFile('ico_03.aar'),
     ]).then(res => {
-      res.forEach((aar, index: number) => {
+      res.forEach((aar, index) => {
         const parsed = parseAL(aar) as ALAR;
         const dir = join(this.config.get('ICO_DIR'), index.toString());
         ensureDirSync(dir);

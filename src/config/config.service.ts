@@ -31,6 +31,7 @@ export class ConfigService {
     this.joinDir('MESSAGE_TEXT_DIR', 'CACHE_DIR');
     this.joinDir('ENEMY_DIR', 'CACHE_DIR');
     this.joinDir('POSTER_DIR', 'CACHE_DIR');
+    this.joinDir('TEMPLE_DIR', 'CACHE_DIR');
     this.ensureDirs();
 
     this.logger.log('Config initialized!');
@@ -52,6 +53,7 @@ export class ConfigService {
       'MESSAGE_TEXT_DIR',
       'ENEMY_DIR',
       'POSTER_DIR',
+      'TEMPLE_DIR',
     ] as Array<keyof Config>).forEach(key => ensureDirSync(this.config[key]));
   }
 

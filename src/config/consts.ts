@@ -17,6 +17,7 @@ export const Consts: Partial<Config> = {
   MAP_DIR: 'map',
   ENEMY_DIR: 'enemy',
   POSTER_DIR: 'poster',
+  TEMPLE_DIR: 'temple',
   PORT: '4000',
   MONGO_HOST: 'localhost',
   MONGO_PORT: '27017',

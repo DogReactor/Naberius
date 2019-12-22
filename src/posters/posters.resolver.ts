@@ -3,7 +3,7 @@ import { ConfigService } from 'config/config.service';
 import { readdir, existsSync, createWriteStream } from 'fs-extra';
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment';
-import * as request from 'request-promise-native';
+import * as request from 'request';
 import { join } from 'path';
 import { Logger } from 'logger/logger.service';
 
@@ -58,5 +58,10 @@ export class PostersResolver {
   @Query(type => [String])
   async Posters() {
     return readdir(this.config.get('POSTER_DIR'));
+  }
+
+  @Query(type => [String])
+  async TempleBanners() {
+    return readdir(this.config.get('TEMPLE_DIR'));
   }
 }

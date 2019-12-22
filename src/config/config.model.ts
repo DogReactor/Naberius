@@ -16,6 +16,7 @@ export class Config {
   MAP_DIR: string;
   ENEMY_DIR: string;
   POSTER_DIR: string;
+  TEMPLE_DIR: string;
   PORT: string;
   MONGO_HOST: string;
   MONGO_PORT: string;

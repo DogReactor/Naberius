@@ -4,9 +4,9 @@ import { CacheFileService } from './cacheFile.service';
 import { HarlemTextService } from './harlemText.service';
 import { ClassDataService } from './class.service';
 import { MissionConfigService } from './missionConfig.service';
-import { QuestNameTextService } from './questNameText.service';
 import { EventArcService } from './eventArc.service';
 import { IcoService } from './ico.service';
+import { TempleService } from './temple.service';
 
 @Resolver()
 export class DataResolver {
@@ -53,6 +53,7 @@ export class DataResolver {
     private readonly questTermConfigs: CacheFileService<any>,
     @Inject('EnemySpecialty_Config')
     private readonly enemySpecialties: CacheFileService<any>,
+    private readonly temples: TempleService,
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {
@@ -81,6 +82,7 @@ export class DataResolver {
       this.enemyElems,
       this.questTermConfigs,
       this.enemySpecialties,
+      this.temples,
     ].forEach(service => service.update());
     return true;
   }

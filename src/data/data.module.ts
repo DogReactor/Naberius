@@ -19,6 +19,7 @@ import { MessageTextService } from './messageText.service';
 import { BattleTalkEventService } from './battleTalkEvent.service';
 import { MapService } from './map.service';
 import { EnemyService } from './enemy.service';
+import { TempleService } from './temple.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -81,6 +82,7 @@ function cacheFactory(fileName: string): Provider {
     BattleTalkEventService,
     MapService,
     EnemyService,
+    TempleService,
   ],
   exports: [
     FileListService,
@@ -115,6 +117,7 @@ function cacheFactory(fileName: string): Provider {
     BattleTalkEventService,
     MapService,
     EnemyService,
+    TempleService,
   ],
 })
 export class DataModule {}
