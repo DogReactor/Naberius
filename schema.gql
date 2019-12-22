@@ -486,6 +486,8 @@ type Skill {
   ID_Text: Int!
   Configs: [SkillInfluenceConfig!]!
   Text: String!
+  SkillID: Int!
+  Cards: [Card!]!
 }
 
 type SkillInfluenceConfig {

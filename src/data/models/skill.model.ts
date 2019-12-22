@@ -4,6 +4,7 @@ import { SkillInfluenceConfig } from './skillInfluenceConfig.model';
 // tslint:disable variable-name
 @ObjectType()
 export class Skill {
+  index: number;
   @Field()
   SkillName: string;
   @Field(type => Int)

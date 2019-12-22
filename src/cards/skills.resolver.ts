@@ -12,6 +12,8 @@ import { SkillText } from 'data/models/skillText.model';
 import { SkillType } from 'data/models/skillType.model';
 import { SkillInfluenceConfig } from 'data/models/skillInfluenceConfig.model';
 import { Int } from 'type-graphql';
+import { Card } from 'data/models/card.model';
+import { DataService } from 'data/data.service';
 
 @Resolver(Skill)
 export class SkillsResolver {
@@ -26,6 +28,8 @@ export class SkillsResolver {
     private readonly skillInfluenceConfigs: CacheFileService<
       SkillInfluenceConfig
     >,
+    @Inject('CardList')
+    private readonly cards: DataService<Card>,
   ) {}
 
   /**************
@@ -69,6 +73,25 @@ export class SkillsResolver {
     }
     return [];
   }
+
+  @ResolveProperty(type => Int)
+  SkillID(@Parent() skill: Skill) {
+    return skill.index;
+  }
+
+  @ResolveProperty(type => [Card])
+  Cards(@Parent() skill: Skill) {
+    return this.cards.data.filter(
+      card =>
+        card.ClassLV0SkillID === skill.index ||
+        card.ClassLV1SkillID === skill.index ||
+        card.EvoSkillID === skill.index,
+    );
+  }
+
+  /***********
+   * Queries *
+   ***********/
 
   @Query(type => [Skill])
   Skills() {

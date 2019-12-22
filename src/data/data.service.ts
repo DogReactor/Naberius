@@ -11,6 +11,7 @@ export abstract class DataService<T> {
     if (this.filePath) {
       try {
         this.data = JSON.parse(await readFile(this.filePath, 'utf-8'));
+        this.data.forEach((d: any, index) => (d.index = index));
       } catch (err) {
         console.error(err);
         this.data = [];
