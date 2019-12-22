@@ -133,24 +133,24 @@
     webpack "4.41.2"
     webpack-node-externals "1.7.2"
 
-"@nestjs/common@^6.9.0":
-  version "6.9.0"
-  resolved "https://registry.npmjs.org/@nestjs/common/-/common-6.9.0.tgz#00323078ff7e8585df4921af0f4f75dfde873866"
-  integrity sha512-dIRiKob3SkXA2JoV3/Li3vThmZAh2yEH2znM3DRXxcA+twLzM7sJNxAuVsqaVUNwZ89Piepu66fm2BFcKNlJ6A==
+"@nestjs/common@^6.10.12":
+  version "6.10.12"
+  resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-6.10.12.tgz#3ac48b5ec305243802320c5c53480fab3a5c1820"
+  integrity sha1-OsSLXsMFJDgCMgxcU0gPqzpcGCA=
   dependencies:
     axios "0.19.0"
     cli-color "2.0.0"
     uuid "3.3.3"
 
-"@nestjs/core@^6.9.0":
-  version "6.9.0"
-  resolved "https://registry.npmjs.org/@nestjs/core/-/core-6.9.0.tgz#cf4ceb19b699f838f2dc5bc46797f6e357f2cfc8"
-  integrity sha512-DvzhJQAs8dXzlJ1Ru6YPHQM+7ODQ2Ity5Ad6OU1YHqQp2GJEwa+6uzCVL/37zu7i/FhUfgLCZLcwHhofRPcgkg==
+"@nestjs/core@^6.10.12":
+  version "6.10.12"
+  resolved "https://registry.npm.taobao.org/@nestjs/core/download/@nestjs/core-6.10.12.tgz#546363837e3cf9a4467e24c4cd8902e9a492668b"
+  integrity sha1-VGNjg348+aRGfiTEzYkC6aSSZos=
   dependencies:
     "@nuxtjs/opencollective" "0.2.2"
     fast-safe-stringify "2.0.7"
     iterare "1.2.0"
-    object-hash "2.0.0"
+    object-hash "2.0.1"
     uuid "3.3.3"
 
 "@nestjs/graphql@^6.5.3":
@@ -179,6 +179,14 @@
     cors "2.8.5"
     express "4.17.1"
     multer "1.4.2"
+
+"@nestjs/schedule@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npm.taobao.org/@nestjs/schedule/download/@nestjs/schedule-0.1.1.tgz#5be4eacea159f6e22a1c892adbd6eb5716ee1087"
+  integrity sha1-W+TqzqFZ9uIqHIkq29brVxbuEIc=
+  dependencies:
+    cron "1.7.2"
+    uuid "3.3.3"
 
 "@nestjs/schematics@^6.6.3", "@nestjs/schematics@^6.7.0":
   version "6.7.0"
@@ -2103,6 +2111,13 @@ cron-parser@^2.7.3:
   dependencies:
     is-nan "^1.2.1"
     moment-timezone "^0.5.25"
+
+cron@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.npm.taobao.org/cron/download/cron-1.7.2.tgz#2ea1f35c138a07edac2ac5af5084ed6fee5723db"
+  integrity sha1-LqHzXBOKB+2sKsWvUITtb+5XI9s=
+  dependencies:
+    moment-timezone "^0.5.x"
 
 cross-fetch@^3.0.4:
   version "3.0.4"
@@ -4367,7 +4382,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment-timezone@^0.5.25:
+moment-timezone@^0.5.25, moment-timezone@^0.5.x:
   version "0.5.27"
   resolved "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.27.tgz#73adec8139b6fe30452e78f210f27b1f346b8877"
   integrity sha512-EIKQs7h5sAsjhPCqN6ggx6cEbs94GK050254TIJySD1bzoM5JTYDwAU1IoVOeTOL6Gm27kYJ51/uuvq1kIlrbw==
@@ -4721,10 +4736,10 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-hash@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/object-hash/-/object-hash-2.0.0.tgz#7c4cc341eb8b53367312a7c546142f00c9e0ea20"
-  integrity sha512-I7zGBH0rDKwVGeGZpZoFaDhIwvJa3l1CZE+8VchylXbInNiCj7sxxea9P5dTM4ftKR5//nrqxrdeGSTWL2VpBA==
+object-hash@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/object-hash/download/object-hash-2.0.1.tgz#cef18a0c940cc60aa27965ecf49b782cbf101d96"
+  integrity sha1-zvGKDJQMxgqieWXs9Jt4LL8QHZY=
 
 object-inspect@^1.6.0:
   version "1.7.0"

@@ -16,4 +16,9 @@ export const Consts: Partial<Config> = {
   BATTLE_TALK_EVENT_DIR: 'battleTalkEvent',
   MAP_DIR: 'map',
   ENEMY_DIR: 'enemy',
+  POSTER_DIR: 'poster',
+  PORT: '4000',
+  MONGO_HOST: 'localhost',
+  MONGO_PORT: '27017',
+  MONGO_DATABASE: 'aigis',
 };

@@ -4,12 +4,14 @@ import { join } from 'path';
 import { Consts } from './consts';
 import { Config } from './config.model';
 import { ensureDirSync } from 'fs-extra';
+import { Logger } from 'logger/logger.service';
 
 @Injectable()
 export class ConfigService {
   private readonly config: Config;
 
-  constructor(filePath: string) {
+  constructor(private readonly logger: Logger, filePath: string) {
+    this.logger.setContext('ConfigService');
     this.config = {
       ...Consts,
       ...JSON.parse(readFileSync(join(filePath, 'config.json'), 'utf-8')),
@@ -28,14 +30,10 @@ export class ConfigService {
     this.joinDir('MAP_DIR', 'CACHE_DIR');
     this.joinDir('MESSAGE_TEXT_DIR', 'CACHE_DIR');
     this.joinDir('ENEMY_DIR', 'CACHE_DIR');
+    this.joinDir('POSTER_DIR', 'CACHE_DIR');
     this.ensureDirs();
 
-    this.setDefault('PORT', '4000');
-    this.setDefault('MONGO_HOST', 'localhost');
-    this.setDefault('MONGO_PORT', '27017');
-    this.setDefault('MONGO_DATABASE', 'aigis');
-
-    console.info('Config initialized!');
+    this.logger.log('Config initialized!');
   }
 
   ensureDirs() {
@@ -53,6 +51,7 @@ export class ConfigService {
       'MAP_DIR',
       'MESSAGE_TEXT_DIR',
       'ENEMY_DIR',
+      'POSTER_DIR',
     ] as Array<keyof Config>).forEach(key => ensureDirSync(this.config[key]));
   }
 

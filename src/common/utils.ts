@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import { ALTX } from 'aigis-fuel';
 import * as sharp from 'sharp';
 import { Stream } from 'stream';
-import { logger } from './logger';
 
 /**
  * sleep for a time
@@ -10,22 +9,6 @@ import { logger } from './logger';
  */
 export async function sleep(ms: number) {
   return new Promise(resolve => setTimeout(() => resolve(), ms));
-}
-
-export function PromiseAllPart(list: any[], key: string) {
-  let promises: any[];
-  try {
-    promises = list.map(item => item[key]);
-  } catch (err) {
-    logger.info(err.message);
-    promises = [];
-  }
-  return Promise.all(promises).then(reses => {
-    reses.forEach((res, index) => {
-      list[index][key] = res;
-    });
-    return list;
-  });
 }
 
 export function numberPadding(num: number, length: number) {

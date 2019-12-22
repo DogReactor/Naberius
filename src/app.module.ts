@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from 'config/config.service';
 import { CardMeta } from 'data/models/cardMeta.model';
 import { ClassMeta } from 'data/models/classMeta.model';
+import { PostersModule } from 'posters/posters.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -28,10 +30,12 @@ import { ClassMeta } from 'data/models/classMeta.model';
         synchronize: true,
       }),
     }),
+    ScheduleModule.forRoot(),
     DataModule,
     FilesModule,
     QuestsModule,
     CardsModule,
+    PostersModule,
   ],
 })
 export class AppModule {}

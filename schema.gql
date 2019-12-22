@@ -199,6 +199,9 @@ type ClassMeta {
   NickNames: [String!]
 }
 
+"""Date custom scalar type"""
+scalar Date
+
 type Dot {
   Name: String!
   Length: Int!
@@ -375,6 +378,7 @@ type PosData {
 
 type Query {
   Files: [File!]!
+  UpdateTime: Date
   Quest(QuestID: Int!): Quest
   QuestEventTexts: [QuestEventText!]!
   Missions: [Mission!]!
@@ -388,6 +392,7 @@ type Query {
   Ability(AbilityID: Int!): Ability!
   Classes: [Class!]!
   Class(ClassID: Int!): Class
+  Posters: [String!]!
 }
 
 type Quest {

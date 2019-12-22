@@ -15,6 +15,7 @@ export class Config {
   BATTLE_TALK_EVENT_DIR: string;
   MAP_DIR: string;
   ENEMY_DIR: string;
+  POSTER_DIR: string;
   PORT: string;
   MONGO_HOST: string;
   MONGO_PORT: string;

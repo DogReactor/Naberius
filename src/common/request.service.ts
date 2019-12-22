@@ -7,6 +7,7 @@ import { FileListService } from 'data/fileList.service';
 import { EventEmitter } from 'events';
 import * as ProgressBar from 'progress';
 import * as progress from 'request-progress';
+import { Logger } from 'logger/logger.service';
 
 @Injectable()
 export class RequestService extends EventEmitter {
@@ -15,6 +16,7 @@ export class RequestService extends EventEmitter {
   constructor(
     private readonly config: ConfigService,
     private readonly files: FileListService,
+    private readonly logger: Logger,
   ) {
     super();
     this.on('download', async (fileName: string) => {
@@ -33,7 +35,6 @@ export class RequestService extends EventEmitter {
         await sleep(Math.floor(Math.random() * 1001));
       }
       this.downloadings.push(fileName);
-      // console.info(`+${this.downloadings.length} Downloading ${fileName}`);
       for (let retry = 1; retry <= 3; retry++) {
         try {
           const req = request.get({
@@ -57,7 +58,7 @@ export class RequestService extends EventEmitter {
 
           const res = await req;
           bar.update(1);
-          console.info(`Downloaded ${fileName}!`);
+          this.logger.log(`Downloaded ${fileName}!`);
           this.downloadings.splice(
             this.downloadings.findIndex(n => n === fileName),
             1,
@@ -65,11 +66,12 @@ export class RequestService extends EventEmitter {
           this.emit(fileName, 'success', res);
           return;
         } catch (err) {
-          // console.error(err.stack);
-          console.info(`Failed downloading ${fileName}, retry #${retry}...`);
+          this.logger.warn(
+            `Failed downloading ${fileName}, retry #${retry}...`,
+          );
         }
       }
-      console.error(`Failed downloading ${fileName}!`);
+      this.logger.error(`Failed downloading ${fileName}!`);
       this.downloadings.splice(
         this.downloadings.findIndex(n => n === fileName),
         1,
