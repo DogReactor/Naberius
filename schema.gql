@@ -393,7 +393,7 @@ type Query {
   Classes: [Class!]!
   Class(ClassID: Int!): Class
   Posters: [String!]!
-  TempleBanners: [String!]!
+  Banners: [String!]!
 }
 
 type Quest {

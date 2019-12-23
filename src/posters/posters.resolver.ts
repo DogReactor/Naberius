@@ -61,7 +61,7 @@ export class PostersResolver {
   }
 
   @Query(type => [String])
-  async TempleBanners() {
-    return readdir(this.config.get('TEMPLE_DIR'));
+  async Banners() {
+    return readdir(this.config.get('BANNER_DIR'));
   }
 }

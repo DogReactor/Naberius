@@ -6,7 +6,7 @@ import { ClassDataService } from './class.service';
 import { MissionConfigService } from './missionConfig.service';
 import { EventArcService } from './eventArc.service';
 import { IcoService } from './ico.service';
-import { TempleService } from './temple.service';
+import { BannerService } from './banner.service';
 
 @Resolver()
 export class DataResolver {
@@ -53,7 +53,7 @@ export class DataResolver {
     private readonly questTermConfigs: CacheFileService<any>,
     @Inject('EnemySpecialty_Config')
     private readonly enemySpecialties: CacheFileService<any>,
-    private readonly temples: TempleService,
+    private readonly temples: BannerService,
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {

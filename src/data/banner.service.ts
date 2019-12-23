@@ -6,7 +6,7 @@ import { ALTX2PNG } from 'common/utils';
 import { join } from 'path';
 
 @Injectable()
-export class TempleService {
+export class BannerService {
   constructor(
     private readonly config: ConfigService,
     private readonly request: RequestService,
@@ -38,7 +38,7 @@ export class TempleService {
                   height: sprite.Height,
                 })
                 .toFile(
-                  join(this.config.get('TEMPLE_DIR'), `${name.trim()}.png`),
+                  join(this.config.get('BANNER_DIR'), `${name.trim()}.png`),
                 );
             }
           }
