@@ -10,4 +10,4 @@ COPY yarn.lock .
 COPY scripts scripts
 RUN yarn install --production
 
-ENTRYPOINT [ "node", "/root/dist/index.js" ]
+ENTRYPOINT [ "node", "/root/dist/main.js" ]

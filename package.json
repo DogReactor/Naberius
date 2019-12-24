@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "nest build",
     "clean": "node scripts/clean.js app",
     "grabPosters": "node scripts/grabPosters.js",
     "start": "nest start",
