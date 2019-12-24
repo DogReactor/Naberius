@@ -92,7 +92,6 @@ export class CardsResolver {
 
   @ResolveProperty(type => [String])
   async ImageStand(@Parent() card: Card) {
-    // TODO: extreamly slow
     return (
       await this.files.find({
         where: {
@@ -106,7 +105,6 @@ export class CardsResolver {
 
   @ResolveProperty(type => [String])
   async ImageCG(@Parent() card: Card) {
-    // TODO: extreamly slow
     return (
       await this.files.find({
         where: {
@@ -254,13 +252,27 @@ export class CardsResolver {
    ***********/
 
   @Query(type => [Card])
-  Cards() {
+  Cards(
+    @Args({ name: 'ClassID', type: () => Int, nullable: true })
+    ClassID?: number,
+  ) {
+    if (ClassID) {
+      return this.cards.data.filter(card => card.InitClassID === ClassID);
+    }
     return this.cards.data;
   }
 
   @Query(type => Card, { nullable: true })
-  Card(@Args({ name: 'CardID', type: () => Int }) CardID: number) {
-    return this.cards.data.find(card => card.CardID === CardID);
+  Card(
+    @Args({ name: 'CardID', type: () => Int, nullable: true }) CardID?: number,
+    @Args({ name: 'Name', type: () => String, nullable: true }) Name?: string,
+  ) {
+    if (Name) {
+      CardID = this.nameTexts.data.findIndex(name => name.Message === Name) + 1;
+    }
+    if (CardID) {
+      return this.cards.data.find(card => card.CardID === CardID);
+    }
   }
 
   /*************

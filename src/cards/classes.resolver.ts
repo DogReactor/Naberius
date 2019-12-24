@@ -82,7 +82,9 @@ export class ClassesResolver {
     const meta = await this.classMetaRepo.findOne({
       ClassID: classData.ClassID,
     });
-    if (meta) return meta.NickNames;
+    if (meta) {
+      return meta.NickNames;
+    }
   }
 
   /***********
@@ -90,12 +92,31 @@ export class ClassesResolver {
    ***********/
 
   @Query(type => [Class])
-  Classes() {
+  Classes(
+    @Args({ name: 'MaterialID', type: () => Int, nullable: true })
+    MaterialID?: number,
+  ) {
+    if (MaterialID) {
+      return this.classes.data.filter(cl =>
+        [
+          cl.JobChangeMaterial1,
+          cl.JobChangeMaterial2,
+          cl.JobChangeMaterial3,
+        ].includes(MaterialID),
+      );
+    }
     return this.classes.data;
   }
 
   @Query(type => Class, { nullable: true })
-  Class(@Args({ name: 'ClassID', type: () => Int }) ClassID: number) {
+  Class(
+    @Args({ name: 'ClassID', type: () => Int, nullable: true })
+    ClassID?: number,
+    @Args({ name: 'Name', type: () => String, nullable: true }) Name?: string,
+  ) {
+    if (Name) {
+      return this.classes.data.find(cl => cl.Name === Name);
+    }
     return this.classes.data.find(cl => cl.ClassID === ClassID);
   }
 

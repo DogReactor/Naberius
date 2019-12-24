@@ -385,14 +385,14 @@ type Query {
   Missions: [Mission!]!
   Mission(MissionID: Int!): Mission!
   Map: Map
-  Cards: [Card!]!
-  Card(CardID: Int!): Card
+  Cards(ClassID: Int): [Card!]!
+  Card(Name: String, CardID: Int): Card
   Skills: [Skill!]!
   Skill(SkillID: Int!): Skill
   Abilities: [Ability!]!
   Ability(AbilityID: Int!): Ability!
-  Classes: [Class!]!
-  Class(ClassID: Int!): Class
+  Classes(MaterialID: Int): [Class!]!
+  Class(Name: String, ClassID: Int): Class
   Posters: [String!]!
   Banners: [String!]!
 }
