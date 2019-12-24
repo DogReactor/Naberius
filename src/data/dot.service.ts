@@ -21,7 +21,9 @@ export class DotService {
     );
     const dotImagePath = join(dotPath, `sprite.png`);
     const dotInfoPath = join(dotPath, `info.json`);
-    if (!(await pathExists(dotPath))) {
+    if (
+      !((await pathExists(dotImagePath)) && (await pathExists(dotInfoPath)))
+    ) {
       await ensureDir(dotPath);
       const dots: Dot[] = [];
       let sprites: { [key: number]: ALTX.FrameTable } = {};
@@ -55,8 +57,13 @@ export class DotService {
           alod.Entries.forEach(entry => {
             dot.Entries.push({
               Name: entry.Name.slice(0, 4),
-              Sprites: sprites[entry.Fields.Texture0ID.Id1],
+              Sprites: entry.Fields.Texture0ID
+                ? sprites[entry.Fields.Texture0ID.Id1]
+                : Object.values(sprites)[0],
             });
+            if (entry.Fields.Texture0ID) {
+              delete sprites[entry.Fields.Texture0ID.Id1];
+            }
           });
           almt.Entries.forEach(entry => {
             const entryIndex = dot.Entries.findIndex(
@@ -89,12 +96,12 @@ export class DotService {
 
       await writeFile(dotInfoPath, JSON.stringify(dots));
     }
-    const file = await readFile(dotInfoPath, 'utf-8');
+    const fileRes = await readFile(dotInfoPath, 'utf-8');
     try {
-      const dots = JSON.parse(file) as Dot[];
+      const dots = JSON.parse(fileRes) as Dot[];
       return dots;
     } catch (err) {
-      console.log(file);
+      console.log(fileRes);
       throw err;
     }
   }

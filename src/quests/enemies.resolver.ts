@@ -9,7 +9,7 @@ import { Dot } from 'data/models/dot.model';
 import { EnemySpecialtyConfig } from 'data/models/enemySpecialtyConfig.model';
 
 @Resolver(Enemy)
-export class EnemyResolver {
+export class EnemiesResolver {
   constructor(
     @Inject('EnemyType')
     private readonly enemyTypes: CacheFileService<EnemyType>,
