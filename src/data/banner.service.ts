@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { RequestService } from 'common/request.service';
 import { parseAL, ALAR, ALTX } from 'aigis-fuel';
 import { ALTX2PNG } from 'common/utils';
@@ -8,7 +8,7 @@ import { join } from 'path';
 @Injectable()
 export class BannerService {
   constructor(
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
     private readonly request: RequestService,
   ) {}
 

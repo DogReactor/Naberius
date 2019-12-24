@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { RequestService } from 'common/request.service';
 import { parseAL, ALAR, ALTB } from 'aigis-fuel';
 import { writeFile, readdirSync, readFileSync, existsSync } from 'fs-extra';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { join } from 'path';
 
 @Injectable()
 export class HarlemTextService {
   constructor(
     private readonly request: RequestService,
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
   ) {}
 
   async update() {

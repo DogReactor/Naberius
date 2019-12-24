@@ -9,7 +9,7 @@ import {
   Inject,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import moment = require('moment');
 import { join } from 'path';
 import { ensureDir, writeFile, remove, readdir } from 'fs-extra';
@@ -21,7 +21,7 @@ import { DataResolver } from 'data/data.resolver';
 @Controller('upload-origin')
 export class FilesController {
   constructor(
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
     @InjectRepository(File)
     private readonly files: Repository<File>,
     private readonly data: DataResolver,

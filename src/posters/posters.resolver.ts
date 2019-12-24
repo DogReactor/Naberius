@@ -1,5 +1,5 @@
 import { Resolver, Query } from '@nestjs/graphql';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { readdir, existsSync, createWriteStream } from 'fs-extra';
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment';
@@ -34,7 +34,7 @@ class DateParser {
 @Resolver()
 export class PostersResolver {
   constructor(
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
     private readonly logger: Logger,
   ) {}
 

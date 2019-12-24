@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RequestService } from 'common/request.service';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { Dot } from './models/dot.model';
 import { join } from 'path';
 import { writeFile, readFile, ensureDir, pathExists } from 'fs-extra';
@@ -11,7 +11,7 @@ import { ALTX, parseAL, ALMT, ALOD, ALAR } from 'aigis-fuel';
 export class DotService {
   constructor(
     private readonly request: RequestService,
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
   ) {}
 
   async get(CardID: number, type: 'Enemy' | 'Player') {

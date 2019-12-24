@@ -3,14 +3,14 @@ import { RequestService } from 'common/request.service';
 import { parseAL, ALAR } from 'aigis-fuel';
 import { ensureDirSync, writeFile, pathExists, readFile } from 'fs-extra';
 import { join, parse } from 'path';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { EventArc } from './models/eventArc.model';
 
 @Injectable()
 export class EventArcService {
   constructor(
     private readonly request: RequestService,
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
   ) {}
 
   async get(QuestID: number) {

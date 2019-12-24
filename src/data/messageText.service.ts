@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { RequestService } from 'common/request.service';
 import { join } from 'path';
 import { writeFile, pathExists, readFile } from 'fs-extra';
@@ -15,7 +15,7 @@ export class MessageTextService {
     @InjectRepository(File)
     private readonly files: Repository<File>,
     private readonly request: RequestService,
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
   ) {}
 
   async get(MissionID: number): Promise<Message[]> {

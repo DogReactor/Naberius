@@ -5,17 +5,26 @@ import { Consts } from './consts';
 import { Config } from './config.model';
 import { ensureDirSync } from 'fs-extra';
 import { Logger } from 'logger/logger.service';
+import { ConfigService as NestConfigService } from '@nestjs/config';
 
 @Injectable()
-export class ConfigService {
+export class ParsedConfigService {
   private readonly config: Config;
 
-  constructor(private readonly logger: Logger, filePath: string) {
+  constructor(
+    private readonly logger: Logger,
+    configs: NestConfigService,
+    filePath: string,
+  ) {
     this.logger.setContext('ConfigService');
     this.config = {
+      FILES_ROOT_DIR: configs.get('FILES_ROOT_DIR', '.'),
+      MONGO_HOST: configs.get('MONGO_HOST', 'localhost'),
+      MONGO_PORT: configs.get('MONGO_PORT', '27017'),
+      MONGO_DATABASE: configs.get('MONGO_DATABASE', 'aigis'),
+      PORT: configs.get('PORT', '4000'),
       ...Consts,
-      ...JSON.parse(readFileSync(join(filePath, 'config.json'), 'utf-8')),
-    };
+    } as Config;
     this.joinDir('DATA_DIR', 'FILES_ROOT_DIR');
     this.joinDir('CACHE_DIR', 'FILES_ROOT_DIR');
     this.joinDir('HARLEM_TEXT_A_DIR', 'CACHE_DIR');

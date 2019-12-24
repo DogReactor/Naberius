@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as request from 'request-promise-native';
 import { parseAL } from 'aigis-fuel';
 import { sleep } from './utils';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { EventEmitter } from 'events';
 import * as ProgressBar from 'progress';
 import * as progress from 'request-progress';
@@ -16,7 +16,7 @@ export class RequestService extends EventEmitter {
   private downloadings: string[] = [];
 
   constructor(
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
     @InjectRepository(File)
     private readonly files: Repository<File>,
     private readonly logger: Logger,

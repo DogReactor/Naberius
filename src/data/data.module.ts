@@ -1,6 +1,6 @@
 import { Module, Provider, Inject } from '@nestjs/common';
 import { ConfigModule } from 'config/config.module';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { DataFileService } from './dataFile.service';
 import { join } from 'path';
 import { CacheFileService } from './cacheFile.service';
@@ -25,8 +25,8 @@ import { File } from './models/file.model';
 function dataFactory(fileName: string): Provider {
   return {
     provide: fileName,
-    inject: [ConfigService],
-    useFactory: (config: ConfigService) => {
+    inject: [ParsedConfigService],
+    useFactory: (config: ParsedConfigService) => {
       const service = new DataFileService();
       service.setFilePath(join(config.get('DATA_DIR'), fileName + '.json'));
       return service;
@@ -37,8 +37,8 @@ function dataFactory(fileName: string): Provider {
 function cacheFactory(fileName: string): Provider {
   return {
     provide: fileName,
-    inject: [ConfigService, RequestService],
-    useFactory: (config: ConfigService, request: RequestService) => {
+    inject: [ParsedConfigService, RequestService],
+    useFactory: (config: ParsedConfigService, request: RequestService) => {
       const service = new CacheFileService(request);
       service.setFilePath(join(config.get('CACHE_DIR'), fileName + '.json'));
       return service;

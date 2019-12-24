@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { join } from 'path';
 import { ensureDir, pathExists, writeFile, readFile } from 'fs-extra';
 import { parseAL, ALAR, ALTX, ALTB } from 'aigis-fuel';
@@ -10,7 +10,7 @@ import { BattleTalkEvent } from './models/battleTalkEvent.model';
 @Injectable()
 export class BattleTalkEventService {
   constructor(
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
     private readonly request: RequestService,
   ) {}
   async get(MissionID: number) {

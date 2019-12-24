@@ -18,8 +18,4 @@ export const Consts: Partial<Config> = {
   ENEMY_DIR: 'enemy',
   POSTER_DIR: 'poster',
   BANNER_DIR: 'banner',
-  PORT: '4000',
-  MONGO_HOST: 'localhost',
-  MONGO_PORT: '27017',
-  MONGO_DATABASE: 'aigis',
 };

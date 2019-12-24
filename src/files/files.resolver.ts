@@ -1,5 +1,5 @@
 import { Resolver, Query } from '@nestjs/graphql';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { readdir, stat } from 'fs-extra';
 import { join } from 'path';
 import { File } from 'data/models/file.model';
@@ -11,7 +11,7 @@ export class FilesResolver {
   constructor(
     @InjectRepository(File)
     private readonly files: Repository<File>,
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
   ) {}
 
   @Query(returns => [File])

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
 import { RequestService } from 'common/request.service';
 import { writeFile, readdir, readFile } from 'fs-extra';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { join, parse } from 'path';
 import { Mission } from './models/missionConfig.model';
 import { MissionQuest } from './models/missionQuest.model';
@@ -19,7 +19,7 @@ export class MissionConfigService {
     @InjectRepository(File)
     private readonly files: Repository<File>,
     private readonly request: RequestService,
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
   ) {
     this.read();
   }

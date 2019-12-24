@@ -4,13 +4,13 @@ import { parseAL, ALAR, ALTX } from 'aigis-fuel';
 import { ALTX2PNG } from 'common/utils';
 import { join } from 'path';
 import { ensureDirSync } from 'fs-extra';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 
 @Injectable()
 export class IcoService {
   constructor(
     private readonly request: RequestService,
-    private readonly config: ConfigService,
+    private readonly config: ParsedConfigService,
   ) {}
   async update() {
     await Promise.all([

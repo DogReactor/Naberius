@@ -6,23 +6,25 @@ import { QuestsModule } from 'quests/quests.module';
 import { CardsModule } from 'cards/cards.module';
 import { DataModule } from 'data/data.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigService } from 'config/config.service';
+import { ParsedConfigService } from 'config/config.service';
 import { CardMeta } from 'data/models/cardMeta.model';
 import { ClassMeta } from 'data/models/classMeta.model';
 import { PostersModule } from 'posters/posters.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { File } from 'data/models/file.model';
+import { ConfigModule as NestConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    NestConfigModule.forRoot(),
     ConfigModule,
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+      inject: [ParsedConfigService],
+      useFactory: (config: ParsedConfigService) => ({
         type: 'mongodb',
         host: config.get('MONGO_HOST'),
         port: Number.parseInt(config.get('MONGO_PORT'), 10),
