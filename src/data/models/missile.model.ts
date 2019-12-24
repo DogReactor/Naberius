@@ -2,6 +2,7 @@ import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
 export class Missile {
+  index: number;
   @Field(type => Int)
   PatternID: number;
   @Field(type => Int)

@@ -20,6 +20,7 @@ import { DataService } from 'data/data.service';
 import { ClassMeta } from 'data/models/classMeta.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Missile } from 'data/models/missile.model';
 
 @Resolver(Class)
 export class ClassesResolver {
@@ -34,6 +35,8 @@ export class ClassesResolver {
     private readonly cards: DataService<Card>,
     @InjectRepository(ClassMeta)
     private readonly classMetaRepo: Repository<ClassMeta>,
+    @Inject('Missile')
+    private readonly missiles: CacheFileService<Missile>,
   ) {}
 
   /**************
@@ -84,6 +87,13 @@ export class ClassesResolver {
     });
     if (meta) {
       return meta.NickNames;
+    }
+  }
+
+  @ResolveProperty(type => Missile, { nullable: true })
+  Missile(@Parent() classData: Class) {
+    if (classData.MissileID !== -1) {
+      return this.missiles.data[classData.MissileID];
     }
   }
 

@@ -7,6 +7,7 @@ import { MapResolver } from './maps.resolver';
 import { EnemiesResolver } from './enemies.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { File } from 'data/models/file.model';
+import { MissilesResolver } from './missiles.resolver';
 
 @Module({
   imports: [ConfigModule, DataModule, TypeOrmModule.forFeature([File])],
@@ -15,7 +16,7 @@ import { File } from 'data/models/file.model';
     MissionsResolver,
     MapResolver,
     EnemiesResolver,
-    MissionsResolver,
+    MissilesResolver,
   ],
 })
 export class QuestsModule {}

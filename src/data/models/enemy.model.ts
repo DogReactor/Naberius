@@ -67,4 +67,8 @@ export class Enemy {
   Param_ChangeCondition: number;
   @Field({ nullable: true })
   _Attribute: string;
+  @Field(type => Int, { nullable: true })
+  TypeAttack: number;
+  @Field(type => Int, { nullable: true })
+  HeightOfs_Paralisys: number;
 }

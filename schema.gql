@@ -180,6 +180,7 @@ type Class {
   ClassAbilityConfigs: [AbilityConfig!]
   Cards: [Card!]!
   NickNames: [String!]
+  Missile: Missile
 }
 
 type ClassBattleStyleConfig {
@@ -250,10 +251,13 @@ type Enemy {
   Param_ChangeParam: Int!
   Param_ChangeCondition: Int!
   _Attribute: String
+  TypeAttack: Int
+  HeightOfs_Paralisys: Int
   EnemyType: EnemyType!
   EnemyElem: EnemyElem!
   Dots: [Dot!]
   SpecialtyConfigs: [EnemySpecialtyConfig!]!
+  Missile: Missile
 }
 
 type EnemyElem {
@@ -327,6 +331,26 @@ type Map {
   Image: String
 }
 
+type Missile {
+  PatternID: Int!
+  Enemy: Int!
+  Speed: Int!
+  YOffset: Int!
+  MaxHeight: Int!
+  XOffset: Int!
+  MaxWidth: Int!
+  DamageArea: Int!
+  SlowTime: Int!
+  SlowRate: Int!
+  HitEffect: Int!
+  ExplosionEffect: Int!
+  DisableRotation: Int!
+  InterruptFlip: Int!
+  _CastType: Int!
+  Property: String!
+  MissileID: Int!
+}
+
 type Mission {
   MissionID: Int!
   Name: String
@@ -385,6 +409,8 @@ type Query {
   Missions: [Mission!]!
   Mission(MissionID: Int!): Mission!
   Map: Map
+  Missiles: [Missile!]!
+  Missile(MissileID: Int!): Missile
   Cards(ClassID: Int): [Card!]!
   Card(Name: String, CardID: Int): Card
   Skills: [Skill!]!

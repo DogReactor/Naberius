@@ -1,4 +1,10 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  ResolveProperty,
+  Parent,
+} from '@nestjs/graphql';
 import { Missile } from 'data/models/missile.model';
 import { CacheFileService } from 'data/cacheFile.service';
 import { Inject } from '@nestjs/common';
@@ -10,6 +16,11 @@ export class MissilesResolver {
     @Inject('Missile')
     private readonly missiles: CacheFileService<Missile>,
   ) {}
+
+  @ResolveProperty(type => Int)
+  MissileID(@Parent() missile: Missile) {
+    return missile.index;
+  }
 
   @Query(type => [Missile])
   Missiles() {

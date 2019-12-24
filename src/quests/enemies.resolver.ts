@@ -7,6 +7,7 @@ import { EnemyElem } from 'data/models/enemyElem.model';
 import { DotService } from 'data/dot.service';
 import { Dot } from 'data/models/dot.model';
 import { EnemySpecialtyConfig } from 'data/models/enemySpecialtyConfig.model';
+import { Missile } from 'data/models/missile.model';
 
 @Resolver(Enemy)
 export class EnemiesResolver {
@@ -18,6 +19,8 @@ export class EnemiesResolver {
     private readonly dots: DotService,
     @Inject('EnemySpecialty_Config')
     private readonly enemySpecialties: CacheFileService<EnemySpecialtyConfig>,
+    @Inject('Missile')
+    private readonly missiles: CacheFileService<Missile>,
   ) {}
 
   @ResolveProperty(type => EnemyType)
@@ -60,5 +63,12 @@ export class EnemiesResolver {
       }
     }
     return configs;
+  }
+
+  @ResolveProperty(type => Missile, { nullable: true })
+  Missile(@Parent() enemy: Enemy) {
+    if (enemy.MissileID !== -1) {
+      return this.missiles.data[enemy.MissileID];
+    }
   }
 }
