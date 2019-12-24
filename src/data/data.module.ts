@@ -7,7 +7,6 @@ import { CacheFileService } from './cacheFile.service';
 import { CommonModule } from 'common/common.module';
 import { RequestService } from 'common/request.service';
 import { DataResolver } from './data.resolver';
-import { FileListService } from './fileList.service';
 import { HarlemTextService } from './harlemText.service';
 import { ClassDataService } from './class.service';
 import { MissionConfigService } from './missionConfig.service';
@@ -20,6 +19,8 @@ import { BattleTalkEventService } from './battleTalkEvent.service';
 import { MapService } from './map.service';
 import { EnemyService } from './enemy.service';
 import { BannerService } from './banner.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { File } from './models/file.model';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -46,10 +47,9 @@ function cacheFactory(fileName: string): Provider {
 }
 
 @Module({
-  imports: [ConfigModule, CommonModule],
+  imports: [ConfigModule, CommonModule, TypeOrmModule.forFeature([File])],
   providers: [
     DataResolver,
-    FileListService,
     dataFactory('CardList'),
     dataFactory('QuestList'),
     cacheFactory('NameText'),
@@ -85,7 +85,7 @@ function cacheFactory(fileName: string): Provider {
     BannerService,
   ],
   exports: [
-    FileListService,
+    DataResolver,
     'CardList',
     'QuestList',
     'NameText',

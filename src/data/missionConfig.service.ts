@@ -1,21 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
-import { FileListService } from './fileList.service';
 import { RequestService } from 'common/request.service';
 import { writeFile, readdir, readFile } from 'fs-extra';
 import { ConfigService } from 'config/config.service';
 import { join, parse } from 'path';
 import { Mission } from './models/missionConfig.model';
 import { MissionQuest } from './models/missionQuest.model';
-import { MissingSubscriptionTopicsError } from 'type-graphql';
 import { EventNameText } from './models/eventNameText.model';
+import { Repository } from 'typeorm';
+import { File } from './models/file.model';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class MissionConfigService {
   configs: Mission[] = [];
   missionQuests: MissionQuest[] = [];
   constructor(
-    private readonly files: FileListService,
+    @InjectRepository(File)
+    private readonly files: Repository<File>,
     private readonly request: RequestService,
     private readonly config: ConfigService,
   ) {
@@ -40,6 +42,7 @@ export class MissionConfigService {
   }
 
   async read() {
+    this.configs = [];
     const dir = this.config.get('MISSION_DIR');
 
     const eventNameTexts: EventNameText[] = JSON.parse(
@@ -86,22 +89,29 @@ export class MissionConfigService {
 
   async update() {
     await Promise.all(
-      this.files.data
-        .filter(
-          file =>
-            (file.Name.includes('MissionConfig.atb') &&
-              file.Name !== 'EmcMissionConfig.atb') ||
-            file.Name.includes('MissionQuestList.atb') ||
-            file.Name === 'EventNameText.atb',
-        )
-        .map(async file => {
-          const data = await this.request.requestALTB(file.Name);
-          const nameParsed = parse(file.Name);
-          await writeFile(
-            join(this.config.get('MISSION_DIR'), nameParsed.name + '.json'),
-            JSON.stringify(data),
-          );
-        }),
+      (
+        await this.files.find({
+          where: {
+            $or: [
+              {
+                $and: [
+                  { Name: /MissionConfig\.atb/ },
+                  { Name: { $not: /EmcMissionConfig\.atb/ } },
+                ],
+              },
+              { Name: /MissionQuestList\.atb/ },
+              { Name: /EventNameText\.atb/ },
+            ],
+          },
+        })
+      ).map(async file => {
+        const data = await this.request.requestALTB(file.Name);
+        const nameParsed = parse(file.Name);
+        await writeFile(
+          join(this.config.get('MISSION_DIR'), nameParsed.name + '.json'),
+          JSON.stringify(data),
+        );
+      }),
     );
     await this.read();
   }

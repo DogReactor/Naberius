@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { FileListService } from './fileList.service';
 import { RequestService } from 'common/request.service';
 import { parseAL, ALAR, ALTB } from 'aigis-fuel';
 import { writeFile, readdirSync, readFileSync, existsSync } from 'fs-extra';
 import { ConfigService } from 'config/config.service';
 import { join } from 'path';
-import { numberPadding } from 'common/utils';
 
 @Injectable()
 export class HarlemTextService {

@@ -16,7 +16,6 @@ import { File } from 'data/models/file.model';
 import { StatusText } from 'data/models/statusText.model';
 import { SystemText } from 'data/models/systemText.model';
 import { SkillsWithType } from './models/skillsWithType.model';
-import { FileListService } from 'data/fileList.service';
 import { HarlemTextService } from 'data/harlemText.service';
 import { Class } from 'data/models/class.model';
 import { ClassDataService } from 'data/class.service';
@@ -40,7 +39,8 @@ function fileSorter(a: File, b: File) {
 export class CardsResolver {
   constructor(
     @Inject('CardList') private readonly cards: DataFileService<Card>,
-    private readonly files: FileListService,
+    @InjectRepository(File)
+    private readonly files: Repository<File>,
     @Inject('NameText')
     private readonly nameTexts: CacheFileService<NameText>,
     @Inject('StatusText')
@@ -91,32 +91,33 @@ export class CardsResolver {
   }
 
   @ResolveProperty(type => [String])
-  ImageStand(@Parent() card: Card) {
+  async ImageStand(@Parent() card: Card) {
     // TODO: extreamly slow
-    return this.files._.filter(
-      file =>
-        !!RegExp(
-          `^${(Array(3).join('0') + card.CardID).slice(-3)}_card_\\d\\.png$`,
-        ).exec(file.Name),
-    )
-      .sort(fileSorter)
-      .map(file => file.Link)
-      .uniq()
-      .value();
+    return (
+      await this.files.find({
+        where: {
+          Name: RegExp(
+            `^${(Array(3).join('0') + card.CardID).slice(-3)}_card_\\d\\.png$`,
+          ),
+        },
+      })
+    ).map(file => file.Link);
   }
 
   @ResolveProperty(type => [String])
-  ImageCG(@Parent() card: Card) {
+  async ImageCG(@Parent() card: Card) {
     // TODO: extreamly slow
-    return this.files._.filter(file => {
-      return !!RegExp(
-        `^HarlemCG_${(Array(3).join('0') + card.CardID).slice(-3)}_\\d\\.png$`,
-      ).exec(file.Name);
-    })
-      .sort(fileSorter)
-      .map(file => file.Link)
-      .uniq()
-      .value();
+    return (
+      await this.files.find({
+        where: {
+          Name: RegExp(
+            `^HarlemCG_${(Array(3).join('0') + card.CardID).slice(
+              -3,
+            )}_\\d\\.png$`,
+          ),
+        },
+      })
+    ).map(file => file.Link);
   }
 
   @ResolveProperty(type => String)

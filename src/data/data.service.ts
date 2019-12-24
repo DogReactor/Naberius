@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
-import { readFile } from 'fs-extra';
+import { readFile, writeFile } from 'fs-extra';
 
 @Injectable()
 export abstract class DataService<T> {
@@ -16,6 +16,15 @@ export abstract class DataService<T> {
         console.error(err);
         this.data = [];
       }
+    } else {
+      console.error('FilePath not set!');
+      process.exit(1);
+    }
+  }
+
+  async write() {
+    if (this.filePath) {
+      await writeFile(this.filePath, JSON.stringify(this.data));
     } else {
       console.error('FilePath not set!');
       process.exit(1);

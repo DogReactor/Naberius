@@ -1,20 +1,22 @@
 import { Resolver, Query } from '@nestjs/graphql';
-import { FileSchema } from './schemas/file.schema';
-import { FileListService } from 'data/fileList.service';
 import { ConfigService } from 'config/config.service';
 import { readdir, stat } from 'fs-extra';
 import { join } from 'path';
+import { File } from 'data/models/file.model';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@Resolver(FileSchema)
+@Resolver(File)
 export class FilesResolver {
   constructor(
-    private readonly fileList: FileListService,
+    @InjectRepository(File)
+    private readonly files: Repository<File>,
     private readonly config: ConfigService,
   ) {}
 
-  @Query(returns => [FileSchema])
-  Files(): FileSchema[] {
-    return this.fileList.data;
+  @Query(returns => [File])
+  Files() {
+    return this.files.find();
   }
 
   @Query(returns => Date, { nullable: true })

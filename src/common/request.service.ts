@@ -3,11 +3,13 @@ import * as request from 'request-promise-native';
 import { parseAL } from 'aigis-fuel';
 import { sleep } from './utils';
 import { ConfigService } from 'config/config.service';
-import { FileListService } from 'data/fileList.service';
 import { EventEmitter } from 'events';
 import * as ProgressBar from 'progress';
 import * as progress from 'request-progress';
 import { Logger } from 'logger/logger.service';
+import { Repository } from 'typeorm';
+import { File } from 'data/models/file.model';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class RequestService extends EventEmitter {
@@ -15,12 +17,13 @@ export class RequestService extends EventEmitter {
 
   constructor(
     private readonly config: ConfigService,
-    private readonly files: FileListService,
+    @InjectRepository(File)
+    private readonly files: Repository<File>,
     private readonly logger: Logger,
   ) {
     super();
     this.on('download', async (fileName: string) => {
-      const file = this.files.data.find(f => f.Name === fileName);
+      const file = await this.files.findOne({ Name: fileName });
       if (!file) {
         this.emit(fileName, 'error', Error("Can't find file: " + fileName));
         return;
@@ -29,13 +32,13 @@ export class RequestService extends EventEmitter {
         return;
       }
       while (true) {
-        if (this.downloadings.length < 10) {
+        if (this.downloadings.length < 5) {
           break;
         }
         await sleep(Math.floor(Math.random() * 1001));
       }
       this.downloadings.push(fileName);
-      for (let retry = 1; retry <= 3; retry++) {
+      for (let retry = 1; retry <= 5; retry++) {
         try {
           const req = request.get({
             url: this.config.get('ASSETS_BASE_URL') + file.Link,
@@ -76,7 +79,11 @@ export class RequestService extends EventEmitter {
         this.downloadings.findIndex(n => n === fileName),
         1,
       );
-      this.emit(fileName, 'error', Error("Can't download file: " + fileName));
+      this.emit(
+        fileName,
+        'error',
+        new Error("Can't download file: " + fileName),
+      );
       return;
     });
   }

@@ -11,6 +11,7 @@ import { CardMeta } from 'data/models/cardMeta.model';
 import { ClassMeta } from 'data/models/classMeta.model';
 import { PostersModule } from 'posters/posters.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { File } from 'data/models/file.model';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { ScheduleModule } from '@nestjs/schedule';
         host: config.get('MONGO_HOST'),
         port: Number.parseInt(config.get('MONGO_PORT'), 10),
         database: config.get('MONGO_DATABASE'),
-        entities: [CardMeta, ClassMeta],
+        entities: [CardMeta, ClassMeta, File],
         synchronize: true,
       }),
     }),

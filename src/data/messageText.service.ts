@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { FileListService } from './fileList.service';
 import { ConfigService } from 'config/config.service';
 import { RequestService } from 'common/request.service';
 import { join } from 'path';
 import { writeFile, pathExists, readFile } from 'fs-extra';
 import { Message } from './models/message.model';
+import { Repository } from 'typeorm';
+import { File } from './models/file.model';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class MessageTextService {
   private cache: { [MissionID: number]: Message[] } = {};
   constructor(
-    private readonly files: FileListService,
+    @InjectRepository(File)
+    private readonly files: Repository<File>,
     private readonly request: RequestService,
     private readonly config: ConfigService,
   ) {}
@@ -26,7 +29,7 @@ export class MessageTextService {
     );
 
     if (!(await pathExists(filePath))) {
-      const file = this.files.data.find(f => f.Name === fileName + '.atb');
+      const file = await this.files.findOne({ Name: fileName + '.atb' });
       if (!file) {
         throw Error(`File ${fileName + '.atb'} not found!`);
       }

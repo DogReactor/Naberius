@@ -3,7 +3,6 @@ import { DataService } from './data.service';
 import { RequestService } from 'common/request.service';
 import { parse } from 'path';
 import { writeFile } from 'fs-extra';
-import { FileListService } from './fileList.service';
 
 @Injectable()
 export class CacheFileService<T> extends DataService<T> {
