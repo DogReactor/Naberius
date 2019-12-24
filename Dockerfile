@@ -6,8 +6,8 @@ COPY dist dist
 COPY static static
 WORKDIR /root/dist
 COPY package.json .
-COPY package-lock.json .
+COPY yarn.lock .
 COPY scripts scripts
-RUN npm install --production
+RUN yarn install --production
 
 ENTRYPOINT [ "node", "/root/dist/index.js" ]

@@ -11,6 +11,10 @@ node_js:
 os:
   - linux
 
+branches:
+  only:
+    - master
+
 before_install:
   - bash install_kubectl.sh
 

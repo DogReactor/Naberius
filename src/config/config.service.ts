@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { readFileSync } from 'fs';
 import { join } from 'path';
 import { Consts } from './consts';
 import { Config } from './config.model';
@@ -13,8 +12,7 @@ export class ParsedConfigService {
 
   constructor(
     private readonly logger: Logger,
-    configs: NestConfigService,
-    filePath: string,
+    private readonly configs: NestConfigService,
   ) {
     this.logger.setContext('ConfigService');
     this.config = {

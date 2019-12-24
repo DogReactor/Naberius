@@ -9,16 +9,7 @@ import {
 
 @Module({
   imports: [LoggerModule, NestConfigModule],
-  providers: [
-    {
-      provide: ParsedConfigService,
-      inject: [Logger, NestConfigService],
-      useFactory: (logger: Logger, config: NestConfigService) => {
-        console.log(config);
-        return new ParsedConfigService(logger, config, '.');
-      },
-    },
-  ],
+  providers: [ParsedConfigService],
   exports: [ParsedConfigService],
 })
 export class ConfigModule {}
