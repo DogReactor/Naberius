@@ -23,7 +23,7 @@ export class CacheFileService<T> extends DataService<T> {
     const assetFileName = parsedPath.name + '.atb';
     await writeFile(
       this.filePath,
-      await this.request.requestALTB(assetFileName),
+      JSON.stringify(await this.request.requestALTB(assetFileName)),
     );
     this.read();
   }
