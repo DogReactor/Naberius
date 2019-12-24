@@ -54,6 +54,8 @@ export class DataResolver {
     @Inject('EnemySpecialty_Config')
     private readonly enemySpecialties: CacheFileService<any>,
     private readonly temples: BannerService,
+    @Inject('Missile')
+    private readonly missiles: CacheFileService<any>,
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {
@@ -83,6 +85,7 @@ export class DataResolver {
       this.questTermConfigs,
       this.enemySpecialties,
       this.temples,
+      this.missiles,
     ].forEach(service => service.update());
     return true;
   }
