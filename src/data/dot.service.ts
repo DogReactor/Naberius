@@ -59,11 +59,8 @@ export class DotService {
               Name: entry.Name.slice(0, 4),
               Sprites: entry.Fields.Texture0ID
                 ? sprites[entry.Fields.Texture0ID.Id1]
-                : Object.values(sprites)[0],
+                : Object.values(sprites).slice(-1)[0],
             });
-            if (entry.Fields.Texture0ID) {
-              delete sprites[entry.Fields.Texture0ID.Id1];
-            }
           });
           almt.Entries.forEach(entry => {
             const entryIndex = dot.Entries.findIndex(
