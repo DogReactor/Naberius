@@ -89,6 +89,13 @@ export class DotService {
 
       await writeFile(dotInfoPath, JSON.stringify(dots));
     }
-    return JSON.parse(await readFile(dotInfoPath, 'utf-8')) as Dot[];
+    const file = await readFile(dotInfoPath, 'utf-8');
+    try {
+      const dots = JSON.parse(file) as Dot[];
+      return dots;
+    } catch (err) {
+      console.log(file);
+      throw err;
+    }
   }
 }
