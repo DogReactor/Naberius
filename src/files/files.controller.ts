@@ -48,6 +48,8 @@ export class FilesController {
         key => (parsedFiles[key] = JSON.parse(files[key][0].buffer)),
       );
 
+      let updated = false;
+
       await Promise.all(
         parsedFiles.FileListR.map(async (file: any) => {
           let dbFile = await this.files.findOne({ Name: file.Name });
@@ -59,6 +61,7 @@ export class FilesController {
             dbFile.Link = file.Link;
             dbFile.UpdateTime = new Date();
             await this.files.save(dbFile);
+            updated = true;
           }
         }),
       );
@@ -74,36 +77,44 @@ export class FilesController {
             dbFile.Link = file.Link;
             dbFile.UpdateTime = new Date();
             await this.files.save(dbFile);
+            updated = true;
           }
         }),
       );
 
-      await Promise.all(
-        Object.keys(files).map(key =>
-          writeFile(
-            join(this.config.get('DATA_DIR'), key + '.json'),
-            files[key][0].buffer,
+      if (updated) {
+        // save files in outer dir
+        await Promise.all(
+          Object.keys(files).map(key =>
+            writeFile(
+              join(this.config.get('DATA_DIR'), key + '.json'),
+              files[key][0].buffer,
+            ),
           ),
-        ),
-      );
+        );
 
-      const dir = join(
-        this.config.get('DATA_DIR'),
-        moment().format('YYYYMMDD'),
-      );
-      await ensureDir(dir);
-      await Promise.all(
-        Object.keys(files).map(key =>
-          writeFile(join(dir, key + '.json'), files[key][0].buffer),
-        ),
-      );
-      for (const file of await readdir(this.config.get('CACHE_DIR'))) {
-        if (file !== 'poster') {
-          await remove(join(this.config.get('CACHE_DIR'), file));
+        // save files in YYYYMMDD folder
+        const dir = join(
+          this.config.get('DATA_DIR'),
+          moment().format('YYYYMMDD'),
+        );
+        await ensureDir(dir);
+        await Promise.all(
+          Object.keys(files).map(key =>
+            writeFile(join(dir, key + '.json'), files[key][0].buffer),
+          ),
+        );
+
+        // remove cache dir
+        for (const file of await readdir(this.config.get('CACHE_DIR'))) {
+          if (file !== 'poster') {
+            await remove(join(this.config.get('CACHE_DIR'), file));
+          }
         }
+
+        this.config.ensureDirs();
+        this.data.UpdateFiles();
       }
-      this.config.ensureDirs();
-      this.data.UpdateFiles();
     } else {
       throw new HttpException(
         {
