@@ -99,8 +99,11 @@ export class CardsResolver {
             `^${(Array(3).join('0') + card.CardID).slice(-3)}_card_\\d\\.png$`,
           ),
         },
+        order: { Name: 'ASC' },
       })
-    ).map(file => file.Link);
+    )
+      .sort()
+      .map(file => file.Link);
   }
 
   @ResolveProperty(type => [String])
@@ -114,6 +117,7 @@ export class CardsResolver {
             )}_\\d\\.png$`,
           ),
         },
+        order: { Name: 'ASC' },
       })
     ).map(file => file.Link);
   }
