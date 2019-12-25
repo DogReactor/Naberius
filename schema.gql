@@ -411,7 +411,7 @@ type Query {
   Map: Map
   Missiles: [Missile!]!
   Missile(MissileID: Int!): Missile
-  Cards(ClassID: Int): [Card!]!
+  Cards(Rare: Int, ClassID: Int): [Card!]!
   Card(Name: String, CardID: Int): Card
   Skills: [Skill!]!
   Skill(SkillID: Int!): Skill

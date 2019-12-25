@@ -259,7 +259,12 @@ export class CardsResolver {
   Cards(
     @Args({ name: 'ClassID', type: () => Int, nullable: true })
     ClassID?: number,
+    @Args({ name: 'Rare', type: () => Int, nullable: true })
+    Rare?: number,
   ) {
+    if (Rare !== undefined) {
+      return this.cards.data.filter(card => card.Rare === Rare);
+    }
     if (ClassID) {
       return this.cards.data.filter(card => card.InitClassID === ClassID);
     }
