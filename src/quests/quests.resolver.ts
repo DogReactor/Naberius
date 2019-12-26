@@ -20,6 +20,7 @@ import { MapService } from 'data/map.service';
 import { QuestEventText } from 'data/models/questEventText.model';
 import { CacheFileService } from 'data/cacheFile.service';
 import { QuestTermConfig } from 'data/models/questTermConfig.model';
+import { Message } from 'data/models/message.model';
 
 @Resolver(Quest)
 export class QuestsResolver {
@@ -28,6 +29,8 @@ export class QuestsResolver {
     private readonly missionConfigs: MissionConfigService,
     private readonly questNameTexts: QuestNameTextService,
     private readonly messageTexts: MessageTextService,
+    @Inject('MessageText')
+    private readonly generalMessageTexts: CacheFileService<Message>,
     private readonly eventArcs: EventArcService,
     private readonly maps: MapService,
     @Inject('QuestEventText')
@@ -111,6 +114,13 @@ export class QuestsResolver {
   @ResolveProperty(type => [QuestTermConfig])
   QuestHardTermConfigs(@Parent() quest: Quest) {
     return this.QuestTermConfigs({ QuestTerms: quest._HardCondition } as Quest);
+  }
+
+  @ResolveProperty(type => String, { nullable: true })
+  HardInfomation(@Parent() quest: Quest) {
+    if (quest._HardCondition) {
+      return this.generalMessageTexts.data[quest._HardInfomation].Message;
+    }
   }
 
   @Query(returns => Quest, { nullable: true })

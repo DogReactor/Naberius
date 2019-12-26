@@ -56,6 +56,8 @@ export class DataResolver {
     private readonly temples: BannerService,
     @Inject('Missile')
     private readonly missiles: CacheFileService<any>,
+    @Inject('MessageText')
+    private readonly generalMessageTexts: CacheFileService<any>,
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {
@@ -86,6 +88,7 @@ export class DataResolver {
       this.enemySpecialties,
       this.temples,
       this.missiles,
+      this.generalMessageTexts,
     ].forEach(service => service.update());
     return true;
   }

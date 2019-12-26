@@ -467,6 +467,7 @@ type Quest {
   Map: Map
   QuestTermConfigs: [QuestTermConfig!]!
   QuestHardTermConfigs: [QuestTermConfig!]!
+  HardInfomation: String
 }
 
 type QuestEventText {
