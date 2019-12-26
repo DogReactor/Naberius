@@ -21,6 +21,7 @@ import { EnemyService } from './enemy.service';
 import { BannerService } from './banner.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { File } from './models/file.model';
+import { LoggerModule } from 'logger/logger.module';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -47,7 +48,12 @@ function cacheFactory(fileName: string): Provider {
 }
 
 @Module({
-  imports: [ConfigModule, CommonModule, TypeOrmModule.forFeature([File])],
+  imports: [
+    ConfigModule,
+    CommonModule,
+    TypeOrmModule.forFeature([File]),
+    LoggerModule,
+  ],
   providers: [
     DataResolver,
     dataFactory('CardList'),
