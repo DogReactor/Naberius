@@ -6,6 +6,7 @@ import {
   UploadedFiles,
   HttpException,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ParsedConfigService } from 'config/config.service';
@@ -16,6 +17,9 @@ import { File } from 'data/models/file.model';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataResolver } from 'data/data.resolver';
+import { Card } from 'data/models/card.model';
+import { DataFileService } from 'data/dataFile.service';
+import { Quest } from 'data/models/quest.model';
 
 @Controller('upload-origin')
 export class FilesController {
@@ -24,6 +28,10 @@ export class FilesController {
     @InjectRepository(File)
     private readonly files: Repository<File>,
     private readonly data: DataResolver,
+    @Inject('CardList')
+    private readonly cards: DataFileService<Card>,
+    @Inject('QuestList')
+    private readonly quests: DataFileService<Quest>,
   ) {}
 
   @Post()
@@ -110,6 +118,9 @@ export class FilesController {
             await remove(join(this.config.get('CACHE_DIR'), file));
           }
         }
+
+        await this.cards.read();
+        await this.quests.read();
 
         this.config.ensureDirs();
         this.data.UpdateFiles();
