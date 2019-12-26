@@ -6,7 +6,6 @@ import {
   UploadedFiles,
   HttpException,
   HttpStatus,
-  Inject,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ParsedConfigService } from 'config/config.service';

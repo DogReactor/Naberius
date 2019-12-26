@@ -22,6 +22,7 @@ export class RequestService extends EventEmitter {
     private readonly logger: Logger,
   ) {
     super();
+    this.setMaxListeners(50);
     this.on('download', async (fileName: string) => {
       const file = await this.files.findOne({ Name: fileName });
       if (!file) {
