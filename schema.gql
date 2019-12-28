@@ -287,6 +287,7 @@ type EnemySpecialtyConfig {
   Param_4: Int!
   _Expression: String!
   _ExtParam: String!
+  Comment: String
 }
 
 type EnemyType {
@@ -392,6 +393,8 @@ type Mission {
 
 type Mutation {
   UpdateFiles: Boolean!
+  QuestConfigMeta(Comment: String, TypeID: Int!): QuestConfigMeta
+  EnemyConfigMeta(Comment: String, TypeID: Int!): EnemyConfigMeta
   CardMeta(NickNames: [String!], ConneName: String, CardID: Int!): Card
   ClassMeta(NickNames: [String!], ClassID: Int!): Class
   SkillConfigMeta(Comment: String, TypeID: Int!): SkillConfigMeta
@@ -502,6 +505,7 @@ type QuestTermConfig {
   Data_Param3: Int!
   Data_Param4: Int!
   Data_Expression: String!
+  Comment: String
 }
 
 type Route {

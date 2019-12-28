@@ -1,52 +1,52 @@
 import {
   Resolver,
   ResolveProperty,
-  Mutation,
   Parent,
+  Mutation,
   Args,
 } from '@nestjs/graphql';
-import { AbilityConfig } from 'data/models/abilityConfig.model';
-import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
+import { EnemySpecialtyConfig } from 'data/models/enemySpecialtyConfig.model';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EnemyConfigMeta } from 'data/models/enemyConfigMeta.model';
 import { Repository } from 'typeorm';
 import { Logger } from 'logger/logger.service';
 import { Int } from 'type-graphql';
 
-@Resolver(AbilityConfig)
-export class AbilityConfigsResolver {
+@Resolver(EnemySpecialtyConfig)
+export class EnemyConfigsResolver {
   constructor(
-    @InjectRepository(AbilityConfigMeta)
-    private readonly abilityConfigMetaRepo: Repository<AbilityConfigMeta>,
+    @InjectRepository(EnemyConfigMeta)
+    private readonly enemyConfigMetaRepo: Repository<EnemyConfigMeta>,
     private readonly logger: Logger,
   ) {}
 
   @ResolveProperty(type => String, { nullable: true })
-  async Comment(@Parent() config: AbilityConfig) {
+  async Comment(@Parent() config: EnemySpecialtyConfig) {
     return (
-      await this.abilityConfigMetaRepo.findOne({
-        TypeID: config._InfluenceType,
+      await this.enemyConfigMetaRepo.findOne({
+        TypeID: config.Type_Influence,
       })
     )?.Comment;
   }
 
-  @Mutation(type => AbilityConfigMeta, { nullable: true })
-  async AbilityConfigMeta(
+  @Mutation(type => EnemyConfigMeta, { nullable: true })
+  async EnemyConfigMeta(
     @Args({ name: 'TypeID', type: () => Int }) TypeID: number,
     @Args({ name: 'Comment', type: () => String, nullable: true })
     Comment: string,
   ) {
     try {
-      let meta = await this.abilityConfigMetaRepo.findOne({ TypeID });
+      let meta = await this.enemyConfigMetaRepo.findOne({ TypeID });
       if (!Comment && meta) {
-        await this.abilityConfigMetaRepo.delete({ TypeID });
+        await this.enemyConfigMetaRepo.delete({ TypeID });
         return null;
       }
       if (!meta) {
-        meta = new AbilityConfigMeta();
+        meta = new EnemyConfigMeta();
         meta.TypeID = TypeID;
       }
       meta.Comment = Comment;
-      await this.abilityConfigMetaRepo.save(meta);
+      await this.enemyConfigMetaRepo.save(meta);
       return meta;
     } catch (err) {
       this.logger.error(err);

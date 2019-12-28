@@ -119,7 +119,7 @@ export class QuestsResolver {
   @ResolveProperty(type => String, { nullable: true })
   HardInfomation(@Parent() quest: Quest) {
     if (quest._HardCondition) {
-      return this.generalMessageTexts.data[quest._HardInfomation].Message;
+      return this.generalMessageTexts.data[quest._HardInfomation]?.Message;
     }
   }
 
