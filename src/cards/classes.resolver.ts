@@ -21,6 +21,7 @@ import { ClassMeta } from 'data/models/classMeta.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Missile } from 'data/models/missile.model';
+import { Logger } from 'logger/logger.service';
 
 @Resolver(Class)
 export class ClassesResolver {
@@ -37,6 +38,7 @@ export class ClassesResolver {
     private readonly classMetaRepo: Repository<ClassMeta>,
     @Inject('Missile')
     private readonly missiles: CacheFileService<Missile>,
+    private readonly logger: Logger,
   ) {}
 
   /**************
@@ -134,14 +136,22 @@ export class ClassesResolver {
    * Mutations *
    *************/
 
-  @Mutation(type => ClassMeta, { nullable: true })
+  @Mutation(type => Class, { nullable: true })
   async ClassMeta(
     @Args({ name: 'ClassID', type: () => Int }) ClassID: number,
     @Args({ name: 'NickNames', type: () => [String], nullable: true })
     NickNames: string[],
   ) {
     try {
+      const classData = this.classes.data.find(cl => cl.ClassID == ClassID);
+      if (!classData) {
+        return null;
+      }
       let meta = await this.classMetaRepo.findOne({ ClassID });
+      if (meta && !NickNames) {
+        await this.classMetaRepo.delete({ ClassID });
+        return null;
+      }
       if (!meta) {
         meta = new ClassMeta();
         meta.ClassID = ClassID;
@@ -150,9 +160,9 @@ export class ClassesResolver {
         meta.NickNames = NickNames;
       }
       await this.classMetaRepo.save(meta);
-      return meta;
+      return classData;
     } catch (err) {
-      console.log(err);
+      this.logger.error(err);
       return null;
     }
   }

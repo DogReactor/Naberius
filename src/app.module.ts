@@ -13,6 +13,10 @@ import { PostersModule } from 'posters/posters.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { File } from 'data/models/file.model';
 import { ConfigModule as NestConfigModule } from '@nestjs/config';
+import { SkillConfigMeta } from 'data/models/skillConfigMeta.model';
+import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
+import { EnemyConfigMeta } from 'data/models/enemyConfigMeta.model';
+import { QuestConfigMeta } from 'data/models/questConfigMeta.model';
 
 @Module({
   imports: [
@@ -29,7 +33,15 @@ import { ConfigModule as NestConfigModule } from '@nestjs/config';
         host: config.get('MONGO_HOST'),
         port: Number.parseInt(config.get('MONGO_PORT'), 10),
         database: config.get('MONGO_DATABASE'),
-        entities: [CardMeta, ClassMeta, File],
+        entities: [
+          CardMeta,
+          ClassMeta,
+          File,
+          SkillConfigMeta,
+          AbilityConfigMeta,
+          EnemyConfigMeta,
+          QuestConfigMeta,
+        ],
         synchronize: true,
       }),
     }),

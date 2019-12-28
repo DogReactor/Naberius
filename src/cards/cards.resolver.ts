@@ -288,7 +288,7 @@ export class CardsResolver {
    * Mutations *
    *************/
 
-  @Mutation(type => CardMeta, { nullable: true })
+  @Mutation(type => Card, { nullable: true })
   async CardMeta(
     @Args({ name: 'CardID', type: () => Int }) CardID: number,
     @Args({ name: 'ConneName', type: () => String, nullable: true })
@@ -297,7 +297,15 @@ export class CardsResolver {
     NickNames: [string],
   ) {
     try {
+      const card = this.cards.data.find(card => card.CardID === CardID);
+      if (!card) {
+        return null;
+      }
       let meta = await this.cardMetaRepo.findOne({ CardID });
+      if(meta && !NickNames && !ConneName) {
+        await this.cardMetaRepo.delete({CardID});
+        return
+      }
       if (!meta) {
         meta = new CardMeta();
         meta.CardID = CardID;
@@ -309,7 +317,7 @@ export class CardsResolver {
         meta.NickNames = NickNames;
       }
       await this.cardMetaRepo.save(meta);
-      return meta;
+      return card;
     } catch (err) {
       console.error(err);
       return null;

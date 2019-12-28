@@ -27,6 +27,12 @@ type AbilityConfig {
   _Param4: Int!
   _Command: String!
   _ActivateCommand: String!
+  Comment: String
+}
+
+type AbilityConfigMeta {
+  TypeID: Int!
+  Comment: String
 }
 
 type Alpha {
@@ -260,6 +266,11 @@ type Enemy {
   Missile: Missile
 }
 
+type EnemyConfigMeta {
+  TypeID: Int!
+  Comment: String
+}
+
 type EnemyElem {
   _EnemyElementID: Int!
   _EnemyElementName: String!
@@ -381,8 +392,10 @@ type Mission {
 
 type Mutation {
   UpdateFiles: Boolean!
-  CardMeta(NickNames: [String!], ConneName: String, CardID: Int!): CardMeta
-  ClassMeta(NickNames: [String!], ClassID: Int!): ClassMeta
+  CardMeta(NickNames: [String!], ConneName: String, CardID: Int!): Card
+  ClassMeta(NickNames: [String!], ClassID: Int!): Class
+  SkillConfigMeta(Comment: String, TypeID: Int!): SkillConfigMeta
+  AbilityConfigMeta(Comment: String, TypeID: Int!): AbilityConfigMeta
 }
 
 type PatternNo {
@@ -470,6 +483,11 @@ type Quest {
   HardInfomation: String
 }
 
+type QuestConfigMeta {
+  TypeID: Int!
+  Comment: String
+}
+
 type QuestEventText {
   Message: String!
   Name: String!
@@ -525,6 +543,11 @@ type Skill {
   Cards: [Card!]!
 }
 
+type SkillConfigMeta {
+  TypeID: Int!
+  Comment: String
+}
+
 type SkillInfluenceConfig {
   Data_ID: Int!
   Type_Collision: Int!
@@ -540,6 +563,7 @@ type SkillInfluenceConfig {
   _ExpressionActivate: String!
   _ExpressionActivateTarget: String!
   _HoldRatioUpperLimit: Int!
+  Comment: String
 }
 
 type SkillsWithType {

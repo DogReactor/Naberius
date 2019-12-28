@@ -10,12 +10,24 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CardMeta } from 'data/models/cardMeta.model';
 import { ClassMeta } from 'data/models/classMeta.model';
 import { File } from 'data/models/file.model';
+import { SkillConfigMeta } from 'data/models/skillConfigMeta.model';
+import { LoggerModule } from 'logger/logger.module';
+import { SkillConfigsResolver } from './skillConfigs.resolver';
+import { AbilityConfigsResolver } from './abilityConfigs.resolver';
+import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
 
 @Module({
   imports: [
     ConfigModule,
     DataModule,
-    TypeOrmModule.forFeature([CardMeta, ClassMeta, File]),
+    TypeOrmModule.forFeature([
+      CardMeta,
+      ClassMeta,
+      File,
+      SkillConfigMeta,
+      AbilityConfigMeta,
+    ]),
+    LoggerModule,
   ],
   providers: [
     CardsResolver,
@@ -23,6 +35,8 @@ import { File } from 'data/models/file.model';
     SkillsWithTypeResolver,
     AbilitiesResolver,
     ClassesResolver,
+    SkillConfigsResolver,
+    AbilityConfigsResolver,
   ],
 })
 export class CardsModule {}
