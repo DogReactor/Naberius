@@ -38,8 +38,7 @@ export class SkillsResolver {
 
   @ResolveProperty(type => String)
   Text(@Parent() skill: Skill) {
-    const text = this.skillTexts.data[skill.ID_Text];
-    return text ? text.Data_Text : null;
+    return this.skillTexts.data[skill.ID_Text]?.Data_Text;
   }
 
   @ResolveProperty(type => [SkillInfluenceConfig])
@@ -101,5 +100,12 @@ export class SkillsResolver {
   @Query(type => Skill, { nullable: true })
   Skill(@Args({ name: 'SkillID', type: () => Int }) SkillID: number) {
     return this.skills.data[SkillID];
+  }
+
+  @Query(type => String)
+  SkillText(
+    @Args({ name: 'SkillTextID', type: () => Int }) SkillTextID: number,
+  ) {
+    return this.skillTexts.data[SkillTextID]?.Data_Text;
   }
 }

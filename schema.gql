@@ -431,6 +431,7 @@ type Query {
   Card(Name: String, CardID: Int): Card
   Skills: [Skill!]!
   Skill(SkillID: Int!): Skill
+  SkillText(SkillTextID: Int!): String!
   Abilities: [Ability!]!
   Ability(AbilityID: Int!): Ability!
   Classes(MaterialID: Int): [Class!]!
