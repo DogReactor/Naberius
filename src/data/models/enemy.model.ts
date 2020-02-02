@@ -1,5 +1,5 @@
 // tslint:disable variable-name
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int, Float } from 'type-graphql';
 
 @ObjectType()
 export class Enemy {
@@ -47,7 +47,7 @@ export class Enemy {
   BossFlag: boolean;
   @Field(type => Int)
   BgmID: number;
-  @Field(type => Int)
+  @Field(type => Float)
   DotRate: number;
   @Field()
   MagicAttack: boolean;
