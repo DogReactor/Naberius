@@ -129,6 +129,7 @@ type Card {
   Dots: [Dot!]
   NickNames: [String!]
   ConneName: String
+  Specialties: [UnitSpecialty!]!
 }
 
 type CardMeta {
@@ -247,7 +248,7 @@ type Enemy {
   AttackAnimNo: Int!
   BossFlag: Boolean!
   BgmID: Int!
-  DotRate: Int!
+  DotRate: Float!
   MagicAttack: Boolean!
   AttackWait: Int!
   HitEffect: Int!
@@ -399,6 +400,7 @@ type Mutation {
   ClassMeta(NickNames: [String!], ClassID: Int!): Class
   SkillConfigMeta(Comment: String, TypeID: Int!): SkillConfigMeta
   AbilityConfigMeta(Comment: String, TypeID: Int!): AbilityConfigMeta
+  UnitSpecialtyMeta(Comment: String, TypeID: Int!): UnitSpecialtyMeta
 }
 
 type PatternNo {
@@ -583,4 +585,21 @@ type Sprite {
   Height: Int!
   OriginX: Int!
   OriginY: Int!
+}
+
+type UnitSpecialty {
+  ID_Card: Int!
+  Type_Specialty: Int!
+  Value_Specialty: Int!
+  Value_Param1: Int!
+  Value_Param2: Int!
+  Value_Param3: Int!
+  Value_Param4: Int!
+  Command: Int!
+  Comment: String
+}
+
+type UnitSpecialtyMeta {
+  TypeID: Int!
+  Comment: String
 }

@@ -15,6 +15,8 @@ import { LoggerModule } from 'logger/logger.module';
 import { SkillConfigsResolver } from './skillConfigs.resolver';
 import { AbilityConfigsResolver } from './abilityConfigs.resolver';
 import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
+import { UnitSpecialtyMeta } from 'data/models/unitSpecialtyMeta.model';
+import { UnitSpecialtiesResolver } from './unitSpecialties.resolver';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
       File,
       SkillConfigMeta,
       AbilityConfigMeta,
+      UnitSpecialtyMeta,
     ]),
     LoggerModule,
   ],
@@ -37,6 +40,7 @@ import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
     ClassesResolver,
     SkillConfigsResolver,
     AbilityConfigsResolver,
+    UnitSpecialtiesResolver,
   ],
 })
 export class CardsModule {}

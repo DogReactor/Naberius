@@ -58,6 +58,8 @@ export class DataResolver {
     private readonly missiles: CacheFileService<any>,
     @Inject('MessageText')
     private readonly generalMessageTexts: CacheFileService<any>,
+    @Inject('UnitSpecialty')
+    private readonly unitSpecialties: CacheFileService<any>,
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {
@@ -89,6 +91,7 @@ export class DataResolver {
       this.temples,
       this.missiles,
       this.generalMessageTexts,
+      this.unitSpecialties,
     ].forEach(service => service.update());
     return true;
   }

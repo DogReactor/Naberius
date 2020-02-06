@@ -25,6 +25,7 @@ import { Dot } from 'data/models/dot.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CardMeta } from 'data/models/cardMeta.model';
 import { Repository } from 'typeorm';
+import { UnitSpecialty } from 'data/models/unitSpecialty.model';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -57,6 +58,8 @@ export class CardsResolver {
     private readonly classes: ClassDataService,
     @Inject('AbilityList')
     private readonly abilities: CacheFileService<Ability>,
+    @Inject('UnitSpecialty')
+    private readonly unitSpecialties: CacheFileService<UnitSpecialty>,
     private readonly dots: DotService,
     @InjectRepository(CardMeta)
     private readonly cardMetaRepo: Repository<CardMeta>,
@@ -251,6 +254,26 @@ export class CardsResolver {
     }
   }
 
+  @ResolveProperty(type => [UnitSpecialty])
+  async Specialties(@Parent() card: Card) {
+    let index = this.unitSpecialties.data.findIndex(
+      us => us.ID_Card === card.CardID,
+    );
+    if (index !== -1) {
+      const configs: UnitSpecialty[] = [];
+      let config = this.unitSpecialties.data[index];
+      while (
+        config &&
+        (config.ID_Card === 0 || config.ID_Card === card.CardID)
+      ) {
+        configs.push(config);
+        config = this.unitSpecialties.data[++index];
+      }
+      return configs;
+    }
+    return [];
+  }
+
   /***********
    * Queries *
    ***********/
@@ -302,9 +325,9 @@ export class CardsResolver {
         return null;
       }
       let meta = await this.cardMetaRepo.findOne({ CardID });
-      if(meta && !NickNames && !ConneName) {
-        await this.cardMetaRepo.delete({CardID});
-        return
+      if (meta && !NickNames && !ConneName) {
+        await this.cardMetaRepo.delete({ CardID });
+        return;
       }
       if (!meta) {
         meta = new CardMeta();
