@@ -20,6 +20,8 @@ export class DataResolver {
     private readonly playerAssignTypes: CacheFileService<any>,
     @Inject('PlayerIdentityType')
     private readonly playerIdentityTypes: CacheFileService<any>,
+    @Inject('PlayerGenusType')
+    private readonly playerGenusTypes: CacheFileService<any>,
     @Inject('SystemText')
     private readonly systemTexts: CacheFileService<any>,
     @Inject('SkillList')
@@ -69,6 +71,7 @@ export class DataResolver {
       this.playerRaceTypes,
       this.playerAssignTypes,
       this.playerIdentityTypes,
+      this.playerGenusTypes,
       this.systemTexts,
       this.skills,
       this.skillTexts,
