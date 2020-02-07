@@ -30,7 +30,7 @@ export class UnitSpecialtyConfigsResolver {
   }
 
   @Mutation(type => UnitConfigMeta, { nullable: true })
-  async UnitSpecialtyMeta(
+  async UnitConfigMeta(
     @Args({ name: 'TypeID', type: () => Int }) TypeID: number,
     @Args({ name: 'Comment', type: () => String, nullable: true })
     Comment: string,
