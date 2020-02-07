@@ -54,6 +54,8 @@ export class CardsResolver {
     private readonly playerAssignTypes: CacheFileService<PlayerType>,
     @Inject('PlayerIdentityType')
     private readonly playerIdentityTypes: CacheFileService<PlayerType>,
+    @Inject('PlayerGenusType')
+    private readonly playerGenusTypes: CacheFileService<PlayerType>,
     private readonly harlemTexts: HarlemTextService,
     private readonly classes: ClassDataService,
     @Inject('AbilityList')
@@ -67,7 +69,11 @@ export class CardsResolver {
 
   getType(
     card: Card,
-    file: 'playerRaceTypes' | 'playerAssignTypes' | 'playerIdentityTypes',
+    file:
+      | 'playerRaceTypes'
+      | 'playerAssignTypes'
+      | 'playerIdentityTypes'
+      | 'playerGenusTypes',
   ) {
     const type = this[file].data.find(t => t._TypeID === card._TypeRace);
     if (type && type._SystemTextID !== 0) {
@@ -143,6 +149,11 @@ export class CardsResolver {
   @ResolveProperty(type => String, { nullable: true })
   IdentityName(@Parent() card: Card) {
     return this.getType(card, 'playerIdentityTypes');
+  }
+
+  @ResolveProperty(type => String, { nullable: true })
+  GenusName(@Parent() card: Card) {
+    return this.getType(card, 'playerGenusTypes');
   }
 
   @ResolveProperty(type => [SkillsWithType])

@@ -121,6 +121,7 @@ type Card {
   RaceName: String
   AssignName: String
   IdentityName: String
+  GenusName: String
   Skills: [SkillsWithType!]!
   Abilities: [Ability!]!
   HarlemTextA: [String!]!
