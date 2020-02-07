@@ -77,7 +77,24 @@ export class CardsResolver {
       | 'playerIdentityTypes'
       | 'playerGenusTypes',
   ) {
-    const type = this[file].data.find(t => t._TypeID === card._TypeRace);
+    let key: number;
+    switch (file) {
+      case 'playerRaceTypes':
+        key = card._TypeRace;
+        break;
+      case 'playerAssignTypes':
+        key = card.Assign;
+        break;
+      case 'playerIdentityTypes':
+        key = card.Identity;
+        break;
+      case 'playerGenusTypes':
+        key = card.Genus;
+        break;
+      default:
+        throw new Error('Type file name error!');
+    }
+    const type = this[file].data.find(t => t._TypeID === key);
     if (type && type._SystemTextID !== 0) {
       const text = this.SystemTexts.data[type._SystemTextID];
       if (text) {
