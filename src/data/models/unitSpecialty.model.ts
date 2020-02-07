@@ -2,7 +2,7 @@ import { ObjectType, Field, Int } from 'type-graphql';
 
 // tslint:disable variable-name
 @ObjectType()
-export class UnitSpecialty {
+export class UnitSpecialtyConfig {
   @Field(type => Int)
   ID_Card: number;
   @Field(type => Int)

@@ -130,7 +130,7 @@ type Card {
   Dots: [Dot!]
   NickNames: [String!]
   ConneName: String
-  Specialties: [UnitSpecialty!]!
+  SpecialtyConfigs: [UnitSpecialtyConfig!]!
 }
 
 type CardMeta {
@@ -588,7 +588,7 @@ type Sprite {
   OriginY: Int!
 }
 
-type UnitSpecialty {
+type UnitSpecialtyConfig {
   ID_Card: Int!
   Type_Specialty: Int!
   Value_Specialty: Int!

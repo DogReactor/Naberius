@@ -5,15 +5,15 @@ import {
   Mutation,
   Args,
 } from '@nestjs/graphql';
-import { UnitSpecialty } from 'data/models/unitSpecialty.model';
+import { UnitSpecialtyConfig } from 'data/models/unitSpecialty.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UnitSpecialtyMeta } from 'data/models/unitSpecialtyMeta.model';
 import { Int } from 'type-graphql';
 import { Logger } from 'logger/logger.service';
 
-@Resolver(UnitSpecialty)
-export class UnitSpecialtiesResolver {
+@Resolver(UnitSpecialtyConfig)
+export class UnitSpecialtyConfigsResolver {
   constructor(
     @InjectRepository(UnitSpecialtyMeta)
     private readonly unitSpecialtyMetaRepo: Repository<UnitSpecialtyMeta>,
@@ -21,7 +21,7 @@ export class UnitSpecialtiesResolver {
   ) {}
 
   @ResolveProperty(type => String, { nullable: true })
-  async Comment(@Parent() specialty: UnitSpecialty) {
+  async Comment(@Parent() specialty: UnitSpecialtyConfig) {
     return (
       await this.unitSpecialtyMetaRepo.findOne({
         TypeID: specialty.Type_Specialty,
