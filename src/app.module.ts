@@ -17,7 +17,7 @@ import { SkillConfigMeta } from 'data/models/skillConfigMeta.model';
 import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
 import { EnemyConfigMeta } from 'data/models/enemyConfigMeta.model';
 import { QuestConfigMeta } from 'data/models/questConfigMeta.model';
-import { UnitSpecialtyMeta } from 'data/models/unitSpecialtyMeta.model';
+import { UnitConfigMeta } from 'data/models/unitConfigMeta.model';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { UnitSpecialtyMeta } from 'data/models/unitSpecialtyMeta.model';
           AbilityConfigMeta,
           EnemyConfigMeta,
           QuestConfigMeta,
-          UnitSpecialtyMeta,
+          UnitConfigMeta,
         ],
         synchronize: true,
       }),

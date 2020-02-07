@@ -3,7 +3,7 @@ import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
 @Entity()
-export class UnitSpecialtyMeta {
+export class UnitConfigMeta {
   @ObjectIdColumn()
   id: ObjectID;
 

@@ -5,18 +5,18 @@ import {
   Mutation,
   Args,
 } from '@nestjs/graphql';
-import { UnitSpecialtyConfig } from 'data/models/unitSpecialty.model';
+import { UnitSpecialtyConfig } from 'data/models/unitSpecialtyConfig.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UnitSpecialtyMeta } from 'data/models/unitSpecialtyMeta.model';
+import { UnitConfigMeta } from 'data/models/unitConfigMeta.model';
 import { Int } from 'type-graphql';
 import { Logger } from 'logger/logger.service';
 
 @Resolver(UnitSpecialtyConfig)
 export class UnitSpecialtyConfigsResolver {
   constructor(
-    @InjectRepository(UnitSpecialtyMeta)
-    private readonly unitSpecialtyMetaRepo: Repository<UnitSpecialtyMeta>,
+    @InjectRepository(UnitConfigMeta)
+    private readonly unitSpecialtyMetaRepo: Repository<UnitConfigMeta>,
     private readonly logger: Logger,
   ) {}
 
@@ -29,7 +29,7 @@ export class UnitSpecialtyConfigsResolver {
     )?.Comment;
   }
 
-  @Mutation(type => UnitSpecialtyMeta, { nullable: true })
+  @Mutation(type => UnitConfigMeta, { nullable: true })
   async UnitSpecialtyMeta(
     @Args({ name: 'TypeID', type: () => Int }) TypeID: number,
     @Args({ name: 'Comment', type: () => String, nullable: true })
@@ -42,7 +42,7 @@ export class UnitSpecialtyConfigsResolver {
         return null;
       }
       if (!meta) {
-        meta = new UnitSpecialtyMeta();
+        meta = new UnitConfigMeta();
         meta.TypeID = TypeID;
       }
       meta.Comment = Comment;

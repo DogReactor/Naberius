@@ -15,7 +15,7 @@ import { LoggerModule } from 'logger/logger.module';
 import { SkillConfigsResolver } from './skillConfigs.resolver';
 import { AbilityConfigsResolver } from './abilityConfigs.resolver';
 import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
-import { UnitSpecialtyMeta } from 'data/models/unitSpecialtyMeta.model';
+import { UnitConfigMeta } from 'data/models/unitConfigMeta.model';
 import { UnitSpecialtyConfigsResolver } from './unitSpecialtyConfigs.resolver';
 
 @Module({
@@ -28,7 +28,7 @@ import { UnitSpecialtyConfigsResolver } from './unitSpecialtyConfigs.resolver';
       File,
       SkillConfigMeta,
       AbilityConfigMeta,
-      UnitSpecialtyMeta,
+      UnitConfigMeta,
     ]),
     LoggerModule,
   ],

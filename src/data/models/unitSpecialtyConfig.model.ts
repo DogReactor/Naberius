@@ -17,6 +17,6 @@ export class UnitSpecialtyConfig {
   Value_Param3: number;
   @Field(type => Int)
   Value_Param4: number;
-  @Field(type => Int)
+  @Field(type => String)
   Command: string;
 }

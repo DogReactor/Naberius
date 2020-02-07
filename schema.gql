@@ -401,7 +401,7 @@ type Mutation {
   ClassMeta(NickNames: [String!], ClassID: Int!): Class
   SkillConfigMeta(Comment: String, TypeID: Int!): SkillConfigMeta
   AbilityConfigMeta(Comment: String, TypeID: Int!): AbilityConfigMeta
-  UnitSpecialtyMeta(Comment: String, TypeID: Int!): UnitSpecialtyMeta
+  UnitSpecialtyMeta(Comment: String, TypeID: Int!): UnitConfigMeta
 }
 
 type PatternNo {
@@ -588,6 +588,11 @@ type Sprite {
   OriginY: Int!
 }
 
+type UnitConfigMeta {
+  TypeID: Int!
+  Comment: String
+}
+
 type UnitSpecialtyConfig {
   ID_Card: Int!
   Type_Specialty: Int!
@@ -596,11 +601,6 @@ type UnitSpecialtyConfig {
   Value_Param2: Int!
   Value_Param3: Int!
   Value_Param4: Int!
-  Command: Int!
-  Comment: String
-}
-
-type UnitSpecialtyMeta {
-  TypeID: Int!
+  Command: String!
   Comment: String
 }

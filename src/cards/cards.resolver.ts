@@ -25,7 +25,7 @@ import { Dot } from 'data/models/dot.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CardMeta } from 'data/models/cardMeta.model';
 import { Repository } from 'typeorm';
-import { UnitSpecialtyConfig } from 'data/models/unitSpecialty.model';
+import { UnitSpecialtyConfig } from 'data/models/unitSpecialtyConfig.model';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
