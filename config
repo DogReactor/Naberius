@@ -7,13 +7,14 @@ clusters:
 contexts:
 - context:
     cluster: kubernetes
-    user: yukimir-admin
-  name: yukimir-admin@kubernetes
-current-context: yukimir-admin@kubernetes
+    user: kubernetes-admin
+  name: kubernetes-admin@kubernetes
+current-context: kubernetes-admin@kubernetes
 kind: Config
 preferences: {}
 users:
-- name: yukimir-admin
+- name: kubernetes-admin
   user:
-    token: 
+    client-certificate-data:
+    client-key-data:
     

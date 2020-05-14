@@ -26,6 +26,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CardMeta } from 'data/models/cardMeta.model';
 import { Repository } from 'typeorm';
 import { UnitSpecialtyConfig } from 'data/models/unitSpecialtyConfig.model';
+import { cardIDPadding } from 'common/utils';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -123,9 +124,7 @@ export class CardsResolver {
     return (
       await this.files.find({
         where: {
-          Name: RegExp(
-            `^${(Array(3).join('0') + card.CardID).slice(-3)}_card_\\d\\.png$`,
-          ),
+          Name: RegExp(`^${cardIDPadding(card.CardID)}_card_\\d\\.png$`),
         },
         order: { Name: 'ASC' },
       })
@@ -139,11 +138,7 @@ export class CardsResolver {
     return (
       await this.files.find({
         where: {
-          Name: RegExp(
-            `^HarlemCG_${(Array(3).join('0') + card.CardID).slice(
-              -3,
-            )}_\\d\\.png$`,
-          ),
+          Name: RegExp(`^HarlemCG_${cardIDPadding(card.CardID)}_\\d\\.png$`),
         },
         order: { Name: 'ASC' },
       })

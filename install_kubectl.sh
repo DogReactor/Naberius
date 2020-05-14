@@ -7,4 +7,5 @@ cp config ${HOME}/.kube/config
 
 kubectl config set clusters.kubernetes.certificate-authority-data "$KUBE_CLUSTER_CERTIFICATE"
 kubectl config set clusters.kubernetes.server "$KUBE_SERVER"
-kubectl config set users.yukimir-admin.token "$KUBE_USER_TOKEN"
+kubectl config set users.kubernetes-admin.client-certificate-data "$KUBE_USER_CERTIFICATE"
+kubectl config set users.kubernetes-admin.client-key-data "$KUBE_USER_KEY"
