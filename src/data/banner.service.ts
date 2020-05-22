@@ -22,7 +22,7 @@ export class BannerService {
         Object.keys(atx.Sprites).forEach(key => {
           const ft = atx.Sprites[Number.parseInt(key, 10)];
           const name = ft.name;
-          if (name?.includes('temple_banner')) {
+          if (name?.includes('temple_summon_banner')) {
             const sprite = ft[0];
             if (
               sprite.Width !== 0 &&
