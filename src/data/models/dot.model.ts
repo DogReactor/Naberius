@@ -70,7 +70,7 @@ export class Alpha {
 export class DotEntry {
   @Field()
   Name: string;
-  @Field(type => [Sprite])
+  @Field(type => [Sprite], { nullable: true })
   Sprites: Sprite[];
   @Field(type => [PatternNo], { nullable: true })
   PatternNo?: PatternNo[];
