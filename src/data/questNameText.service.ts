@@ -42,4 +42,8 @@ export class QuestNameTextService {
       await readFile(filePath, 'utf-8'),
     ));
   }
+
+  async update() {
+    this.cache = {}
+  }
 }

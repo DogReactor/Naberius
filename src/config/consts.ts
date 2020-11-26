@@ -1,7 +1,7 @@
 import { Config } from './config.model';
 
 export const Consts: Partial<Config> = {
-  ASSETS_BASE_URL: 'http://assets.millennium-war.net',
+  ASSETS_BASE_URL: 'https://drc1bk94f7rq8.cloudfront.net',
   HARLEM_TEXT_R_DIR: 'HarlemTextR',
   HARLEM_TEXT_A_DIR: 'HarlemTextA',
   CACHE_DIR: 'cache',

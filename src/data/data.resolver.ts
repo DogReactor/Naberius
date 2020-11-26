@@ -7,6 +7,7 @@ import { MissionConfigService } from './missionConfig.service';
 import { EventArcService } from './eventArc.service';
 import { IcoService } from './ico.service';
 import { BannerService } from './banner.service';
+import { QuestNameTextService } from './questNameText.service';
 
 @Resolver()
 export class DataResolver {
@@ -62,6 +63,7 @@ export class DataResolver {
     private readonly generalMessageTexts: CacheFileService<any>,
     @Inject('UnitSpecialty')
     private readonly unitSpecialties: CacheFileService<any>,
+    private readonly questNameTexts: QuestNameTextService
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {
@@ -95,6 +97,7 @@ export class DataResolver {
       this.missiles,
       this.generalMessageTexts,
       this.unitSpecialties,
+      this.questNameTexts
     ].forEach(service => service.update());
     return true;
   }
