@@ -13,7 +13,7 @@ export abstract class DataService<T> {
         this.data = JSON.parse(await readFile(this.filePath, 'utf-8'));
         this.data.forEach((d: any, index) => (d.index = index));
       } catch (err) {
-        console.error(err);
+        console.info(err, 'can be ignored');
         this.data = [];
       }
     } else {

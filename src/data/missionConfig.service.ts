@@ -45,45 +45,49 @@ export class MissionConfigService {
     this.configs = [];
     const dir = this.config.get('MISSION_DIR');
 
-    const eventNameTexts: EventNameText[] = JSON.parse(
-      await readFile(join(dir, 'EventNameText.json'), 'utf-8'),
-    );
-
-    const configFiles = (await readdir(dir)).filter(name =>
-      name.includes('MissionConfig'),
-    );
-    for (const fileName of configFiles) {
-      const missions: Mission[] = JSON.parse(
-        await readFile(join(dir, fileName), 'utf-8'),
+    try {
+      const eventNameTexts: EventNameText[] = JSON.parse(
+        await readFile(join(dir, 'EventNameText.json'), 'utf-8'),
       );
 
-      for (const config of missions) {
-        if (config.QuestID) {
-          // fuck daily reproduce missions
-          this.missionQuests.push(
-            ...config.QuestID.split(',').map(idStr => ({
-              MissionID: config.MissionID,
-              QuestID: Number.parseInt(idStr, 10),
-            })),
-          );
-          config.Name = eventNameTexts[config.TitleID!].Data_Text;
+      const configFiles = (await readdir(dir)).filter(name =>
+        name.includes('MissionConfig'),
+      );
+      for (const fileName of configFiles) {
+        const missions: Mission[] = JSON.parse(
+          await readFile(join(dir, fileName), 'utf-8'),
+        );
+
+        for (const config of missions) {
+          if (config.QuestID) {
+            // fuck daily reproduce missions
+            this.missionQuests.push(
+              ...config.QuestID.split(',').map(idStr => ({
+                MissionID: config.MissionID,
+                QuestID: Number.parseInt(idStr, 10),
+              })),
+            );
+            config.Name = eventNameTexts[config.TitleID!].Data_Text;
+          }
         }
+
+        this.configs.push(
+          ...missions.map(mission => ({
+            ...mission,
+            Type: fileName.replace('MissionConfig.json', ''),
+          })),
+        );
       }
 
-      this.configs.push(
-        ...missions.map(mission => ({
-          ...mission,
-          Type: fileName.replace('MissionConfig.json', ''),
-        })),
+      const mqFiles = (await readdir(dir)).filter(name =>
+        name.includes('QuestList'),
       );
-    }
-
-    const mqFiles = (await readdir(dir)).filter(name =>
-      name.includes('QuestList'),
-    );
-    for (const fileName of mqFiles) {
-      const file = JSON.parse(await readFile(join(dir, fileName), 'utf-8'));
-      this.missionQuests.push(...file);
+      for (const fileName of mqFiles) {
+        const file = JSON.parse(await readFile(join(dir, fileName), 'utf-8'));
+        this.missionQuests.push(...file);
+      }
+    } catch (err) {
+      console.info(err, 'can be ignored')
     }
   }
 
