@@ -41,8 +41,13 @@ export class RequestService extends EventEmitter {
       this.downloadings.push(fileName);
       for (let retry = 1; retry <= 5; retry++) {
         try {
+          let url = file.Link;
+          // file.Link可能为完整url，傻逼大咪咪猴子
+          if (!/(http|https):\/\//.exec(url)) {
+            url = this.config.get('ASSETS_BASE_URL') + file.Link;
+          }
           const req = request.get({
-            url: this.config.get('ASSETS_BASE_URL') + file.Link,
+            url,
             encoding: null,
             timeout: 50 * 1000,
             proxy: process.env.proxy,
