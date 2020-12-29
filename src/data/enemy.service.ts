@@ -39,4 +39,8 @@ export class EnemyService {
       await readFile(filePath, 'utf-8'),
     ));
   }
+
+  async update() {
+    this.cache = []
+  }
 }
