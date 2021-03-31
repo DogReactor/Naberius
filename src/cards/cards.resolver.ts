@@ -27,6 +27,7 @@ import { CardMeta } from 'data/models/cardMeta.model';
 import { Repository } from 'typeorm';
 import { UnitSpecialtyConfig } from 'data/models/unitSpecialtyConfig.model';
 import { cardIDPadding } from 'common/utils';
+import { PlayerCGService } from 'data/playerCG.service';
 
 function fileSorter(a: File, b: File) {
   if (a.Name < b.Name) {
@@ -66,6 +67,7 @@ export class CardsResolver {
       UnitSpecialtyConfig
     >,
     private readonly dots: DotService,
+    private readonly playerCGs: PlayerCGService,
     @InjectRepository(CardMeta)
     private readonly cardMetaRepo: Repository<CardMeta>,
   ) {}
@@ -121,28 +123,30 @@ export class CardsResolver {
 
   @ResolveProperty(type => [String])
   async ImageStand(@Parent() card: Card) {
-    return (
-      await this.files.find({
-        where: {
-          Name: RegExp(`^${cardIDPadding(card.CardID)}_card_\\d\\.png$`),
-        },
-        order: { Name: 'ASC' },
-      })
-    )
-      .sort()
-      .map(file => file.Link);
+    return this.playerCGs.get(card.CardID, 'Stand');
+    // return (
+    //   await this.files.find({
+    //     where: {
+    //       Name: RegExp(`^${cardIDPadding(card.CardID)}_card_\\d\\.png$`),
+    //     },
+    //     order: { Name: 'ASC' },
+    //   })
+    // )
+    //   .sort()
+    //   .map(file => file.Link);
   }
 
   @ResolveProperty(type => [String])
   async ImageCG(@Parent() card: Card) {
-    return (
-      await this.files.find({
-        where: {
-          Name: RegExp(`^HarlemCG_${cardIDPadding(card.CardID)}_\\d\\.png$`),
-        },
-        order: { Name: 'ASC' },
-      })
-    ).map(file => file.Link);
+    return this.playerCGs.get(card.CardID, 'Harlem');
+    // return (
+    //   await this.files.find({
+    //     where: {
+    //       Name: RegExp(`^HarlemCG_${cardIDPadding(card.CardID)}_\\d\\.png$`),
+    //     },
+    //     order: { Name: 'ASC' },
+    //   })
+    // ).map(file => file.Link);
   }
 
   @ResolveProperty(type => String)

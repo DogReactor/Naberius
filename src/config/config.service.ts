@@ -39,6 +39,8 @@ export class ParsedConfigService {
     this.joinDir('ENEMY_DIR', 'CACHE_DIR');
     this.joinDir('POSTER_DIR', 'CACHE_DIR');
     this.joinDir('BANNER_DIR', 'CACHE_DIR');
+    this.joinDir('PLAYER_STAND_CG_DIR', 'CACHE_DIR');
+    this.joinDir('PLAYER_HARLEM_CG_DIR', 'CACHE_DIR')
     this.ensureDirs();
 
     this.logger.log('Config initialized!');
@@ -61,6 +63,8 @@ export class ParsedConfigService {
       'ENEMY_DIR',
       'POSTER_DIR',
       'BANNER_DIR',
+      'PLAYER_STAND_CG_DIR',
+      'PLAYER_HARLEM_CG_DIR',
     ] as Array<keyof Config>).forEach(key => ensureDirSync(this.config[key]));
   }
 

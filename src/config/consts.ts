@@ -2,8 +2,8 @@ import { Config } from './config.model';
 
 export const Consts: Partial<Config> = {
   ASSETS_BASE_URL: 'https://drc1bk94f7rq8.cloudfront.net',
-  HARLEM_TEXT_R_DIR: 'HarlemTextR',
-  HARLEM_TEXT_A_DIR: 'HarlemTextA',
+  HARLEM_TEXT_R_DIR: 'harlemTextR',
+  HARLEM_TEXT_A_DIR: 'harlemTextA',
   CACHE_DIR: 'cache',
   DATA_DIR: 'data',
   MISSION_DIR: 'mission',
@@ -18,4 +18,6 @@ export const Consts: Partial<Config> = {
   ENEMY_DIR: 'enemy',
   POSTER_DIR: 'poster',
   BANNER_DIR: 'banner',
+  PLAYER_STAND_CG_DIR: 'standCG',
+  PLAYER_HARLEM_CG_DIR: 'harlemCG'
 };

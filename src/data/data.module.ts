@@ -22,6 +22,7 @@ import { BannerService } from './banner.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { File } from './models/file.model';
 import { LoggerModule } from 'logger/logger.module';
+import { PlayerCGService } from './playerCG.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -93,6 +94,7 @@ function cacheFactory(fileName: string): Provider {
     MapService,
     EnemyService,
     BannerService,
+    PlayerCGService,
   ],
   exports: [
     DataResolver,
@@ -132,6 +134,7 @@ function cacheFactory(fileName: string): Provider {
     MapService,
     EnemyService,
     BannerService,
+    PlayerCGService
   ],
 })
 export class DataModule {}

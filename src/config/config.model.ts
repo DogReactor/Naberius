@@ -21,4 +21,6 @@ export class Config {
   MONGO_HOST: string;
   MONGO_PORT: string;
   MONGO_DATABASE: string;
+  PLAYER_STAND_CG_DIR: string;
+  PLAYER_HARLEM_CG_DIR: string;
 }
