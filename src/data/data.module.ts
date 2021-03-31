@@ -17,7 +17,6 @@ import { DotService } from './dot.service';
 import { MessageTextService } from './messageText.service';
 import { BattleTalkEventService } from './battleTalkEvent.service';
 import { MapService } from './map.service';
-import { EnemyService } from './enemy.service';
 import { BannerService } from './banner.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { File } from './models/file.model';
@@ -82,6 +81,7 @@ function cacheFactory(fileName: string): Provider {
     cacheFactory('Missile'),
     cacheFactory('MessageText'),
     cacheFactory('UnitSpecialty'),
+    // cacheFactory('Enemy'),
     HarlemTextService,
     ClassDataService,
     MissionConfigService,
@@ -92,7 +92,7 @@ function cacheFactory(fileName: string): Provider {
     DotService,
     BattleTalkEventService,
     MapService,
-    EnemyService,
+    // EnemyService,
     BannerService,
     PlayerCGService,
   ],
@@ -123,6 +123,7 @@ function cacheFactory(fileName: string): Provider {
     'Missile',
     'MessageText',
     'UnitSpecialty',
+    // 'Enemy',
     HarlemTextService,
     ClassDataService,
     MissionConfigService,
@@ -132,7 +133,7 @@ function cacheFactory(fileName: string): Provider {
     DotService,
     BattleTalkEventService,
     MapService,
-    EnemyService,
+    // EnemyService,
     BannerService,
     PlayerCGService
   ],

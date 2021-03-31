@@ -390,7 +390,6 @@ type Mission {
   Type: String!
   Quests: [Quest!]!
   BattleTalkEvents: [BattleTalkEvent!]
-  Enemies: [Enemy!]!
 }
 
 type Mutation {

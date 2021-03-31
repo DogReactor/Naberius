@@ -8,7 +8,6 @@ import { EventArcService } from './eventArc.service';
 import { IcoService } from './ico.service';
 import { BannerService } from './banner.service';
 import { QuestNameTextService } from './questNameText.service';
-import { EnemyService } from './enemy.service';
 
 @Resolver()
 export class DataResolver {
@@ -65,7 +64,8 @@ export class DataResolver {
     @Inject('UnitSpecialty')
     private readonly unitSpecialties: CacheFileService<any>,
     private readonly questNameTexts: QuestNameTextService,
-    private readonly enemies: EnemyService
+    // @Inject('Enemy')
+    // private readonly enemies: CacheFileService<any>
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {
@@ -100,7 +100,7 @@ export class DataResolver {
       this.generalMessageTexts,
       this.unitSpecialties,
       this.questNameTexts,
-      this.enemies
+      // this.enemies
     ].forEach(service => service.update());
     return true;
   }

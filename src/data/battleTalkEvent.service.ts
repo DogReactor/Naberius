@@ -29,22 +29,27 @@ export class BattleTalkEventService {
       for (const file of aarFile.Files) {
         if (file.Name === 'FaceIcon.atx') {
           const atx = file.Content as ALTX;
+          console.log(atx)
           const image = ALTX2PNG(atx);
+          image.toFile(talkPath + '/all.png');
           Object.keys(atx.Sprites).forEach((key: string) => {
-            const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
-            if (sprite.Width !== 0 && sprite.Height !== 0) {
-              const name = Number.parseInt(
-                atx.Sprites[Number.parseInt(key, 10)].name || key,
-                10,
-              );
-              image
-                .extract({
-                  left: sprite.X,
-                  top: sprite.Y,
-                  width: sprite.Width,
-                  height: sprite.Height,
-                })
-                .toFile(join(talkPath, `${name}.png`));
+            const sprites = atx.Sprites[Number.parseInt(key, 10)];
+            if (sprites.length > 0) {
+              const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
+              if (sprite.Width !== 0 && sprite.Height !== 0) {
+                const name = Number.parseInt(
+                  atx.Sprites[Number.parseInt(key, 10)].name || key,
+                  10,
+                );
+                image
+                  .extract({
+                    left: sprite.X,
+                    top: sprite.Y,
+                    width: sprite.Width,
+                    height: sprite.Height,
+                  })
+                  .toFile(join(talkPath, `${name}.png`));
+              }
             }
           });
         } else if (file.Name === 'BattleTalkEvent.atb') {

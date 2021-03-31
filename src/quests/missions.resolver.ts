@@ -14,7 +14,6 @@ import { Int } from 'type-graphql';
 import { BattleTalkEvent } from 'data/models/battleTalkEvent.model';
 import { BattleTalkEventService } from 'data/battleTalkEvent.service';
 import { Enemy } from 'data/models/enemy.model';
-import { EnemyService } from 'data/enemy.service';
 
 @Resolver(Mission)
 export class MissionsResolver {
@@ -22,7 +21,6 @@ export class MissionsResolver {
     private readonly missionConfigs: MissionConfigService,
     @Inject('QuestList') private readonly quests: DataFileService<Quest>,
     private readonly battleTalkEvents: BattleTalkEventService,
-    private readonly enemies: EnemyService,
   ) {}
 
   @ResolveProperty(type => [Quest])
@@ -34,11 +32,6 @@ export class MissionsResolver {
   @ResolveProperty(type => [BattleTalkEvent], { nullable: true })
   async BattleTalkEvents(@Parent() mission: Mission) {
     return this.battleTalkEvents.get(mission.MissionID);
-  }
-
-  @ResolveProperty(type => [Enemy])
-  async Enemies(@Parent() mission: Mission) {
-    return this.enemies.get(mission.MissionID);
   }
 
   @Query(type => [Mission])
