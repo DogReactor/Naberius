@@ -54,7 +54,7 @@ export class PlayerCGService {
       }
     } catch (err) {
       this.logger.error(err.message);
-      return null;
+      return [];
     }
 
     // 重新获取一次
