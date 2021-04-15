@@ -20,18 +20,19 @@ export class PlayerCGService {
         type === 'Stand' ? 'PLAYER_STAND_CG_DIR' : 'PLAYER_HARLEM_CG_DIR',
       ),
     );
-    const CardIDPadded = numberPadding(CardID, 3);
+    const CardIDPadded3 = numberPadding(CardID, 3);
+    const CardIDPadded4 = numberPadding(CardID, 4);
     const fileBase =
-      (type === 'Stand' ? 'Card' : 'HarlemCG') + CardIDPadded;
+      (type === 'Stand' ? 'Card' : 'HarlemCG') + CardIDPadded4;
     const aarFileName = `${fileBase}.aar`;
 
     // 获取文件列表
     const getFilelist = async () => {
       const fileList = await fs.readdir(imgPath);
       if (type === 'Stand') {
-        return fileList.filter(name => name.match(RegExp(`${CardIDPadded}_card_\\d.png`))).sort();
+        return fileList.filter(name => name.match(RegExp(`${CardIDPadded3}_card_\\d.png`))).sort();
       } else {
-        return fileList.filter(name => name.match(RegExp(`HarlemCG_${CardIDPadded}_\\d.png`))).sort();
+        return fileList.filter(name => name.match(RegExp(`HarlemCG_${CardIDPadded3}_\\d.png`))).sort();
       }
     }
 
