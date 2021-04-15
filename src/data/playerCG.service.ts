@@ -14,15 +14,13 @@ export class PlayerCGService {
     private readonly config: ParsedConfigService,
     private readonly logger: Logger,
   ) {}
-  async getFilenames(CardID: number, type: 'Stand' | 'Harlem') {
-  }
   async get(CardID: number, type: 'Stand' | 'Harlem') {
     const imgPath = path.join(
       this.config.get(
         type === 'Stand' ? 'PLAYER_STAND_CG_DIR' : 'PLAYER_HARLEM_CG_DIR',
       ),
     );
-    const CardIDPadded = numberPadding(CardID, 4);
+    const CardIDPadded = numberPadding(CardID, 3);
     const fileBase =
       (type === 'Stand' ? 'Card' : 'HarlemCG') + CardIDPadded;
     const aarFileName = `${fileBase}.aar`;

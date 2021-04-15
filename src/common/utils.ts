@@ -12,15 +12,7 @@ export async function sleep(ms: number) {
 }
 
 export function numberPadding(num: number, length: number) {
-  return (Array(length).join('0') + num).slice(-length);
-}
-
-export function cardIDPadding(id: number) {
-  if (id < 1000) {
-    return id.toString().padStart(3, '0');
-  } else {
-    return id.toString();
-  }
+  return num.toString().padStart(length, '0');
 }
 
 export function ALTX2PNG(altx: ALTX) {
