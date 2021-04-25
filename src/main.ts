@@ -4,6 +4,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ParsedConfigService } from 'config/config.service';
 import { join } from 'path';
 
+// 防止console.error直接终止node进程
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('unhandledRejection', reason, promise);
+});
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
