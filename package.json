@@ -54,7 +54,7 @@
     "subscriptions-transport-ws": "^0.9.15",
     "type-graphql": "^0.17.6",
     "typegoose": "^5.8.0",
-    "typeorm": "^0.2.21"
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.11.5",
