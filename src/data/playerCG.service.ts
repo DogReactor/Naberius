@@ -22,19 +22,24 @@ export class PlayerCGService {
     );
     const CardIDPadded3 = numberPadding(CardID, 3);
     const CardIDPadded4 = numberPadding(CardID, 4);
-    const fileBase =
-      (type === 'Stand' ? 'Card' : 'HarlemCG') + CardIDPadded4;
+    const fileBase = (type === 'Stand' ? 'Card' : 'HarlemCG') + CardIDPadded4;
     const aarFileName = `${fileBase}.aar`;
 
     // 获取文件列表
     const getFilelist = async () => {
       const fileList = await fs.readdir(imgPath);
       if (type === 'Stand') {
-        return fileList.filter(name => name.match(RegExp(`${CardIDPadded3}_card_\\d.png`))).sort();
+        return fileList
+          .filter(name => name.match(RegExp(`${CardIDPadded3}_card_\\d.png`)))
+          .sort();
       } else {
-        return fileList.filter(name => name.match(RegExp(`HarlemCG_${CardIDPadded3}_\\d.png`))).sort();
+        return fileList
+          .filter(name =>
+            name.match(RegExp(`HarlemCG_${CardIDPadded3}_\\d.png`)),
+          )
+          .sort();
       }
-    }
+    };
 
     // 如果已经有图了就直接返回
     const fileList = await getFilelist();
@@ -49,11 +54,14 @@ export class PlayerCGService {
         const txName = file.Name.split('.');
         if (txName[1] === 'atx' && file.Content) {
           const content = file.Content as ALTX;
-          await ALTX2PNG(content).toFile(path.join(imgPath, txName[0] + '.png'));
+          await ALTX2PNG(content).toFile(
+            path.join(imgPath, txName[0] + '.png'),
+          );
         }
       }
     } catch (err) {
-      this.logger.error(err.message);
+      const error = err as Error;
+      this.logger.error(error.message);
       return [];
     }
 
