@@ -79,7 +79,9 @@ export class ClassesResolver {
 
   @ResolveProperty(type => [Card])
   Cards(@Parent() classData: Class) {
-    return this.cards.data.filter(c => c.InitClassID === classData.ClassID);
+    return this.cards.data.filter(
+      c => Number.parseInt(c.InitClassID, 10) === classData.ClassID,
+    );
   }
 
   @ResolveProperty(type => [String], { nullable: true })

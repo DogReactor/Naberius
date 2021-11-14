@@ -70,7 +70,7 @@ export class CardsResolver {
       | 'playerIdentityTypes'
       | 'playerGenusTypes',
   ) {
-    let key: number;
+    let key: string;
     switch (file) {
       case 'playerRaceTypes':
         key = card._TypeRace;
@@ -87,7 +87,9 @@ export class CardsResolver {
       default:
         throw new Error('Type file name error!');
     }
-    const type = this[file].data.find(t => t._TypeID === key);
+    const type = this[file].data.find(
+      t => t._TypeID === Number.parseInt(key, 10),
+    );
     if (type && type._SystemTextID !== 0) {
       const text = this.SystemTexts.data[type._SystemTextID];
       if (text) {
@@ -103,7 +105,7 @@ export class CardsResolver {
 
   @ResolveProperty(type => String)
   Name(@Parent() card: Card) {
-    const name = this.nameTexts.data[card.CardID - 1];
+    const name = this.nameTexts.data[Number.parseInt(card.CardID, 10) - 1];
     if (name) {
       return name.Message;
     } else {
@@ -113,17 +115,17 @@ export class CardsResolver {
 
   @ResolveProperty(type => [String])
   async ImageStand(@Parent() card: Card) {
-    return this.playerCGs.get(card.CardID, 'Stand');
+    return this.playerCGs.get(Number.parseInt(card.CardID, 10), 'Stand');
   }
 
   @ResolveProperty(type => [String])
   async ImageCG(@Parent() card: Card) {
-    return this.playerCGs.get(card.CardID, 'Harlem');
+    return this.playerCGs.get(Number.parseInt(card.CardID, 10), 'Harlem');
   }
 
   @ResolveProperty(type => String)
   IllustName(@Parent() card: Card) {
-    return this.statusTexts.data[card.Illust].Message;
+    return this.statusTexts.data[Number.parseInt(card.Illust, 10)].Message;
   }
 
   @ResolveProperty(type => String, { nullable: true })
@@ -150,13 +152,22 @@ export class CardsResolver {
   Skills(@Parent() card: Card) {
     const skills: SkillsWithType[] = [];
     if (card.ClassLV0SkillID) {
-      skills.push({ Type: 'Init', initSkillID: card.ClassLV0SkillID });
+      skills.push({
+        Type: 'Init',
+        initSkillID: Number.parseInt(card.ClassLV0SkillID, 10),
+      });
     }
     if (card.ClassLV0SkillID !== card.ClassLV1SkillID) {
-      skills.push({ Type: 'CC', initSkillID: card.ClassLV1SkillID });
+      skills.push({
+        Type: 'CC',
+        initSkillID: Number.parseInt(card.ClassLV1SkillID, 10),
+      });
     }
     if (card.EvoSkillID) {
-      skills.push({ Type: 'Evo', initSkillID: card.EvoSkillID });
+      skills.push({
+        Type: 'Evo',
+        initSkillID: Number.parseInt(card.EvoSkillID, 10),
+      });
     }
     return skills;
   }
@@ -167,13 +178,17 @@ export class CardsResolver {
     if (card.Ability_Default) {
       abilities.push({
         Type: 'Init',
-        ...this.abilities.data.find(a => a.AbilityID === card.Ability_Default)!,
+        ...this.abilities.data.find(
+          a => a.AbilityID === Number.parseInt(card.Ability_Default, 10),
+        )!,
       });
     }
     if (card.Ability) {
       abilities.push({
         Type: 'Evo',
-        ...this.abilities.data.find(a => a.AbilityID === card.Ability)!,
+        ...this.abilities.data.find(
+          a => a.AbilityID === Number.parseInt(card.Ability, 10),
+        )!,
       });
     }
     return abilities;
@@ -194,7 +209,9 @@ export class CardsResolver {
     const classes: Class[] = [];
     // init class
     classes.push({
-      ...this.classes.data.find(cl => cl.ClassID === card.InitClassID)!,
+      ...this.classes.data.find(
+        cl => cl.ClassID === Number.parseInt(card.InitClassID, 10),
+      )!,
       Type: 'Init',
     });
 
@@ -241,7 +258,9 @@ export class CardsResolver {
 
   @ResolveProperty(type => [String], { nullable: true })
   async NickNames(@Parent() card: Card) {
-    const meta = await this.cardMetaRepo.findOne({ CardID: card.CardID });
+    const meta = await this.cardMetaRepo.findOne({
+      CardID: Number.parseInt(card.CardID, 10),
+    });
     if (meta) {
       return meta.NickNames;
     }
@@ -249,7 +268,9 @@ export class CardsResolver {
 
   @ResolveProperty(type => String, { nullable: true })
   async ConneName(@Parent() card: Card) {
-    const meta = await this.cardMetaRepo.findOne({ CardID: card.CardID });
+    const meta = await this.cardMetaRepo.findOne({
+      CardID: Number.parseInt(card.CardID, 10),
+    });
     if (meta) {
       return meta.ConneName;
     }
@@ -258,14 +279,15 @@ export class CardsResolver {
   @ResolveProperty(type => [UnitSpecialtyConfig])
   async SpecialtyConfigs(@Parent() card: Card) {
     let index = this.unitSpecialtyConfigs.data.findIndex(
-      us => us.ID_Card === card.CardID,
+      us => us.ID_Card === Number.parseInt(card.CardID),
     );
     if (index !== -1) {
       const configs: UnitSpecialtyConfig[] = [];
       let config = this.unitSpecialtyConfigs.data[index];
       while (
         config &&
-        (config.ID_Card === 0 || config.ID_Card === card.CardID)
+        (config.ID_Card === 0 ||
+          config.ID_Card === Number.parseInt(card.CardID))
       ) {
         configs.push(config);
         config = this.unitSpecialtyConfigs.data[++index];
@@ -287,10 +309,14 @@ export class CardsResolver {
     Rare?: number,
   ) {
     if (Rare !== undefined) {
-      return this.cards.data.filter(card => card.Rare === Rare);
+      return this.cards.data.filter(
+        card => Number.parseInt(card.Rare, 10) === Rare,
+      );
     }
     if (ClassID) {
-      return this.cards.data.filter(card => card.InitClassID === ClassID);
+      return this.cards.data.filter(
+        card => Number.parseInt(card.InitClassID, 10) === ClassID,
+      );
     }
     return this.cards.data;
   }
@@ -304,7 +330,9 @@ export class CardsResolver {
       CardID = this.nameTexts.data.findIndex(name => name.Message === Name) + 1;
     }
     if (CardID) {
-      return this.cards.data.find(card => card.CardID === CardID);
+      return this.cards.data.find(
+        card => Number.parseInt(card.CardID, 10) === CardID,
+      );
     }
   }
 
@@ -321,7 +349,9 @@ export class CardsResolver {
     NickNames: [string],
   ) {
     try {
-      const card = this.cards.data.find(card => card.CardID === CardID);
+      const card = this.cards.data.find(
+        card => Number.parseInt(card.CardID, 10) === CardID,
+      );
       if (!card) {
         return null;
       }

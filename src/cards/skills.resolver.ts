@@ -82,9 +82,9 @@ export class SkillsResolver {
   Cards(@Parent() skill: Skill) {
     return this.cards.data.filter(
       card =>
-        card.ClassLV0SkillID === skill.index ||
-        card.ClassLV1SkillID === skill.index ||
-        card.EvoSkillID === skill.index,
+        Number.parseInt(card.ClassLV0SkillID) === skill.index ||
+        Number.parseInt(card.ClassLV1SkillID) === skill.index ||
+        Number.parseInt(card.EvoSkillID) === skill.index,
     );
   }
 

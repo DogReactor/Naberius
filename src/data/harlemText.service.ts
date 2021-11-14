@@ -54,7 +54,7 @@ export class HarlemTextService {
     );
   }
 
-  get(CardID: number, type: 'A' | 'R') {
+  get(CardID: number | string, type: 'A' | 'R') {
     const dir = this.config.get(
       type === 'A' ? 'HARLEM_TEXT_A_DIR' : 'HARLEM_TEXT_R_DIR',
     );

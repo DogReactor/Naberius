@@ -59,9 +59,9 @@ export class AbilitiesResolver {
   @ResolveProperty(type => [Card])
   Cards(@Parent() ability: Ability) {
     return this.cards.data.filter(
-      a =>
-        a.Ability_Default === ability.AbilityID ||
-        a.Ability === ability.AbilityID,
+      card =>
+        Number.parseInt(card.Ability_Default, 10) === ability.AbilityID ||
+        Number.parseInt(card.Ability, 10) === ability.AbilityID,
     );
   }
 

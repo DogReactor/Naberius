@@ -16,7 +16,7 @@ export class DotService {
     private readonly logger: Logger,
   ) {}
 
-  async get(CardID: number, type: 'Enemy' | 'Player') {
+  async get(CardID: number | string, type: 'Enemy' | 'Player') {
     const dotPath = join(
       this.config.get(type === 'Player' ? 'PLAYER_DOT_DIR' : 'ENEMY_DOT_DIR'),
       CardID.toString(),
@@ -30,7 +30,10 @@ export class DotService {
         await ensureDir(dotPath);
         const dots: Dot[] = [];
         let sprites: { [key: number]: ALTX.FrameTable } = {};
-        const aarFilename = `${type}Dot${numberPadding(CardID, 4)}.aar`;
+        const aarFilename = `${type}Dot${numberPadding(
+          typeof CardID === 'number' ? CardID : Number.parseInt(CardID, 10),
+          4,
+        )}.aar`;
         const aarFile = parseAL(
           await this.request.requestFile(aarFilename),
         ) as ALAR;
