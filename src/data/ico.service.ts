@@ -13,35 +13,39 @@ export class IcoService {
     private readonly config: ParsedConfigService,
   ) {}
   async update() {
-    await Promise.all([
-      this.request.requestFile('ico_00.aar'),
-      this.request.requestFile('ico_01.aar'),
-      this.request.requestFile('ico_02.aar'),
-      this.request.requestFile('ico_03.aar'),
-    ]).then(res => {
-      res.forEach((aar, index) => {
-        const parsed = parseAL(aar) as ALAR;
-        const dir = join(this.config.get('ICO_DIR'), index.toString());
-        ensureDirSync(dir);
-        parsed.Files.forEach(file => {
-          const atx = file.Content as ALTX;
-          const image = ALTX2PNG(atx);
-          Object.keys(atx.Sprites).forEach(key => {
-            const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
-            if (sprite.Width !== 0 && sprite.Height !== 0) {
-              const modKey = Number.parseInt(key, 10) % 2048;
-              image
-                .extract({
-                  left: sprite.X,
-                  top: sprite.Y,
-                  width: sprite.Width,
-                  height: sprite.Height,
-                })
-                .toFile(join(dir, `${modKey}.png`));
-            }
+    try {
+      await Promise.all([
+        this.request.requestFile('ico_00.aar'),
+        this.request.requestFile('ico_01.aar'),
+        this.request.requestFile('ico_02.aar'),
+        this.request.requestFile('ico_03.aar'),
+      ]).then(res => {
+        res.forEach((aar, index) => {
+          const parsed = parseAL(aar) as ALAR;
+          const dir = join(this.config.get('ICO_DIR'), index.toString());
+          ensureDirSync(dir);
+          parsed.Files.forEach(file => {
+            const atx = file.Content as ALTX;
+            const image = ALTX2PNG(atx);
+            Object.keys(atx.Sprites).forEach(key => {
+              const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
+              if (sprite.Width !== 0 && sprite.Height !== 0) {
+                const modKey = Number.parseInt(key, 10) % 2048;
+                image
+                  .extract({
+                    left: sprite.X,
+                    top: sprite.Y,
+                    width: sprite.Width,
+                    height: sprite.Height,
+                  })
+                  .toFile(join(dir, `${modKey}.png`));
+              }
+            });
           });
         });
       });
-    });
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

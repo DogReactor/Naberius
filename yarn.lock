@@ -976,10 +976,10 @@ aggregate-error@3.0.0:
     clean-stack "^2.0.0"
     indent-string "^3.2.0"
 
-aigis-fuel@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/aigis-fuel/-/aigis-fuel-0.4.2.tgz#a8a396b43089e63af3c293aaafa04d815e0233f6"
-  integrity sha512-PCFLMCcfb5NYARIhblNmceOB6nv9RK4iuwawM6NZp4G26impv1SpqJHNrWEZAmLF2YhWiHr4B79EEvilIYauqA==
+aigis-fuel@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.npmjs.org/aigis-fuel/-/aigis-fuel-0.4.3.tgz#3251fbb2304d74f78f9f2a5a06b88033ec4ebd85"
+  integrity sha512-DNhXKJtD8cAao1lYXv3m8AFhker0tNdy3J705FrS+CzDR+HINyMRlBPovbz0PYv+uwKQzNP49x7jkOtuzVZ0vg==
   dependencies:
     lz4 "^0.6.5"
 

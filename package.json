@@ -23,7 +23,7 @@
     "@nestjs/schematics": "^6.7.0",
     "@nestjs/serve-static": "^1.0.2",
     "@nestjs/typeorm": "^6.2.0",
-    "aigis-fuel": "^0.4.2",
+    "aigis-fuel": "^0.4.3",
     "apollo-server": "^2.14.2",
     "apollo-server-express": "^2.9.8",
     "apollo-server-koa": "^2.14.2",
