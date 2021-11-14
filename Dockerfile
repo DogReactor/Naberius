@@ -1,4 +1,4 @@
-FROM node
+FROM node:fermium
 LABEL maintainer="moondropx"
 
 WORKDIR /root
