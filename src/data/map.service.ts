@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { ParsedConfigService } from 'config/config.service';
 import { join } from 'path';
 import { pathExists, writeFile, readFile } from 'fs-extra';
-import { parseAL, ALAR, ALTB } from 'aigis-fuel';
+import { parseAL, ALAR, ALTB, ALTX } from 'aigis-fuel';
 import { RequestService } from 'common/request.service';
 import { Map, Route } from './models/map.model';
-import { numberPadding } from 'common/utils';
+import { ALTX2PNG, numberPadding } from 'common/utils';
 
 @Injectable()
 export class MapService {
@@ -19,6 +19,7 @@ export class MapService {
       ? `${MissionID}_${numberPadding(MapID, 4)}`
       : MapID;
     const mapPath = join(this.config.get('MAP_DIR'), `${MapName}.json`);
+    const mapImagePath = join(this.config.get('MAP_DIR'), `${MapName}.png`);
     if (!(await pathExists(mapPath))) {
       const map = new Map();
       const aarFilename = `Map${MapName}.aar`;
@@ -49,6 +50,13 @@ export class MapService {
           map.Routes[Number.parseInt(match[1], 10)] = routes;
         } else if (file.Name.includes('Enemy')) {
           map.Enemies = (file.Content as ALTB).Contents;
+        } else if (file.Name === 'Map.atx') {
+          try {
+            const content = file.Content as ALTX;
+            await ALTX2PNG(content).toFile(mapImagePath);
+          } catch (e) {
+            console.error(e as Error);
+          }
         }
       }
 

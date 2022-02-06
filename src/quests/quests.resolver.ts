@@ -126,7 +126,7 @@ export class QuestsResolver {
 
   @ResolveProperty(type => String, { nullable: true })
   HardInfomation(@Parent() quest: Quest) {
-    if (quest._HardCondition) {
+    if (Number.parseInt(quest._HardCondition, 10)) {
       return this.generalMessageTexts.data[
         Number.parseInt(quest._HardInfomation, 10)
       ]?.Message;
