@@ -2,76 +2,76 @@ import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
 export class Quest {
-  @Field(type => Int)
-  QuestID: number;
-  @Field(type => Int)
-  QuestTitle: number;
-  @Field(type => Int)
-  Text: number;
-  @Field(type => Int)
-  Type: number;
-  @Field(type => Int)
-  Charisma: number;
-  @Field(type => Int)
-  ActionPoint: number;
-  @Field(type => Int)
-  Rank: number;
-  @Field(type => Int)
-  Level: number;
-  @Field(type => Int)
-  Capacity: number;
-  @Field(type => Int)
-  defHP: number;
-  @Field(type => Int)
-  defAP: number;
-  @Field(type => Int)
-  AppearCondition: number;
-  @Field(type => Int)
-  RankExp: number;
-  @Field(type => Int)
-  Gold: number;
-  @Field(type => Int)
-  MapNo: number;
-  @Field(type => Int)
-  EntryNo: number;
-  @Field(type => Int)
-  Treasure1: number;
-  @Field(type => Int)
-  Treasure2: number;
-  @Field(type => Int)
-  Treasure3: number;
-  @Field(type => Int)
-  Treasure4: number;
-  @Field(type => Int)
-  Treasure5: number;
-  @Field(type => Int)
-  UnitLevel: number;
-  @Field(type => Int)
-  QuestTerms: number;
-  @Field(type => Int)
-  LocationNo: number;
-  @Field(type => Int)
-  StartOpenDay: number;
-  @Field(type => Int)
-  EndOpenDay: number;
-  @Field(type => Int)
-  OpenWeek: number;
-  @Field(type => Int)
-  BonusType: number;
-  @Field(type => Int)
-  BonusNum: number;
-  @Field(type => Int)
-  UnitList: number;
-  @Field(type => Int)
-  _HardLevel: number;
-  @Field(type => Int)
-  _HardCondition: number;
-  @Field(type => Int)
-  _HardInfomation: number;
-  @Field(type => Int)
-  _DispIndex: number;
-  @Field(type => Int)
-  _HoldingParam: number;
-  @Field(type => Int)
-  DangerArea: number;
+  @Field()
+  QuestID: string;
+  @Field()
+  QuestTitle: string;
+  @Field()
+  Text: string;
+  @Field()
+  Type: string;
+  @Field()
+  Charisma: string;
+  @Field()
+  ActionPoint: string;
+  @Field()
+  Rank: string;
+  @Field()
+  Level: string;
+  @Field()
+  Capacity: string;
+  @Field()
+  defHP: string;
+  @Field()
+  defAP: string;
+  @Field()
+  AppearCondition: string;
+  @Field()
+  RankExp: string;
+  @Field()
+  Gold: string;
+  @Field()
+  MapNo: string;
+  @Field()
+  EntryNo: string;
+  @Field()
+  Treasure1: string;
+  @Field()
+  Treasure2: string;
+  @Field()
+  Treasure3: string;
+  @Field()
+  Treasure4: string;
+  @Field()
+  Treasure5: string;
+  @Field()
+  UnitLevel: string;
+  @Field()
+  QuestTerms: string;
+  @Field()
+  LocationNo: string;
+  @Field()
+  StartOpenDay: string;
+  @Field()
+  EndOpenDay: string;
+  @Field()
+  OpenWeek: string;
+  @Field()
+  BonusType: string;
+  @Field()
+  BonusNum: string;
+  @Field()
+  UnitList: string;
+  @Field()
+  _HardLevel: string;
+  @Field()
+  _HardCondition: string;
+  @Field()
+  _HardInfomation: string;
+  @Field()
+  _DispIndex: string;
+  @Field()
+  _HoldingParam: string;
+  @Field()
+  DangerArea: string;
 }

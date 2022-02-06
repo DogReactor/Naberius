@@ -26,7 +26,10 @@ export class MissionsResolver {
   @ResolveProperty(type => [Quest])
   Quests(@Parent() mission: Mission) {
     const QuestIDs = this.missionConfigs.getQuestIDs(mission.MissionID);
-    return this.quests.data.filter(quest => QuestIDs.includes(quest.QuestID));
+    console.log(QuestIDs);
+    return this.quests.data.filter(quest =>
+      QuestIDs.includes(Number.parseInt(quest.QuestID, 10)),
+    );
   }
 
   @ResolveProperty(type => [BattleTalkEvent], { nullable: true })

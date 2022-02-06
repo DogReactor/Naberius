@@ -41,7 +41,9 @@ export class QuestsResolver {
 
   @ResolveProperty(type => Mission, { nullable: true })
   Mission(@Parent() quest: Quest) {
-    return this.missionConfigs.getMissionByQuestID(quest.QuestID);
+    return this.missionConfigs.getMissionByQuestID(
+      Number.parseInt(quest.QuestID, 10),
+    );
   }
 
   @ResolveProperty(type => String, { nullable: true })
@@ -50,7 +52,7 @@ export class QuestsResolver {
     if (mission) {
       const texts = await this.questNameTexts.get(mission.MissionID);
       if (texts) {
-        return texts[quest.QuestTitle].Message;
+        return texts[Number.parseInt(quest.QuestTitle, 10)].Message;
       }
     }
   }
@@ -61,35 +63,40 @@ export class QuestsResolver {
     if (mission) {
       const texts = await this.messageTexts.get(mission.MissionID);
       if (texts) {
-        return texts[Math.min(quest.QuestTitle, texts.length - 1)].Message;
+        return texts[
+          Math.min(Number.parseInt(quest.QuestTitle, 10), texts.length - 1)
+        ].Message;
       }
     }
   }
 
   @ResolveProperty(type => [EventArc], { nullable: true })
   async EventArcs(@Parent() quest: Quest) {
-    return this.eventArcs.get(quest.QuestID);
+    return this.eventArcs.get(Number.parseInt(quest.QuestID, 10));
   }
 
   @ResolveProperty(type => Map, { nullable: true })
   async Map(@Parent() quest: Quest) {
-    if (quest.MapNo >= 1000) {
-      return this.maps.get(quest.MapNo);
+    if (Number.parseInt(quest.MapNo, 10) >= 1000) {
+      return this.maps.get(Number.parseInt(quest.MapNo, 10));
     } else {
       const mission = this.Mission(quest);
       if (mission) {
-        return this.maps.get(quest.MapNo, mission.MissionID);
+        return this.maps.get(
+          Number.parseInt(quest.MapNo, 10),
+          mission.MissionID,
+        );
       }
     }
   }
 
   @ResolveProperty(type => [QuestTermConfig])
   QuestTermConfigs(@Parent() quest: Quest) {
-    if (quest.QuestTerms === 0) {
+    if (Number.parseInt(quest.QuestTerms, 10) === 0) {
       return [];
     }
     let index = this.questTermConfigs.data.findIndex(
-      qtc => qtc.ID_Config === quest.QuestTerms,
+      qtc => qtc.ID_Config === Number.parseInt(quest.QuestTerms, 10),
     );
 
     const configs: QuestTermConfig[] = [];
@@ -100,7 +107,8 @@ export class QuestsResolver {
         if (
           !(
             config &&
-            (config.ID_Config === 0 || config.ID_Config === quest.QuestTerms)
+            (config.ID_Config === 0 ||
+              config.ID_Config === Number.parseInt(quest.QuestTerms))
           )
         ) {
           break;
@@ -119,13 +127,17 @@ export class QuestsResolver {
   @ResolveProperty(type => String, { nullable: true })
   HardInfomation(@Parent() quest: Quest) {
     if (quest._HardCondition) {
-      return this.generalMessageTexts.data[quest._HardInfomation]?.Message;
+      return this.generalMessageTexts.data[
+        Number.parseInt(quest._HardInfomation, 10)
+      ]?.Message;
     }
   }
 
   @Query(returns => Quest, { nullable: true })
   Quest(@Args({ name: 'QuestID', type: () => Int }) QuestID: number) {
-    return this.questList.data.find(quest => quest.QuestID === QuestID);
+    return this.questList.data.find(
+      quest => Number.parseInt(quest.QuestID, 10) === QuestID,
+    );
   }
 
   @Query(returns => [QuestEventText])
