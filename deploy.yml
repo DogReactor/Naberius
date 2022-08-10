@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: naberius #
-          image: moondropx/naberius # 部署时用的docker镜像
+          image: yukimir/naberius # 部署时用的docker镜像
           env:
             - name: MONGO_HOST
               value: mongo-service
