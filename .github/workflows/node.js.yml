@@ -11,7 +11,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -37,10 +36,14 @@ jobs:
         cache: 'npm'
     - run: npm build
     - run: docker build -t moondropx/naberius .
-    - run: bash docker_push.sh
   deploy:
-  
+    needs: build
     runs-on: ubuntu-latest
+    environment: production
+    services:
+      docker:
+        image: docker
     steps:
+    - run: bash docker_push.sh
     - run: bash install_kubectl.sh
     - run: bash kube_deploy.sh
