@@ -13,7 +13,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      KUBE_CLUSTER_CERTIFICATE: ${{ secrets.KUBE_CLUSTER_CERTIFICATE }}
+      KUBE_SERVER: ${{ secrets.KUBE_SERVER }}
+      KUBE_USER_CERTIFICATE: ${{ secrets.KUBE_USER_CERTIFICATE }}
+      KUBE_USER_KEY: ${{ secrets.KUBE_USER_KEY }}
     strategy:
       matrix:
         node-version: [14.x]
