@@ -207,7 +207,7 @@ export class CardsResolver {
   @ResolveProperty(type => [Class])
   Classes(@Parent() card: Card) {
     const classes: Class[] = [];
-    function getClass(classId: number){
+    getClass = (classId: number) => {
       return this.classes.data.find(cl => cl.ClassID === classId) || 
         {
           ClassID: -1,
