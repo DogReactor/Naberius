@@ -34,7 +34,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm build
+    - run: npm run build
     - run: docker build -t moondropx/naberius .
   deploy:
     needs: build
