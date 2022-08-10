@@ -207,18 +207,62 @@ export class CardsResolver {
   @ResolveProperty(type => [Class])
   Classes(@Parent() card: Card) {
     const classes: Class[] = [];
+    function getClass(classId: number){
+      return this.classes.data.find(cl => cl.ClassID === classId) || 
+        {
+          ClassID: -1,
+          Name: "卫星",
+          MaxLevel: 99,
+          Cost: 99,
+          InitHP: 1,
+          MaxHP: 1,
+          AttackType: 1,
+          InitAtk: 1,
+          MaxAtk: 1,
+          MaxTarget: 1,
+          InitDef: 114,
+          MaxDef: 514,
+          AtkSpeedCorrection: 1919,
+          AtkArea: 810,
+          JobChange: 0,
+          JobChangeMaterial1: 0,
+          JobChangeMaterial2: 0,
+          JobChangeMaterial3: 0,
+          Data_ExtraAwakeOrb1: 0,
+          Data_ExtraAwakeOrb2: 0,
+          Dot: 0,
+          MissileID: 0,
+          ApproachFlag: 0,
+          BlockNum: 1,
+          DotNo: 0,
+          AttackWait: 1,
+          AttackAnimNo: 0,
+          BuildExp: 1000,
+          HpGaugeHeight: 5,
+          AttackAttribute: 1,
+          HitEffect: 1,
+          Explanation: "卫星职业，暂未落地",
+          ClassAbility1: 0,
+          ClassAbilityPower1: 0,
+          AwakeType1: 0,
+          AwakeType2: 0,
+          _LowRareEvolveMaterial_01: 0,
+          _LowRareEvolveMaterial_02: 0,
+          _LowRareEvolveMaterial_03: 0,
+          SortGroupID: 0,
+          DisplayPermission: ""
+        };
+    }
     // init class
     classes.push({
-      ...this.classes.data.find(
-        cl => cl.ClassID === Number.parseInt(card.InitClassID, 10),
-      )!,
+      ...getClass(Number.parseInt(card.InitClassID, 10))!,
       Type: 'Init',
     });
 
     // Init -> CC || Init -> Evo
     if (classes[0].JobChange) {
       classes.push({
-        ...this.classes.data.find(cl => cl.ClassID === classes[0].JobChange)!,
+        ...getClass(classes[0].JobChange)!,
         Type: classes[0].Data_ExtraAwakeOrb1 ? 'Evo' : 'CC',
       });
     }
@@ -228,7 +272,7 @@ export class CardsResolver {
       const CCClass = classes[classes.length - 1];
       if (CCClass.JobChange) {
         classes.push({
-          ...this.classes.data.find(cl => cl.ClassID === CCClass.JobChange)!,
+          ...getClass(CCClass.JobChange)!,
           Type: 'Evo',
         });
       }
@@ -239,11 +283,11 @@ export class CardsResolver {
       const EvoClass = classes[classes.length - 1];
       if (EvoClass.AwakeType1) {
         classes.push({
-          ...this.classes.data.find(cl => cl.ClassID === EvoClass.AwakeType1)!,
+          ...getClass(EvoClass.AwakeType1)!,
           Type: 'Evo2a',
         });
         classes.push({
-          ...this.classes.data.find(cl => cl.ClassID === EvoClass.AwakeType2)!,
+          ...getClass(EvoClass.AwakeType2)!,
           Type: 'Evo2b',
         });
       }
