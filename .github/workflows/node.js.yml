@@ -20,6 +20,7 @@ jobs:
       KUBE_SERVER: ${{ secrets.KUBE_SERVER }}
       KUBE_USER_CERTIFICATE: ${{ secrets.KUBE_USER_CERTIFICATE }}
       KUBE_USER_KEY: ${{ secrets.KUBE_USER_KEY }}
+      TRAVIS_COMMIT: ${{ github.head_ref }}
     strategy:
       matrix:
         node-version: [14.x]
