@@ -62,11 +62,23 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-    - host: aigisapi.naberi.us #
+    - host: aigisapi.pigtv.moe #
       http:
         paths:
           - backend:
               serviceName: naberius-service # 上边定义的service名字
               servicePort: 4000 # 上边service使用的端口
   tls:
-    - secretName: aigisapi-naberi-us-tls
+    - secretName: aigisapi-pigtv-moe-tls
+---
+kind: Certificate
+metadata:
+  name: aigisapi-pigtv-moe-tls
+  namespace: magicdog
+spec:
+  secretName: aigisapi-pigtv-moe-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: Issuer
+  dnsNames:
+  - aigisapi-pigtv-moe-tls
