@@ -80,6 +80,6 @@ spec:
   secretName: aigisapi-pigtv-moe-tls
   issuerRef:
     name: letsencrypt-prod
-    kind: Issuer
+    kind: ClusterIssuer
   dnsNames:
   - aigisapi-pigtv-moe-tls
