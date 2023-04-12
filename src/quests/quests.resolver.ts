@@ -77,9 +77,13 @@ export class QuestsResolver {
 
   @ResolveProperty(type => Map, { nullable: true })
   async Map(@Parent() quest: Quest) {
-    if (Number.parseInt(quest.MapNo, 10) >= 1000) {
-      return this.maps.get(Number.parseInt(quest.MapNo, 10));
-    } else {
+    try {
+      if (Number.parseInt(quest.MapNo, 10) < 1000) {
+        throw '';
+      } else {
+        return await this.maps.get(Number.parseInt(quest.MapNo, 10));
+      }
+    } catch {
       const mission = this.Mission(quest);
       if (mission) {
         return this.maps.get(
