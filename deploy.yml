@@ -38,7 +38,7 @@ spec:
           persistentVolumeClaim:
             claimName: util-pv-claim
       nodeSelector:
-        kubernetes.io/hostname: master
+        kubernetes.io/hostname: node-us
 
 ---
 kind: Service
