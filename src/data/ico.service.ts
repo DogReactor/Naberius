@@ -29,8 +29,8 @@ export class IcoService {
             const image = ALTX2PNG(atx);
             Object.keys(atx.Sprites).forEach(key => {
               const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
-              if (sprite.Width !== 0 && sprite.Height !== 0) {
-                const modKey = Number.parseInt(key, 10) % 2048;
+              if (sprite.Width !== 0 && sprite.Height !== 0) { 
+				const modKey = Number.parseInt(key, 10) % 4096;
                 image
                   .extract({
                     left: sprite.X,
