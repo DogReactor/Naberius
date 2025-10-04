@@ -30,8 +30,8 @@ export class AbilitiesResolver {
   @ResolveProperty(type => String, { nullable: true })
   Text(@Parent() ability: Ability) {
     let index = this.abilityTexts.data.findIndex(
-	    at => at.AbilityTextID === ability.AbilityTextID,
-	);
+        at => at.AbilityTextID === ability.AbilityTextID,
+    );
     const text = this.abilityTexts.data[index];
     return text ? text.AbilityText : null;
   }

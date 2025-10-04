@@ -1,8 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { ALTX, parseAL } from 'aigis-fuel';
 import { RequestService } from 'common/request.service';
 import { ALTX2PNG, numberPadding } from 'common/utils';
 import { ParsedConfigService } from 'config/config.service';
+import { Repository } from 'typeorm';
+import { File } from 'data/models/file.model';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Logger } from 'logger/logger.service';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -12,6 +15,8 @@ export class PlayerCGService {
   constructor(
     private readonly request: RequestService,
     private readonly config: ParsedConfigService,
+    @InjectRepository(File)
+    private readonly files: Repository<File>,
     private readonly logger: Logger,
   ) {}
   async get(CardID: number, type: 'Stand' | 'Harlem') {
@@ -22,8 +27,25 @@ export class PlayerCGService {
     );
     const CardIDPadded3 = numberPadding(CardID, 3);
     const CardIDPadded4 = numberPadding(CardID, 4);
-    const fileBase = (type === 'Stand' ? 'Card' : 'HarlemCG') + CardIDPadded4;
-    const aarFileName = `${fileBase}.aar`;
+    let aarFileName : string;
+    if (type === 'Stand') {
+        // assume one ALAR file contains all StandCGs.
+        const fileNamePrefix = 'Card' + CardIDPadded4 + '_';
+        let fileName : string;
+        let file : any;
+        let idx = 3;
+        do {
+            fileName = fileNamePrefix + idx + '.aar';
+            file = await this.files.findOne({ Name: fileName });
+            idx--;
+        } while (!file && idx >= 0);
+        if (!file) {
+            return [];
+        }
+        aarFileName = fileName;
+    } else {
+        aarFileName = 'HarlemCG' + CardIDPadded4 + '.aar';
+    }
 
     // 获取文件列表
     const getFilelist = async () => {
