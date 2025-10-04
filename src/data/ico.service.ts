@@ -30,7 +30,7 @@ export class IcoService {
             Object.keys(atx.Sprites).forEach(key => {
               const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
               if (sprite.Width !== 0 && sprite.Height !== 0) { 
-				const modKey = Number.parseInt(key, 10) % 4096;
+                const modKey = Number.parseInt(key, 10) % 8192;
                 image
                   .extract({
                     left: sprite.X,

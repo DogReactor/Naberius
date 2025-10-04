@@ -35,7 +35,7 @@ export class EnemiesResolver {
 
   @ResolveProperty(type => [Dot], { nullable: true })
   async Dots(@Parent() enemy: Enemy) {
-    return this.dots.get((enemy.PatternID >> 8) % 4096, 'Enemy');
+    return this.dots.get((enemy.PatternID >> 4) & 0x1FFF, 'Enemy');
   }
 
   @ResolveProperty(type => [EnemySpecialtyConfig])
