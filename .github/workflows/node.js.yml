@@ -46,11 +46,7 @@ jobs:
     
     # 尝试使用预编译的 Sharp 二进制文件
     - name: Install dependencies
-      run: |
-        npm config set sharp_binary_host "https://npmmirror.com/mirrors/sharp"
-        npm config set sharp_libvips_binary_host "https://npmmirror.com/mirrors/sharp-libvips"
-        npm install --legacy-peer-deps
-    
+      run: npm install --legacy-peer-deps
     - run: npm run build
     - run: docker build -t yukimir/naberius .
     - run: bash docker_push.sh
