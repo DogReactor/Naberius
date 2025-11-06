@@ -35,9 +35,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
+    - run: npm install --legacy-peer-deps
     - run: npm run build
     - run: docker build -t yukimir/naberius .
     - run: bash docker_push.sh
-    - run: bash install_kubectl.sh
-    - run: bash kube_deploy.sh
