@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RequestService } from 'common/request.service';
 import { parseAL, ALAR, ALTX } from 'aigis-fuel';
-import { ALTX2PNG } from 'common/utils';
+import { ALTXExtractPNG } from 'common/utils';
 import { join } from 'path';
 import { ensureDirSync } from 'fs-extra';
 import { ParsedConfigService } from 'config/config.service';
@@ -26,18 +26,12 @@ export class IcoService {
           ensureDirSync(dir);
           parsed.Files.forEach(file => {
             const atx = file.Content as ALTX;
-            const image = ALTX2PNG(atx);
             Object.keys(atx.Sprites).forEach(key => {
               const sprite = atx.Sprites[Number.parseInt(key, 10)][0];
-              if (sprite.Width !== 0 && sprite.Height !== 0) { 
-                const modKey = Number.parseInt(key, 10) % 8192;
-                image
-                  .extract({
-                    left: sprite.X,
-                    top: sprite.Y,
-                    width: sprite.Width,
-                    height: sprite.Height,
-                  })
+              if (sprite.Width !== 0 && sprite.Height !== 0) {
+                const modKey = Number.parseInt(key, 10) & 0x1fff;
+                ALTXExtractPNG(atx,
+                    sprite.X, sprite.Y, sprite.Width, sprite.Height)
                   .toFile(join(dir, `${modKey}.png`));
               }
             });

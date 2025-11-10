@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ParsedConfigService } from 'config/config.service';
 import { RequestService } from 'common/request.service';
 import { parseAL, ALAR, ALTX } from 'aigis-fuel';
-import { ALTX2PNG } from 'common/utils';
+import { ALTXExtractPNG, toCString } from 'common/utils';
 import { join } from 'path';
 
 @Injectable()
@@ -18,28 +18,17 @@ export class BannerService {
     for (const file of parsedFile.Files) {
       if (file.Name.includes('.atx')) {
         const atx = file.Content as ALTX;
-        const image = ALTX2PNG(atx);
         Object.keys(atx.Sprites).forEach(key => {
           const ft = atx.Sprites[Number.parseInt(key, 10)];
           const name = ft.name;
+          console.log(`${key} ${name}`);
           if (name?.includes('temple_summon_banner')) {
             const sprite = ft[0];
-            if (
-              sprite.Width !== 0 &&
-              sprite.Width !== 1 &&
-              sprite.Height !== 0 &&
-              sprite.Height !== 1
-            ) {
-              image
-                .extract({
-                  left: sprite.X,
-                  top: sprite.Y,
-                  width: sprite.Width,
-                  height: sprite.Height,
-                })
-                .toFile(
-                  join(this.config.get('BANNER_DIR'), `${name.trim()}.png`),
-                );
+            if (sprite.Width > 1 && sprite.Height > 1) {
+              ALTXExtractPNG(atx,
+                  sprite.X, sprite.Y, sprite.Width, sprite.Height)
+                .toFile(join(
+                  this.config.get('BANNER_DIR'), `${toCString(name)}.png`));
             }
           }
         });

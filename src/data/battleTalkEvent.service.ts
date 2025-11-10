@@ -4,7 +4,7 @@ import { join } from 'path';
 import { ensureDir, pathExists, writeFile, readFile } from 'fs-extra';
 import { parseAL, ALAR, ALTX, ALTB } from 'aigis-fuel';
 import { RequestService } from 'common/request.service';
-import { ALTX2PNG } from 'common/utils';
+import { ALTX2PNG, ALTXExtractPNG } from 'common/utils';
 import { BattleTalkEvent } from './models/battleTalkEvent.model';
 
 @Injectable()
@@ -41,13 +41,8 @@ export class BattleTalkEventService {
                   atx.Sprites[Number.parseInt(key, 10)].name || key,
                   10,
                 );
-                image
-                  .extract({
-                    left: sprite.X,
-                    top: sprite.Y,
-                    width: sprite.Width,
-                    height: sprite.Height,
-                  })
+                ALTXExtractPNG(atx,
+                    sprite.X, sprite.Y, sprite.Width, sprite.Height)
                   .toFile(join(talkPath, `${name}.png`));
               }
             }

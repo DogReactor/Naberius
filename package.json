@@ -23,7 +23,7 @@
     "@nestjs/schematics": "^6.7.0",
     "@nestjs/serve-static": "^1.0.2",
     "@nestjs/typeorm": "^6.2.0",
-    "aigis-fuel": "git+https://github.com/Yukimir/AigisFuel.git",
+    "aigis-fuel": "git+https://github.com/DogReactor/AigisFuel",
     "apollo-server": "^2.14.2",
     "apollo-server-express": "^2.9.8",
     "apollo-server-koa": "^2.14.2",
@@ -79,5 +79,6 @@
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.13.0",
     "typescript": "^4.4.4"
-  }
+  },
+  "packageManager": "yarn@4.3.1+sha512.af78262d7d125afbfeed740602ace8c5e4405cd7f4735c08feb327286b2fdb2390fbca01589bfd1f50b1240548b74806767f5a063c94b67e431aabd0d86f7774"
 }
