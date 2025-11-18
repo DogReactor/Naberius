@@ -55,7 +55,7 @@ export class SkillsResolver {
       let index = this.skillInfluenceConfigs.data.findIndex(
         config => config.Data_ID === type.ID_Influence,
       );
-      if (index) {
+      if (index >= 0) {
         const configs: SkillInfluenceConfig[] = [];
         let config = this.skillInfluenceConfigs.data[index];
         // push config to result if config.Data_ID === 0

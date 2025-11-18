@@ -980,6 +980,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cors@npm:^2":
+  version: 2.8.19
+  resolution: "@types/cors@npm:2.8.19"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/b5dd407040db7d8aa1bd36e79e5f3f32292f6b075abc287529e9f48df1a25fda3e3799ba30b4656667ffb931d3b75690c1d6ca71e39f7337ea6dfda8581916d0
+  languageName: node
+  linkType: hard
+
 "@types/express-serve-static-core@npm:^4.17.21, @types/express-serve-static-core@npm:^4.17.33":
   version: 4.19.7
   resolution: "@types/express-serve-static-core@npm:4.19.7"
@@ -7581,6 +7590,7 @@ __metadata:
     "@nestjs/schematics": "npm:^6.7.0"
     "@nestjs/serve-static": "npm:^1.0.2"
     "@nestjs/typeorm": "npm:^6.2.0"
+    "@types/cors": "npm:^2"
     "@types/express": "npm:^4.17.2"
     "@types/fs-extra": "npm:^5.0.4"
     "@types/koa": "npm:^2.0.46"
@@ -7602,6 +7612,7 @@ __metadata:
     apollo-server-express: "npm:^2.9.8"
     apollo-server-koa: "npm:^2.14.2"
     chalk: "npm:^2.4.1"
+    cors: "npm:^2.8.5"
     fs-extra: "npm:^7.0.0"
     graphql: "npm:^14.5.8"
     graphql-tools: "npm:^4.0.0"
