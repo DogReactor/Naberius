@@ -109,6 +109,11 @@ type Card {
   Assign: String!
   Genus: String!
   Identity: String!
+  Identity2: String!
+  Identity3: String!
+  Identity4: String!
+  Identity5: String!
+  Identity6: String!
   Blood: String!
   HomeCooking: String!
   ChildCardID: String!
@@ -120,7 +125,7 @@ type Card {
   IllustName: String!
   RaceName: String
   AssignName: String
-  IdentityName: String
+  IdentityName: [String!]
   GenusName: String
   Skills: [SkillsWithType!]!
   Abilities: [Ability!]!

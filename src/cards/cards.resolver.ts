@@ -99,6 +99,58 @@ export class CardsResolver {
     return null;
   }
 
+  getIdentityTypes(card: Card): string[] {
+    const data = this['playerIdentityTypes'].data;
+    let key: number;
+    let text: string[] = [] as string[];
+    key = Number.parseInt(card.Identity, 10);
+    if (key !== 0) {
+      text.push(this.getText(data, key));
+    } else {
+      return text;
+    }
+    key = Number.parseInt(card.Identity2, 10);
+    if (key !== 0) {
+      text.push(this.getText(data, key));
+    } else {
+      return text;
+    }
+    key = Number.parseInt(card.Identity3, 10);
+    if (key !== 0) {
+      text.push(this.getText(data, key));
+    } else {
+      return text;
+    }
+    key = Number.parseInt(card.Identity4, 10);
+    if (key !== 0) {
+      text.push(this.getText(data, key));
+    } else {
+      return text;
+    }
+    key = Number.parseInt(card.Identity5, 10);
+    if (key !== 0) {
+      text.push(this.getText(data, key));
+    } else {
+      return text;
+    }
+    key = Number.parseInt(card.Identity6, 10);
+    if (key !== 0) {
+      text.push(this.getText(data, key));
+    }
+    return text;
+  }
+
+  getText(data: PlayerType[], key: number): string {
+    const type = data.find( t => t._TypeID === key );
+    if (type && type._SystemTextID !== 0) {
+      const text = this.SystemTexts.data[type._SystemTextID];
+      if (text) {
+        return text.Data_Text;
+      }
+    }
+    return '??';
+  }
+
   /**************
    * Properties *
    **************/
@@ -138,9 +190,10 @@ export class CardsResolver {
     return this.getType(card, 'playerAssignTypes');
   }
 
-  @ResolveProperty(type => String, { nullable: true })
+  @ResolveProperty(type => [String], { nullable: true })
   IdentityName(@Parent() card: Card) {
-    return this.getType(card, 'playerIdentityTypes');
+    //return this.getType(card, 'playerIdentityTypes');
+    return this.getIdentityTypes(card);
   }
 
   @ResolveProperty(type => String, { nullable: true })

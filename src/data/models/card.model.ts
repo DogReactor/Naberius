@@ -123,6 +123,16 @@ export class Card {
   @Field()
   Identity: string;
   @Field()
+  Identity2: string;
+  @Field()
+  Identity3: string;
+  @Field()
+  Identity4: string;
+  @Field()
+  Identity5: string;
+  @Field()
+  Identity6: string;
+  @Field()
   Blood: string;
   @Field()
   HomeCooking: string;
