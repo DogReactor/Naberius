@@ -101,6 +101,7 @@ export class MissionConfigService {
                 $and: [
                   { Name: /MissionConfig\.atb/ },
                   { Name: { $not: /EmcMissionConfig\.atb/ } },
+                  { Name: { $not: /ProgressiveBeginnerMissionConfig\.atb/ } },
                 ],
               },
               { Name: /MissionQuestList\.atb/ },
