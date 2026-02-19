@@ -22,6 +22,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { File } from './models/file.model';
 import { LoggerModule } from 'logger/logger.module';
 import { PlayerCGService } from './playerCG.service';
+import { SkinService } from './skin.service';
+import { SkinDotService } from './skinDot.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -95,6 +97,8 @@ function cacheFactory(fileName: string): Provider {
     // EnemyService,
     BannerService,
     PlayerCGService,
+    SkinService,
+    SkinDotService,
   ],
   exports: [
     DataResolver,
@@ -135,7 +139,9 @@ function cacheFactory(fileName: string): Provider {
     MapService,
     // EnemyService,
     BannerService,
-    PlayerCGService
+    PlayerCGService,
+    SkinService,
+    SkinDotService,
   ],
 })
 export class DataModule {}

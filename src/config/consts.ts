@@ -19,5 +19,8 @@ export const Consts: Partial<Config> = {
   POSTER_DIR: 'poster',
   BANNER_DIR: 'banner',
   PLAYER_STAND_CG_DIR: 'standCG',
-  PLAYER_HARLEM_CG_DIR: 'harlemCG'
+  PLAYER_HARLEM_CG_DIR: 'harlemCG',
+  SKIN_ICO_DIR: 'skinIco',
+  SKIN_CG_DIR: 'skinCG',
+  SKIN_DOT_DIR: 'skinDot',
 };

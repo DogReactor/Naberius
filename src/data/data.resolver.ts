@@ -8,6 +8,7 @@ import { EventArcService } from './eventArc.service';
 import { IcoService } from './ico.service';
 import { BannerService } from './banner.service';
 import { QuestNameTextService } from './questNameText.service';
+import { SkinService } from './skin.service';
 
 @Resolver()
 export class DataResolver {
@@ -66,6 +67,7 @@ export class DataResolver {
     private readonly questNameTexts: QuestNameTextService,
     // @Inject('Enemy')
     // private readonly enemies: CacheFileService<any>
+    private readonly skins: SkinService,
   ) {}
   @Mutation(returns => Boolean)
   UpdateFiles() {
@@ -101,6 +103,7 @@ export class DataResolver {
       this.unitSpecialties,
       this.questNameTexts,
       // this.enemies
+      this.skins
     ].forEach(service => service.update());
     return true;
   }

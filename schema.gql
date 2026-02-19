@@ -443,6 +443,8 @@ type Query {
   Ability(AbilityID: Int!): Ability!
   Classes(MaterialID: Int): [Class!]!
   Class(Name: String, ClassID: Int): Class
+  Skins: [Skin!]!
+  Skin(rowid: Int!): Skin
   Posters: [String!]!
   Banners: [String!]!
 }
@@ -581,6 +583,30 @@ type SkillInfluenceConfig {
 type SkillsWithType {
   Type: String!
   Skills: [Skill!]!
+}
+
+type Skin {
+  rowid: Int!
+  FaceId: Int!
+  FreeCondition: Int!
+  FaceId_RarityGroup01: Int!
+  FaceId_RarityGroup02: Int!
+  FaceId_RarityGroup03: Int!
+  FaceId_RarityGroup04: Int!
+  FaceId_RarityGroup05: Int!
+  FaceId_RarityGroup06: Int!
+  FaceId_RarityGroup08: Int!
+  IllustratorR18: Int!
+  Illust: String!
+  Image: [String!]!
+  Dots: [Dot!]
+  Units: [SkinUnit!]
+}
+
+type SkinUnit {
+  cardID: Int!
+  name: String!
+  rarity: Int!
 }
 
 type Sprite {

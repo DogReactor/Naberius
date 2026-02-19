@@ -17,6 +17,7 @@ import { AbilityConfigsResolver } from './abilityConfigs.resolver';
 import { AbilityConfigMeta } from 'data/models/abilityConfigMeta.model';
 import { UnitConfigMeta } from 'data/models/unitConfigMeta.model';
 import { UnitSpecialtyConfigsResolver } from './unitSpecialtyConfigs.resolver';
+import { SkinResolver } from './skin.resolver';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { UnitSpecialtyConfigsResolver } from './unitSpecialtyConfigs.resolver';
     SkillConfigsResolver,
     AbilityConfigsResolver,
     UnitSpecialtyConfigsResolver,
+    SkinResolver,
   ],
 })
 export class CardsModule {}
