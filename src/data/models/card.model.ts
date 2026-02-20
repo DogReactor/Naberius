@@ -142,4 +142,12 @@ export class Card {
   OriginID: string;
   @Field()
   RootsID: string;
+  @Field()
+  ExtendSkin01:string;
+  @Field()
+  ExtendSkin02:string;
+  @Field()
+  ExtendSkin03:string;
+  @Field()
+  ExtendSkin04:string;
 }

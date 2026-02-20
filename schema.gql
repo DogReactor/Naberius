@@ -119,6 +119,10 @@ type Card {
   ChildCardID: String!
   OriginID: String!
   RootsID: String!
+  ExtendSkin01: String!
+  ExtendSkin02: String!
+  ExtendSkin03: String!
+  ExtendSkin04: String!
   Name: String!
   ImageStand: [String!]!
   ImageCG: [String!]!

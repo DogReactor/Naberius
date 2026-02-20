@@ -21,7 +21,6 @@ export class BannerService {
         Object.keys(atx.Sprites).forEach(key => {
           const ft = atx.Sprites[Number.parseInt(key, 10)];
           const name = ft.name;
-          console.log(`${key} ${name}`);
           if (name?.includes('temple_summon_banner')) {
             const sprite = ft[0];
             if (sprite.Width > 1 && sprite.Height > 1) {

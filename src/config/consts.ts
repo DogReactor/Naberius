@@ -23,4 +23,5 @@ export const Consts: Partial<Config> = {
   SKIN_ICO_DIR: 'skinIco',
   SKIN_CG_DIR: 'skinCG',
   SKIN_DOT_DIR: 'skinDot',
+  DB_CACHE_DIR: 'dbCache',
 };

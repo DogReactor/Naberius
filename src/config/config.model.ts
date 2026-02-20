@@ -26,4 +26,5 @@ export class Config {
   SKIN_ICO_DIR: string;
   SKIN_CG_DIR: string;
   SKIN_DOT_DIR: string;
+  DB_CACHE_DIR: string;
 }

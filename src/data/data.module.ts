@@ -24,6 +24,7 @@ import { LoggerModule } from 'logger/logger.module';
 import { PlayerCGService } from './playerCG.service';
 import { SkinService } from './skin.service';
 import { SkinDotService } from './skinDot.service';
+import { SkinUnitCacheService } from './skinUnitCache.service';
 
 function dataFactory(fileName: string): Provider {
   return {
@@ -99,6 +100,7 @@ function cacheFactory(fileName: string): Provider {
     PlayerCGService,
     SkinService,
     SkinDotService,
+    SkinUnitCacheService,
   ],
   exports: [
     DataResolver,
@@ -142,6 +144,7 @@ function cacheFactory(fileName: string): Provider {
     PlayerCGService,
     SkinService,
     SkinDotService,
+    SkinUnitCacheService,
   ],
 })
 export class DataModule {}

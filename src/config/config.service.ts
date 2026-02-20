@@ -44,6 +44,7 @@ export class ParsedConfigService {
     this.joinDir('SKIN_ICO_DIR', 'CACHE_DIR');
     this.joinDir('SKIN_CG_DIR', 'CACHE_DIR');
     this.joinDir('SKIN_DOT_DIR', 'CACHE_DIR');
+    this.joinDir('DB_CACHE_DIR', 'CACHE_DIR')
     this.ensureDirs();
 
     this.logger.log('Config initialized!');
@@ -71,6 +72,7 @@ export class ParsedConfigService {
       'SKIN_ICO_DIR',
       'SKIN_CG_DIR',
       'SKIN_DOT_DIR',
+      'DB_CACHE_DIR',
     ] as Array<keyof Config>).forEach(key => ensureDirSync(this.config[key]));
   }
 

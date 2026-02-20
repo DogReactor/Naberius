@@ -17,6 +17,8 @@ import { File } from 'data/models/file.model';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataResolver } from 'data/data.resolver';
+import { CacheFileService } from 'data/cacheFile.service';
+import { SkinUnitMap } from 'data/models/skinUnitMap.model';
 import { Card } from 'data/models/card.model';
 import { DataFileService } from 'data/dataFile.service';
 import { Quest } from 'data/models/quest.model';
@@ -28,6 +30,8 @@ export class FilesController {
     @InjectRepository(File)
     private readonly files: Repository<File>,
     private readonly data: DataResolver,
+    @Inject('SkinUnitCacheService')
+    private readonly relationshipCache: CacheFileService<SkinUnitMap>,
     @Inject('CardList')
     private readonly cards: DataFileService<Card>,
     @Inject('QuestList')
@@ -123,7 +127,9 @@ export class FilesController {
         await this.quests.read();
 
         this.config.ensureDirs();
-        this.data.UpdateFiles();
+        await this.data.UpdateFiles();
+        // relationship cache; move to a new service if needed.
+        await this.relationshipCache.update();
       }
     } else {
       throw new HttpException(

@@ -70,8 +70,8 @@ export class DataResolver {
     private readonly skins: SkinService,
   ) {}
   @Mutation(returns => Boolean)
-  UpdateFiles() {
-    [
+  async UpdateFiles() {
+    await Promise.all([
       this.nameTexts,
       this.statusTexts,
       this.playerRaceTypes,
@@ -104,7 +104,7 @@ export class DataResolver {
       this.questNameTexts,
       // this.enemies
       this.skins
-    ].forEach(service => service.update());
+    ].map(async service => service.update()));
     return true;
   }
 }

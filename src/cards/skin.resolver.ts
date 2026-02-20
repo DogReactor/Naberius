@@ -13,12 +13,15 @@ import { StatusText } from 'data/models/statusText.model';
 import { Dot } from 'data/models/dot.model';
 import { SkinService } from 'data/skin.service';
 import { SkinDotService } from 'data/skinDot.service';
+import { SkinUnitCacheService } from 'data/skinUnitCache.service';
 
 @Resolver(Skin)
 export class SkinResolver {
   constructor(
     @Inject('SkinService')
-    private readonly skins: CacheFileService<Skin>,
+    private readonly skins: SkinService,
+    @Inject('SkinUnitCacheService')
+    private readonly skinUnits: SkinUnitCacheService,
     @Inject('StatusText')
     private readonly StatusText: CacheFileService<StatusText>,
     private readonly dots: SkinDotService,
@@ -31,7 +34,7 @@ export class SkinResolver {
   
   @ResolveProperty(type => [String])
   async Image(@Parent() skin: Skin) {
-    return (this.skins as SkinService).getCG(skin.rowid);
+    return this.skins.getCG(skin.rowid);
   }
   
   @ResolveProperty(type => [Dot], {nullable: true})
@@ -39,10 +42,9 @@ export class SkinResolver {
     return this.dots.get(skin.rowid);
   }
 
-  //TODO
   @ResolveProperty(type => [SkinUnit], {nullable: true})
   async Units(@Parent() skin: Skin) {
-    return [];
+    return this.skinUnits.getSkinUnits(skin.rowid);
   }
 
   @Query(type => [Skin])

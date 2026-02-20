@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { RequestService } from 'common/request.service';
 import { parseAL, ALAR, ALTX } from 'aigis-fuel';
 import { ALTXExtractPNG } from 'common/utils';
@@ -11,6 +11,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ALTX2PNG, numberPadding } from 'common/utils';
 import { Logger } from 'logger/logger.service';
 import { Skin } from './models/skin.model';
+import { SkinUnitMap } from 'data/models/skinUnitMap.model';
 import { ALTB } from 'aigis-fuel';
 import { CacheFileService } from './cacheFile.service';
 
@@ -69,7 +70,7 @@ export class SkinService extends CacheFileService<Skin> {
     // 重新获取一次
     return await getFilelist();
   }
-  
+
   async update() {
     try {
       const ctx = (parseAL(
