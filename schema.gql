@@ -592,6 +592,7 @@ type SkillsWithType {
 type Skin {
   rowid: Int!
   FaceId: Int!
+  SmartPhoneDiff: Int!
   FreeCondition: Int!
   FaceId_RarityGroup01: Int!
   FaceId_RarityGroup02: Int!

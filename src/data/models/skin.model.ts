@@ -7,6 +7,8 @@ export class Skin {
   @Field(type => Int)
   FaceId: number;
   @Field(type => Int)
+  SmartPhoneDiff: number;
+  @Field(type => Int)
   FreeCondition: number;
   @Field(type => Int)
   FaceId_RarityGroup01: number;

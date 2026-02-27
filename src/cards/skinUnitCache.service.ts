@@ -39,7 +39,7 @@ export class SkinUnitCacheService extends CacheFileService<SkinUnitMap> {
       const skinName = [card.ExtendSkin01, card.ExtendSkin02, card.ExtendSkin03, card.ExtendSkin04];
       const cardInfo: SkinUnit = {
           cardID: Number.parseInt(card.CardID),
-          name: this.nameTexts.data[Number.parseInt(card.CardID, 10) - 1]?.Message,
+          name: this.nameTexts.data[Number.parseInt(card.CardID, 10) - 1]?.Message || '??',
           rarity: Number.parseInt(card.Rare),
       };
       let i = 0;

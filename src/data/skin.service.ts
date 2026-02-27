@@ -27,8 +27,7 @@ export class SkinService extends CacheFileService<Skin> {
     super(request);
     this.setFilePath(join(config.get('CACHE_DIR'), 'SkinPackage.json'));
   }
-  
-  //TODO impl fetching SP version CG
+
   async getCG(skinIndex: number) {
     const imgPath = this.config.get('SKIN_CG_DIR');
     const CardIDPadded3 = numberPadding(skinIndex, 3);
@@ -37,7 +36,7 @@ export class SkinService extends CacheFileService<Skin> {
     const getFilelist = async () => {
       const fileList = await readdir(imgPath);
       return fileList
-        .filter(name => name.match(RegExp(`${CardIDPadded3}_card_0.png`)))
+        .filter(name => name.match(RegExp(`${CardIDPadded3}_card_0(.sp)?.png`)))
         .sort();
     };
 
@@ -49,22 +48,27 @@ export class SkinService extends CacheFileService<Skin> {
 
     // 下载图
     const CardIDPadded4 = numberPadding(skinIndex, 4);
-    const aarFileName = `SkinCard${CardIDPadded4}_0.aar`
-    try {
-      const aarFile = parseAL(await this.request.requestFile(aarFileName));
-      for (const file of aarFile.Files) {
-        const txName = file.Name.split('.');
-        if (txName[1] === 'atx' && file.Content) {
-          const content = file.Content as ALTX;
-          await ALTX2PNG(content).toFile(
-            join(imgPath, txName[0] + '.png'),
-          );
+    const downloadCG = async (filename: string, suffix: string) => {
+      try {
+        const aarFile = parseAL(await this.request.requestFile(filename));
+        for (const file of aarFile.Files) {
+          const txName = file.Name.split('.');
+          if (txName[1] === 'atx' && file.Content) {
+            const content = file.Content as ALTX;
+            await ALTX2PNG(content).toFile(
+              join(imgPath, txName[0] + suffix),
+            );
+          }
         }
+      } catch (err) {
+        const error = err as Error;
+        this.logger.error(error.message);
       }
-    } catch (err) {
-      const error = err as Error;
-      this.logger.error(error.message);
-      return [];
+    }
+
+    await downloadCG(`SkinCard${CardIDPadded4}_0.aar`, '.png');
+    if (this.data[skinIndex-1].SmartPhoneDiff !== 0) {
+      await downloadCG(`SkinCard${CardIDPadded4}_sp_0.aar`, '.sp.png');
     }
 
     // 重新获取一次
@@ -73,6 +77,7 @@ export class SkinService extends CacheFileService<Skin> {
 
   async update() {
     try {
+      let tempData  = [] as Skin[];
       const ctx = (parseAL(
             await this.request.requestFile('SkinPackage.atb'),
           ) as ALTB).Contents;
@@ -80,8 +85,9 @@ export class SkinService extends CacheFileService<Skin> {
         throw Error('SkinPackage malformed.');
       }
       for (let i = 0; i < ctx.length; ++i) {
-        this.data.push({rowid: i+1, ...ctx[i]});
+        tempData.push({rowid: i+1, ...ctx[i]});
       }
+      this.data = tempData;
       await writeFile(this.filePath, JSON.stringify(this.data));
 
       this.request.requestFile('skin_ico_00.aar')
