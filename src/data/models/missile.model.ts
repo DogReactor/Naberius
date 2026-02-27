@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int, Float } from 'type-graphql';
 
 @ObjectType()
 export class Missile {
@@ -7,17 +7,19 @@ export class Missile {
   PatternID: number;
   @Field(type => Int)
   Enemy: number;
-  @Field(type => Int)
+  @Field(type => Float)
   Speed: number;
-  @Field(type => Int)
+  @Field(type => Float)
   YOffset: number;
-  @Field(type => Int)
+  @Field(type => Float)
   MaxHeight: number;
-  @Field(type => Int)
+  @Field(type => Float)
+  MinHeight: number;
+  @Field(type => Float)
   XOffset: number;
-  @Field(type => Int)
+  @Field(type => Float)
   MaxWidth: number;
-  @Field(type => Int)
+  @Field(type => Float)
   DamageArea: number;
   @Field(type => Int)
   SlowTime: number;
@@ -28,11 +30,23 @@ export class Missile {
   @Field(type => Int)
   ExplosionEffect: number;
   @Field(type => Int)
+  EffectSizeFix: number;
+  @Field(type => Int)
   DisableRotation: number;
   @Field(type => Int)
   InterruptFlip: number;
   @Field(type => Int)
   _CastType: number;
+  @Field(type => Int)
+  HealType: number;
+  @Field(type => Int)
+  PenetrateType: number;
+  @Field(type => Int)
+  ColDiameter: number;
   @Field()
   Property: string;
+  @Field(type => Int)
+  BlastResidueTime: number;
+  @Field(type => Int)
+  BlastResidueInterval: number;
 }

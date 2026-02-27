@@ -27,6 +27,8 @@ type AbilityConfig {
   _Param4: Int!
   _Command: String!
   _ActivateCommand: String!
+  ExtendProperty: String!
+  NoChangeCondition: String!
   Comment: String
 }
 
@@ -357,20 +359,27 @@ type Map {
 type Missile {
   PatternID: Int!
   Enemy: Int!
-  Speed: Int!
-  YOffset: Int!
-  MaxHeight: Int!
-  XOffset: Int!
-  MaxWidth: Int!
-  DamageArea: Int!
+  Speed: Float!
+  YOffset: Float!
+  MaxHeight: Float!
+  MinHeight: Float!
+  XOffset: Float!
+  MaxWidth: Float!
+  DamageArea: Float!
   SlowTime: Int!
   SlowRate: Int!
   HitEffect: Int!
   ExplosionEffect: Int!
+  EffectSizeFix: Int!
   DisableRotation: Int!
   InterruptFlip: Int!
   _CastType: Int!
+  HealType: Int!
+  PenetrateType: Int!
+  ColDiameter: Int!
   Property: String!
+  BlastResidueTime: Int!
+  BlastResidueInterval: Int!
   MissileID: Int!
 }
 
@@ -581,6 +590,7 @@ type SkillInfluenceConfig {
   _ExpressionActivate: String!
   _ExpressionActivateTarget: String!
   _HoldRatioUpperLimit: Int!
+  ExtendProperty: String!
   Comment: String
 }
 

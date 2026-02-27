@@ -31,4 +31,6 @@ export class SkillInfluenceConfig {
   _ExpressionActivateTarget: string;
   @Field(type => Int)
   _HoldRatioUpperLimit: number;
+  @Field()
+  ExtendProperty: string;
 }

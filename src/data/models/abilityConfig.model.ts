@@ -22,4 +22,8 @@ export class AbilityConfig {
   _Command: string;
   @Field()
   _ActivateCommand: string;
+  @Field()
+  ExtendProperty: string;
+  @Field()
+  NoChangeCondition: string;
 }
