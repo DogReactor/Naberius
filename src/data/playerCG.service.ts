@@ -29,7 +29,7 @@ export class PlayerCGService {
     const CardIDPadded4 = numberPadding(CardID, 4);
     let aarFileName : string;
     if (type === 'Stand') {
-        // assume one ALAR file contains all StandCGs.
+        // assume one ALAR file with greatest number contains all StandCGs.
         const fileNamePrefix = 'Card' + CardIDPadded4 + '_';
         let fileName : string;
         let file : any;
@@ -76,9 +76,14 @@ export class PlayerCGService {
         const txName = file.Name.split('.');
         if (txName[1] === 'atx' && file.Content) {
           const content = file.Content as ALTX;
-          await ALTX2PNG(content).toFile(
-            path.join(imgPath, txName[0] + '.png'),
-          );
+          try {
+            await ALTX2PNG(content).toFile(
+              path.join(imgPath, txName[0] + '.png'),
+            );
+          } catch (e) {
+            const error = e as Error;
+            this.logger.error(error.message);
+          }
         }
       }
     } catch (err) {

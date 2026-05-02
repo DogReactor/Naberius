@@ -25,7 +25,7 @@ export function ALTX2PNG(altx: ALTX) {
   }).png();
 }
 
-// did this because sharp.extract() modifies source sharp instance (>=0.33)
+//workaround; sharp.extract() modifies original sharp instance after 0.33
 export function ALTXExtractPNG(
   altx: ALTX, left: number, top: number, width: number, height: number) {
   const buf = altx.Image as Buffer;
@@ -39,6 +39,9 @@ export function ALTXExtractPNG(
   const destLineSize = (width << 2);
   let start = (top * w + left) << 2;
   let destStart = 0;
+  if (buf.length < start + destLineSize * height) {
+    throw new Error("ALTXExtractPNG: Image Buffer Out of Range");
+  }
   for (let i = 0; i < height; ++i) {
     buf.copy(dest, destStart, start, start + destLineSize);
     start = start + lineSize;
@@ -67,9 +70,9 @@ export async function streamToBuffer(stream: Stream) {
 }
 
 /**
- * Return C-style String according to str as a char buffer.
+ * Return null terminated string according to str as a char buffer.
  * 'name' attribute in AL may contain multiple \x00 at tail.
- * @return a C-Style substring which ends before first \x00
+ * @return a substring which ends before first \x00
 */
 export function toCString(str: string) {
   const len = str.length;
