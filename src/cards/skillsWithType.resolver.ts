@@ -35,6 +35,19 @@ export class SkillsWithTypeResolver {
               skillIDs.push(targetID);
             }
           }
+        } else if (config.Data_InfluenceType === 267) {
+          // 267充能切换
+          const found = /(?<=(切り替わりスキルリスト=))\d+/.exec(config.ExtendProperty);
+          if (found) {
+            const targetID = Number.parseInt(found[0]);
+            if (targetID !== 0 && !skillIDs.includes(targetID)) {
+              const targetSkill = this.skills.data[targetID];
+              if (targetSkill) {
+                skills.push(targetSkill);
+                skillIDs.push(targetID);
+              }
+            }
+          }
         }
       });
       index++;
